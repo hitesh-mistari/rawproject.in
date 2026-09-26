@@ -1,0 +1,170 @@
+[
+    {
+        "id": 74,
+        "name": "swing",
+        "slug": "swing",
+        "description": "",
+        "count": 2,
+        "image": ""
+    },
+    {
+        "id": 20,
+        "name": "Bedroom",
+        "slug": "bedroom",
+        "description": "",
+        "count": 19,
+        "image": ""
+    },
+    {
+        "id": 21,
+        "name": "Bed",
+        "slug": "bed",
+        "description": "",
+        "count": 9,
+        "image": ""
+    },
+    {
+        "id": 22,
+        "name": "Side Table",
+        "slug": "side-table",
+        "description": "",
+        "count": 8,
+        "image": ""
+    },
+    {
+        "id": 23,
+        "name": "Wardrobe",
+        "slug": "wardrobe",
+        "description": "",
+        "count": 2,
+        "image": ""
+    },
+    {
+        "id": 24,
+        "name": "Dining",
+        "slug": "dining",
+        "description": "",
+        "count": 19,
+        "image": ""
+    },
+    {
+        "id": 28,
+        "name": "Dining Table",
+        "slug": "dining-table",
+        "description": "",
+        "count": 6,
+        "image": ""
+    },
+    {
+        "id": 25,
+        "name": "Bar Cabinates",
+        "slug": "bar-cabinates",
+        "description": "",
+        "count": 3,
+        "image": ""
+    },
+    {
+        "id": 26,
+        "name": "Bar Chairs",
+        "slug": "bar-chairs",
+        "description": "",
+        "count": 4,
+        "image": ""
+    },
+    {
+        "id": 27,
+        "name": "Chairs",
+        "slug": "chairs",
+        "description": "",
+        "count": 6,
+        "image": ""
+    },
+    {
+        "id": 29,
+        "name": "Living",
+        "slug": "living",
+        "description": "",
+        "count": 47,
+        "image": ""
+    },
+    {
+        "id": 37,
+        "name": "Sofa",
+        "slug": "sofa",
+        "description": "",
+        "count": 6,
+        "image": ""
+    },
+    {
+        "id": 31,
+        "name": "Console Table",
+        "slug": "console-table",
+        "description": "",
+        "count": 3,
+        "image": ""
+    },
+    {
+        "id": 30,
+        "name": "Center Table",
+        "slug": "center-table",
+        "description": "",
+        "count": 5,
+        "image": ""
+    },
+    {
+        "id": 32,
+        "name": "Day Bed",
+        "slug": "day-bed",
+        "description": "",
+        "count": 2,
+        "image": ""
+    },
+    {
+        "id": 33,
+        "name": "Lounge Chair",
+        "slug": "lounge-chair",
+        "description": "",
+        "count": 11,
+        "image": ""
+    },
+    {
+        "id": 34,
+        "name": "Ottoman &amp; Bench",
+        "slug": "ottoman-bench",
+        "description": "",
+        "count": 5,
+        "image": ""
+    },
+    {
+        "id": 35,
+        "name": "Shoe Stand",
+        "slug": "shoe-stand",
+        "description": "",
+        "count": 2,
+        "image": ""
+    },
+    {
+        "id": 36,
+        "name": "Side Table living",
+        "slug": "side-table-living",
+        "description": "",
+        "count": 6,
+        "image": ""
+    },
+    {
+        "id": 38,
+        "name": "TV Unit",
+        "slug": "tv-unit",
+        "description": "",
+        "count": 5,
+        "image": ""
+    },
+    {
+        "id": 39,
+        "name": "One of One",
+        "slug": "one-of-one",
+        "description": "",
+        "count": 5,
+        "image": ""
+    }
+]
