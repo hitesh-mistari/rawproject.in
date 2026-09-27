@@ -12,11 +12,12 @@ const ContactPage: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setFormSubmitted(true);
-    // WhatsApp direct fallback
-    const text = `New message from ${formData.name} (${formData.email}): ${formData.message}`;
-    const waUrl = `https://api.whatsapp.com/send?phone=918698814865?text=${encodeURIComponent(text)}`;
+    // Redirect directly to WhatsApp
+    const text = `Hi, I'm ${formData.name}. ${formData.message}\n\nEmail: ${formData.email}`;
+    const waUrl = `https://api.whatsapp.com/send?phone=918698814865&text=${encodeURIComponent(text)}`;
     window.open(waUrl, '_blank');
+    
+    setFormSubmitted(true);
   };
 
   return (
