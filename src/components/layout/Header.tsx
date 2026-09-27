@@ -1,4 +1,5 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useLayoutEffect } from 'react';
+import gsap from 'gsap';
 import { Link, useNavigate } from 'react-router-dom';
 import { Search, ChevronDown, ChevronRight, Menu, X } from 'lucide-react';
 
@@ -81,7 +82,31 @@ const Header: React.FC = () => {
   const [mobileExpandedCat, setMobileExpandedCat] = useState<string | null>(null);
 
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const logoRef = useRef<HTMLSpanElement>(null);
   const navigate = useNavigate();
+  
+  useLayoutEffect(() => {
+    if (!logoRef.current) return;
+    const chars = logoRef.current.querySelectorAll('.logo-char');
+    
+    gsap.fromTo(chars, 
+      { 
+        y: 30, 
+        opacity: 0, 
+        rotateX: -90,
+        transformOrigin: '50% 50% -20px'
+      },
+      {
+        y: 0,
+        opacity: 1,
+        rotateX: 0,
+        stagger: 0.04,
+        duration: 1.2,
+        ease: "elastic.out(1, 0.5)",
+        delay: 0.2
+      }
+    );
+  }, []);
   
 
   const handleSearch = (e: React.FormEvent) => {
@@ -110,6 +135,14 @@ const Header: React.FC = () => {
 
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
+  const renderAnimatedText = (text: string, isBold: boolean = false) => {
+    return text.split('').map((char, index) => (
+      <span key={`${char}-${index}`} className={`inline-block logo-char ${isBold ? 'font-bold' : ''}`} style={{ whiteSpace: char === ' ' ? 'pre' : 'normal' }}>
+        {char}
+      </span>
+    ));
+  };
+
   return (
     <>
       <header className="bg-white w-full relative z-40">
@@ -118,8 +151,10 @@ const Header: React.FC = () => {
           {/* Left: Brand Logo */}
           <div className="flex-shrink-0">
             <Link to="/" className="group flex flex-col" onClick={closeMobileMenu}>
-              <span className="font-recoleta text-[24px] sm:text-[28px] md:text-[32px] text-[#1a1612] leading-tight mb-1" style={{ letterSpacing: '0.02em' }}>
-                the <strong className="font-bold">raw</strong> project
+              <span ref={logoRef} className="font-recoleta text-[24px] sm:text-[28px] md:text-[32px] text-[#1a1612] leading-tight mb-1 flex items-center" style={{ letterSpacing: '0.02em', perspective: '400px' }}>
+                {renderAnimatedText('the ')}
+                {renderAnimatedText('raw', true)}
+                {renderAnimatedText(' project')}
               </span>
             </Link>
           </div>
