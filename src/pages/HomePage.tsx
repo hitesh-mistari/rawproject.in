@@ -198,7 +198,7 @@ const HomePage: React.FC = () => {
       {/* 1. HERO BANNER */}
       <div className="w-full bg-white">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12 py-0">
-          <section className="relative w-full overflow-hidden bg-[#d3cec3] rounded-[20px] shadow-sm" style={{ minHeight: '80vh' }}>
+          <section className="relative w-full overflow-hidden bg-[#d3cec3] rounded-[20px] shadow-sm min-h-[60vh] md:min-h-[80vh] h-[60vh] md:h-[80vh]">
             {/* Desktop Images */}
             <div className="hidden md:block absolute inset-0 w-full h-full">
               {heroDesktopSlides.map((src, idx) => (
