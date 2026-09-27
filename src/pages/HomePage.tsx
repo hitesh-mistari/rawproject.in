@@ -11,23 +11,6 @@ gsap.registerPlugin(ScrollTrigger);
 const HomePage: React.FC = () => {
   const whatsappUrl = "https://api.whatsapp.com/send?phone=918698814865&text=Hi!%20We%27d%20like%20you%20to%20suggest%20some%20furniture.";
 
-  const heroDesktopSlides = [
-    '/images/home/carousel/mainhero.png',
-    '/images/home/hero/hero_slide1.jpg',
-  ];
-  const heroMobileSlides = [
-    '/images/home/carousel/mainhero.png',
-    '/images/home/hero/hero_mobile3.webp',
-  ];
-  
-  const [heroIndex, setHeroIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setHeroIndex((prev) => (prev + 1) % heroDesktopSlides.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [heroDesktopSlides.length]);
 
   const inspirationSlides = [
     { id: 'wood-grain', src: '/images/home/inspiration/3.jpg', alt: 'The Raw Project Inspiration - Wood Grain' },
@@ -197,68 +180,6 @@ const HomePage: React.FC = () => {
       <ScrubbedBentoGallery />
 
       {/* 1. HERO BANNER */}
-      <div className="w-full bg-white">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12 py-0">
-          <section className="relative w-full overflow-hidden bg-[#d3cec3] rounded-[20px] shadow-sm min-h-[60vh] md:min-h-[80vh] h-[60vh] md:h-[80vh]">
-            {/* Desktop Images */}
-            <div className="hidden md:block absolute inset-0 w-full h-full">
-              {heroDesktopSlides.map((src, idx) => (
-                <div
-                  key={src}
-                  className="absolute inset-0 w-full h-full transition-opacity duration-[1500ms] ease-in-out"
-                  style={{
-                    opacity: heroIndex === idx ? 1 : 0,
-                    zIndex: heroIndex === idx ? 1 : 0,
-                  }}
-                >
-                  <img
-                    src={src}
-                    alt={`Hero slide ${idx + 1}`}
-                    className={`w-full h-full object-cover object-center transition-transform duration-[15000ms] ease-out ${heroIndex === idx ? 'scale-105' : 'scale-100'}`}
-                    loading={idx === 0 ? 'eager' : 'lazy'}
-                  />
-                </div>
-              ))}
-            </div>
-
-            {/* Mobile Images */}
-            <div className="block md:hidden absolute inset-0 w-full h-full">
-              {heroMobileSlides.map((src, idx) => (
-                <div
-                  key={src}
-                  className="absolute inset-0 w-full h-full transition-opacity duration-[1500ms] ease-in-out"
-                  style={{
-                    opacity: (heroIndex % heroMobileSlides.length) === idx ? 1 : 0,
-                    zIndex: (heroIndex % heroMobileSlides.length) === idx ? 1 : 0,
-                  }}
-                >
-                  <img
-                    src={src}
-                    alt={`Hero mobile slide ${idx + 1}`}
-                    className={`w-full h-full object-cover object-center transition-transform duration-[15000ms] ease-out ${(heroIndex % heroMobileSlides.length) === idx ? 'scale-105' : 'scale-100'}`}
-                    loading={idx === 0 ? 'eager' : 'lazy'}
-                  />
-                </div>
-              ))}
-            </div>
-
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-30">
-              {heroDesktopSlides.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setHeroIndex(idx)}
-                  aria-label={`Go to hero slide ${idx + 1}`}
-                  className={`h-1.5 transition-all duration-500 rounded-full ${
-                    heroIndex === idx ? 'w-8 bg-white' : 'w-2 bg-white/50 hover:bg-white/80'
-                  }`}
-                />
-              ))}
-            </div>
-          </section>
-        </div>
-      </div>
-
-      {/* 1.5. WORKS OF QUIET ELEGANCE - 100VH ARCHITECTURAL SHOWCASE SECTION */}
       <section className="bg-[#faf9f6] min-h-screen flex flex-col justify-between py-12 sm:py-16 border-b border-[#ded7ca]">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12 w-full flex-1 flex flex-col justify-between">
           
