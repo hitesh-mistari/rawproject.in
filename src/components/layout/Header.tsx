@@ -124,7 +124,45 @@ const Header: React.FC = () => {
 
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const logoRef = useRef<HTMLSpanElement>(null);
+  const megaMenuRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    if (!megaMenuRef.current) return;
+    if (isShopOpen) {
+      gsap.killTweensOf(megaMenuRef.current);
+      gsap.to(megaMenuRef.current, {
+        autoAlpha: 1,
+        y: 0,
+        scale: 1,
+        rotateX: 0,
+        transformOrigin: "top center",
+        duration: 0.4,
+        ease: "power3.out",
+        display: "block"
+      });
+      // Stagger child elements
+      gsap.fromTo(megaMenuRef.current.querySelectorAll('.mega-menu-col'),
+        { opacity: 0, y: 15 },
+        { opacity: 1, y: 0, stagger: 0.05, duration: 0.4, ease: "power2.out", delay: 0.1 }
+      );
+      gsap.fromTo(megaMenuRef.current.querySelector('.mega-menu-featured'),
+        { opacity: 0, scale: 0.95 },
+        { opacity: 1, scale: 1, duration: 0.6, ease: "power3.out", delay: 0.2 }
+      );
+    } else {
+      gsap.killTweensOf(megaMenuRef.current);
+      gsap.to(megaMenuRef.current, {
+        autoAlpha: 0,
+        y: -10,
+        scale: 0.98,
+        rotateX: -5,
+        duration: 0.3,
+        ease: "power2.in",
+        display: "none"
+      });
+    }
+  }, [isShopOpen]);
   
   useLayoutEffect(() => {
     if (!logoRef.current) return;
@@ -280,9 +318,10 @@ const Header: React.FC = () => {
                 </div>
               </HoverUnderlineLink>
 
-              {isShopOpen && (
-                <div 
-                  className="absolute top-full left-1/2 -translate-x-1/2 mt-5 z-50 animate-fadeIn"
+              <div 
+                  ref={megaMenuRef}
+                  className="absolute top-full left-1/2 -translate-x-1/2 mt-5 z-50 opacity-0"
+                  style={{ display: "none" }}
                   onMouseEnter={handleShopMouseEnter}
                   onMouseLeave={handleShopMouseLeave}
                 >
@@ -294,7 +333,7 @@ const Header: React.FC = () => {
                       {SHOP_CATEGORIES.map((cat) => (
                         <div 
                           key={cat.id} 
-                          className="flex flex-col min-w-[140px]"
+                          className="flex flex-col min-w-[140px] mega-menu-col"
                           onMouseEnter={() => setHoveredCategory(cat.id)}
                         >
                           <Link 
@@ -331,7 +370,7 @@ const Header: React.FC = () => {
                     </div>
 
                     {/* Featured Mega Menu Block */}
-                    <div className="hidden lg:block w-[320px] bg-[#eae5da] relative overflow-hidden group border border-[#dfdbd2]">
+                    <div className="hidden lg:block w-[320px] bg-[#eae5da] relative overflow-hidden group border border-[#dfdbd2] mega-menu-featured">
                       <img 
                         key={currentCategoryData?.featuredImage}
                         src={currentCategoryData?.featuredImage || '/images/home/featured_sahara_sofa.png'} 
@@ -355,7 +394,6 @@ const Header: React.FC = () => {
                     </div>
                   </div>
                 </div>
-              )}
             </div>
 
             <HoverUnderlineLink to="/news" isActive={location.pathname === '/news'} className="text-[12px] tracking-[0.1em] text-[#666] hover:text-black font-medium transition-colors uppercase py-1">
