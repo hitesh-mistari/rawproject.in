@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useLayoutEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Flip } from 'gsap/Flip';
@@ -9,44 +9,37 @@ const ScrubbedBentoGallery: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     let ctx = gsap.context(() => {
-      // Small timeout to ensure Vite dev CSS is fully injected before Flip calculates bounds
-      setTimeout(() => {
-        const galleryElement = galleryRef.current;
-        if (!galleryElement || !containerRef.current) return;
+      const galleryElement = galleryRef.current;
+      if (!galleryElement || !containerRef.current) return;
 
-        const galleryItems = galleryElement.querySelectorAll('.gallery__item');
-        if (galleryItems.length === 0) return;
+      const galleryItems = galleryElement.querySelectorAll('.gallery__item');
+      if (galleryItems.length === 0) return;
 
-        // Ensure no final class is initially present
-        galleryElement.classList.remove('gallery--final');
+      // Ensure no final class is initially present
+      galleryElement.classList.remove('gallery--final');
 
-        // Temporarily add final class to capture state
-        galleryElement.classList.add('gallery--final');
-        const flipState = Flip.getState(galleryItems);
-        galleryElement.classList.remove('gallery--final');
+      // Temporarily add final class to capture state
+      galleryElement.classList.add('gallery--final');
+      const flipState = Flip.getState(galleryItems);
+      galleryElement.classList.remove('gallery--final');
 
-        const flip = Flip.to(flipState, {
-          simple: true,
-          ease: 'expoScale(1, 5)',
-        });
+      const flip = Flip.to(flipState, {
+        simple: true,
+        ease: 'expoScale(1, 5)',
+      });
 
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: galleryElement,
-            start: 'center center',
-            end: '+=100%',
-            scrub: true,
-            pin: containerRef.current,
-          },
-        });
-        tl.add(flip);
-
-        return () => {
-          gsap.set(galleryItems, { clearProps: 'all' });
-        };
-      }, 100);
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: galleryElement,
+          start: 'center center',
+          end: '+=100%',
+          scrub: true,
+          pin: containerRef.current,
+        },
+      });
+      tl.add(flip);
     }, containerRef);
 
     return () => ctx.revert();
@@ -64,16 +57,18 @@ const ScrubbedBentoGallery: React.FC = () => {
   ];
 
   return (
-    <div ref={containerRef} className="relative w-full h-[100vh] flex items-center justify-center overflow-hidden bg-[#faf9f5]">
-      <div 
-        ref={galleryRef} 
-        className="gallery gallery--bento relative w-full h-full flex-none"
-      >
-        {images.map((src, i) => (
-          <div key={i} className="gallery__item flex-none relative bg-center bg-cover">
-            <img src={src} alt="" className="object-cover w-full h-full" />
-          </div>
-        ))}
+    <div ref={containerRef} className="w-full h-[100vh] bg-[#faf9f5]">
+      <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
+        <div 
+          ref={galleryRef} 
+          className="gallery gallery--bento relative w-full h-full flex-none"
+        >
+          {images.map((src, i) => (
+            <div key={i} className="gallery__item flex-none relative bg-center bg-cover">
+              <img src={src} alt="" className="object-cover w-full h-full" />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
