@@ -76,14 +76,14 @@ const GlobalAudio: React.FC = () => {
       <div className="fixed bottom-6 left-6 z-[60]">
         <button
           onClick={toggleSound}
-          className="flex items-center justify-center p-3 bg-black/85 hover:bg-black text-white rounded-full shadow-xl backdrop-blur-sm transition-all duration-300 hover:scale-110 border border-white/20 cursor-pointer"
+          className="flex items-center justify-center p-3 bg-[#eae5da]/95 hover:bg-[#e0dbd0] rounded-full shadow-[0_4px_20px_rgb(0,0,0,0.1)] backdrop-blur-sm transition-all duration-300 hover:scale-110 border border-[#d8c3a5]/40 cursor-pointer"
           aria-label={isMuted || !isPlaying ? 'Play ambient audio' : 'Mute ambient audio'}
           title={isMuted || !isPlaying ? 'Click to play ambient audio' : 'Click to mute audio'}
         >
           {isMuted || !isPlaying ? (
-            <VolumeX className="w-5 h-5 text-[#d8c3a5]" />
+            <VolumeX className="w-5 h-5 text-[#8a6040]" />
           ) : (
-            <Volume2 className="w-5 h-5 text-[#8fe388] animate-pulse" />
+            <Volume2 className="w-5 h-5 text-[#8a6040] animate-pulse" />
           )}
         </button>
       </div>
