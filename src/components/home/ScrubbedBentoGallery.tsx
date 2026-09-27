@@ -68,11 +68,11 @@ const ScrubbedBentoGallery: React.FC = () => {
     <div ref={wrapperRef} className="gallery-wrap relative w-full h-[100vh] flex items-center justify-center overflow-hidden bg-[#faf9f5]">
       <div 
         ref={galleryRef} 
-        className="gallery gallery--bento relative w-full h-full flex-none"
+        className="gallery gallery--bento relative w-full flex-none"
       >
         {images.map((src, i) => (
           <div key={i} className="gallery__item flex-none relative bg-center bg-cover">
-            <img src={src} alt="" className="object-cover w-full h-full" />
+            <img src={src} alt="" className="w-full h-auto block" />
           </div>
         ))}
       </div>
