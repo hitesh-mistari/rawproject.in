@@ -269,7 +269,7 @@ const HomePage: React.FC = () => {
               </h2>
             </div>
             <div className="mt-4 md:mt-0 max-w-md text-left md:text-right flex flex-col items-start md:items-end">
-              <p className="text-[13px] text-[#6b6359] font-light leading-relaxed mb-3">
+              <p className="text-[13px] text-[#6b6359] font-medium leading-relaxed mb-3">
                 Through architecture and design, we craft environments that honor materiality, light, and the human experience.
               </p>
               <Link 
@@ -488,7 +488,7 @@ const HomePage: React.FC = () => {
               </h2>
             </div>
             <div className="lg:pb-2">
-              <p className="text-[14px] text-[#4a4238] font-light leading-relaxed mb-6 lg:mb-8">
+              <p className="text-[14px] text-[#4a4238] font-medium leading-relaxed mb-6 lg:mb-8">
                 We work with materials that carry memory — wood, stone, cane, brass — and give them another life. Each piece is shaped by skilled hands, with respect for nature, craft and the spaces it will live in.
               </p>
               <div className="w-full h-px bg-[#d8d2c4]" />
@@ -510,7 +510,7 @@ const HomePage: React.FC = () => {
                 <span className="text-[12px] font-medium text-[#8a7f72] mt-0.5 tracking-wider">01.</span>
                 <div>
                   <h3 className="text-[13px] font-bold text-[#1a1612] tracking-[0.2em] uppercase mb-2">Material</h3>
-                  <p className="text-[13.5px] text-[#4a4238] font-light leading-[1.6]">
+                  <p className="text-[13.5px] text-[#4a4238] font-medium leading-[1.6]">
                     We source sustainable wood, natural stone, cane and brass with care.
                   </p>
                 </div>
@@ -530,7 +530,7 @@ const HomePage: React.FC = () => {
                 <span className="text-[12px] font-medium text-[#8a7f72] mt-0.5 tracking-wider">02.</span>
                 <div>
                   <h3 className="text-[13px] font-bold text-[#1a1612] tracking-[0.2em] uppercase mb-2">Craft</h3>
-                  <p className="text-[13.5px] text-[#4a4238] font-light leading-[1.6]">
+                  <p className="text-[13.5px] text-[#4a4238] font-medium leading-[1.6]">
                     Our artisans bring decades of skill and knowledge to every detail.
                   </p>
                 </div>
@@ -550,7 +550,7 @@ const HomePage: React.FC = () => {
                 <span className="text-[12px] font-medium text-[#8a7f72] mt-0.5 tracking-wider">03.</span>
                 <div>
                   <h3 className="text-[13px] font-bold text-[#1a1612] tracking-[0.2em] uppercase mb-2">Object</h3>
-                  <p className="text-[13.5px] text-[#4a4238] font-light leading-[1.6]">
+                  <p className="text-[13.5px] text-[#4a4238] font-medium leading-[1.6]">
                     Honest, durable pieces made to be lived with, for years to come.
                   </p>
                 </div>
@@ -704,7 +704,7 @@ const HomePage: React.FC = () => {
               Inspired by <br/><i className="font-serif text-[#6b6359]">Nature's Canvas</i>
             </h2>
 
-            <div className="space-y-5 text-[15px] text-[#4a4238] font-light leading-[1.8] max-w-lg">
+            <div className="space-y-5 text-[15px] text-[#2a251e] font-medium leading-[1.8] max-w-lg">
               <p>
                 I've perpetually been captivated by the tapestries woven by nature itself.
                 From the exquisite intricacies of veins adorning a leaf to the mesmerizing
@@ -723,7 +723,7 @@ const HomePage: React.FC = () => {
               <span className="block text-[11px] uppercase tracking-widest font-bold text-[#1a1612]">
                 Founder & Designer
               </span>
-              <span className="block text-xl font-serif font-light text-[#8a7f72] mt-2">
+              <span className="block text-xl font-serif font-normal text-[#8a7f72] mt-2">
                 Ar. Amruta Bade
               </span>
             </div>
@@ -906,7 +906,7 @@ const HomePage: React.FC = () => {
               Why The<br />Raw Project
             </h2>
             
-            <p className="text-[15px] sm:text-[17px] text-white/90 leading-[1.6] font-light mb-10 max-w-[500px]">
+            <p className="text-[15px] sm:text-[17px] text-white/90 leading-[1.6] font-medium mb-10 max-w-[500px]">
               Minimal, versatile, and built to last. We source FSC-certified timber and sustainable organic fabrics to let the raw beauty of the materials speak for themselves. Handcrafted by over 200 artisans across India, every piece is a celebration of traditional heritage, mindful design, and uncompromising quality.
             </p>
             
@@ -930,7 +930,7 @@ const HomePage: React.FC = () => {
           <h2 className="text-3xl md:text-5xl font-serif text-[#1a1612] mb-4 tracking-wide">
             Need Design Advice?
           </h2>
-          <p className="text-[#666] font-light mb-8 max-w-lg leading-relaxed text-[15px]">
+          <p className="text-[#666] font-medium mb-8 max-w-lg leading-relaxed text-[15px]">
             Speak to our design architects about custom dimensions, finishes, and bespoke commissions for your space.
           </p>
           <a
