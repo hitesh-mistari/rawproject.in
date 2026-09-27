@@ -35,19 +35,19 @@ const ContactPage: React.FC = () => {
               <div className="w-14 h-[1.5px] bg-black"></div>
             </div>
 
-            <div className="space-y-8 text-[15px]">
+            <div className="space-y-10 text-[15px] pt-4">
               {/* Phone Number */}
               <div className="flex items-start gap-4">
-                <div className="w-6 shrink-0 mt-0.5 text-black">
+                <div className="w-6 shrink-0 mt-0.5 text-[#8a7f72]">
                   <Phone className="w-5 h-5 fill-current stroke-none" />
                 </div>
                 <div>
-                  <h3 className="text-[17px] font-semibold text-black leading-tight mb-1">
+                  <h3 className="text-[11px] font-bold tracking-[0.2em] uppercase text-[#8a7f72] leading-tight mb-2">
                     Phone Number
                   </h3>
                   <a
                     href="tel:+918698814865"
-                    className="text-[#333] hover:text-black transition-colors block text-[15px]"
+                    className="text-[#1a1612] hover:text-[#8a6040] transition-colors block text-[16px] font-medium"
                   >
                     +918698814865
                   </a>
@@ -56,16 +56,16 @@ const ContactPage: React.FC = () => {
 
               {/* Email */}
               <div className="flex items-start gap-4">
-                <div className="w-6 shrink-0 mt-0.5 text-black">
+                <div className="w-6 shrink-0 mt-0.5 text-[#8a7f72]">
                   <Mail className="w-5 h-5 fill-current stroke-none" />
                 </div>
                 <div>
-                  <h3 className="text-[17px] font-semibold text-black leading-tight mb-1">
+                  <h3 className="text-[11px] font-bold tracking-[0.2em] uppercase text-[#8a7f72] leading-tight mb-2">
                     Email
                   </h3>
                   <a
                     href="mailto:therawprojectt@gmail.com"
-                    className="text-[#333] hover:text-black transition-colors block text-[15px]"
+                    className="text-[#1a1612] hover:text-[#8a6040] transition-colors block text-[16px] font-medium"
                   >
                     therawprojectt@gmail.com
                   </a>
@@ -74,35 +74,34 @@ const ContactPage: React.FC = () => {
 
               {/* Address */}
               <div className="flex items-start gap-4">
-                <div className="w-6 shrink-0 mt-0.5 text-black">
+                <div className="w-6 shrink-0 mt-0.5 text-[#8a7f72]">
                   <MapPin className="w-5 h-5 fill-current stroke-none" />
                 </div>
                 <div>
-                  <h3 className="text-[17px] font-semibold text-black leading-tight mb-1">
+                  <h3 className="text-[11px] font-bold tracking-[0.2em] uppercase text-[#8a7f72] leading-tight mb-2">
                     Address
                   </h3>
-                  <div className="text-[#333] text-[15px] leading-relaxed space-y-0.5">
+                  <div className="text-[#1a1612] text-[15px] leading-relaxed space-y-0.5 font-medium">
                     <p>3rd Floor, The Raw Project @ Deck Spaces,</p>
                     <p>Nexus Point, Rambhoomi, College Road,</p>
-                    <p>Nashik 422007</p>
-                    <p>Maharashtra, IN</p>
+                    <p>Nashik 422007, Maharashtra, IN</p>
                   </div>
                 </div>
               </div>
 
               {/* Business Hours */}
               <div className="flex items-start gap-4">
-                <div className="w-6 shrink-0 mt-0.5 text-black">
-                  <Clock className="w-5 h-5 stroke-[2] text-black" />
+                <div className="w-6 shrink-0 mt-0.5 text-[#8a7f72]">
+                  <Clock className="w-5 h-5 stroke-[2] text-[#8a7f72]" />
                 </div>
                 <div>
-                  <h3 className="text-[17px] font-semibold text-black leading-tight mb-1">
+                  <h3 className="text-[11px] font-bold tracking-[0.2em] uppercase text-[#8a7f72] leading-tight mb-2">
                     Business Hours
                   </h3>
-                  <div className="text-[#333] text-[15px] leading-relaxed space-y-1">
-                    <p>Monday — Friday 9am – 5pm</p>
-                    <p>Saturday — 10am – 3pm</p>
-                    <p>Sunday — Closed</p>
+                  <div className="text-[#1a1612] text-[15px] leading-relaxed space-y-1 font-medium">
+                    <p>Monday — Friday: 9am – 5pm</p>
+                    <p>Saturday: 10am – 3pm</p>
+                    <p className="text-[#8a7f72]">Sunday: Closed</p>
                   </div>
                 </div>
               </div>
@@ -137,55 +136,58 @@ const ContactPage: React.FC = () => {
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label className="block text-[13px] text-[#666] mb-1.5 font-normal">
-                    Name
-                  </label>
+              <form onSubmit={handleSubmit} className="space-y-10">
+                <div className="relative pt-3">
                   <input
                     type="text"
                     required
-                    placeholder="Name"
+                    id="name"
+                    placeholder=" "
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full bg-white border border-[#d9d9d9] px-4 py-2.5 text-[14px] text-black placeholder:text-[#aaa] focus:outline-none focus:border-stone-500 rounded-none shadow-[inset_0_1px_2px_rgba(0,0,0,0.03)]"
+                    className="peer w-full bg-transparent border-b border-[#c2b9a7] px-0 py-2.5 text-[15px] text-[#1a1612] placeholder-transparent focus:outline-none focus:border-[#8a6040] transition-colors rounded-none"
                   />
+                  <label htmlFor="name" className="absolute left-0 top-1 text-[11px] uppercase tracking-widest text-[#8a7f72] font-semibold transition-all peer-placeholder-shown:text-[14px] peer-placeholder-shown:text-[#8a7f72] peer-placeholder-shown:top-6 peer-placeholder-shown:font-normal peer-focus:top-1 peer-focus:text-[11px] peer-focus:text-[#8a6040] peer-focus:font-semibold peer-focus:tracking-widest cursor-text">
+                    Name
+                  </label>
                 </div>
 
-                <div>
-                  <label className="block text-[13px] text-[#666] mb-1.5 font-normal">
-                    Email
-                  </label>
+                <div className="relative pt-3">
                   <input
                     type="email"
                     required
-                    placeholder="Email"
+                    id="email"
+                    placeholder=" "
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full bg-white border border-[#d9d9d9] px-4 py-2.5 text-[14px] text-black placeholder:text-[#aaa] focus:outline-none focus:border-stone-500 rounded-none shadow-[inset_0_1px_2px_rgba(0,0,0,0.03)]"
+                    className="peer w-full bg-transparent border-b border-[#c2b9a7] px-0 py-2.5 text-[15px] text-[#1a1612] placeholder-transparent focus:outline-none focus:border-[#8a6040] transition-colors rounded-none"
                   />
+                  <label htmlFor="email" className="absolute left-0 top-1 text-[11px] uppercase tracking-widest text-[#8a7f72] font-semibold transition-all peer-placeholder-shown:text-[14px] peer-placeholder-shown:text-[#8a7f72] peer-placeholder-shown:top-6 peer-placeholder-shown:font-normal peer-focus:top-1 peer-focus:text-[11px] peer-focus:text-[#8a6040] peer-focus:font-semibold peer-focus:tracking-widest cursor-text">
+                    Email
+                  </label>
                 </div>
 
-                <div>
-                  <label className="block text-[13px] text-[#666] mb-1.5 font-normal">
-                    Message
-                  </label>
+                <div className="relative pt-3">
                   <textarea
-                    rows={5}
+                    rows={4}
                     required
-                    placeholder="Message"
+                    id="message"
+                    placeholder=" "
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full bg-white border border-[#d9d9d9] px-4 py-2.5 text-[14px] text-black placeholder:text-[#aaa] focus:outline-none focus:border-stone-500 rounded-none shadow-[inset_0_1px_2px_rgba(0,0,0,0.03)] resize-y"
+                    className="peer w-full bg-transparent border-b border-[#c2b9a7] px-0 py-2.5 text-[15px] text-[#1a1612] placeholder-transparent focus:outline-none focus:border-[#8a6040] transition-colors rounded-none resize-none"
                   />
+                  <label htmlFor="message" className="absolute left-0 top-1 text-[11px] uppercase tracking-widest text-[#8a7f72] font-semibold transition-all peer-placeholder-shown:text-[14px] peer-placeholder-shown:text-[#8a7f72] peer-placeholder-shown:top-6 peer-placeholder-shown:font-normal peer-focus:top-1 peer-focus:text-[11px] peer-focus:text-[#8a6040] peer-focus:font-semibold peer-focus:tracking-widest cursor-text">
+                    Message
+                  </label>
                 </div>
 
-                <div>
+                <div className="pt-6">
                   <button
                     type="submit"
-                    className="w-full bg-[#5c6352] hover:bg-[#4e5445] text-white py-3 px-6 text-[14px] font-normal transition-colors rounded-none shadow-sm cursor-pointer"
+                    className="w-full bg-[#1a1612] hover:bg-[#8a6040] text-white py-4 px-6 text-[12px] uppercase tracking-[0.2em] font-bold transition-all duration-300 shadow-[0_8px_20px_rgb(0,0,0,0.08)] hover:shadow-[0_12px_25px_rgb(0,0,0,0.12)] cursor-pointer"
                   >
-                    Send
+                    Send Message
                   </button>
                 </div>
               </form>
