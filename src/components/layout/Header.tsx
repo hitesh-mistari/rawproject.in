@@ -1,7 +1,47 @@
 import React, { useState, useRef, useLayoutEffect } from 'react';
 import gsap from 'gsap';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Search, ChevronDown, ChevronRight, Menu, X } from 'lucide-react';
+
+const HoverUnderlineLink = ({ to, children, className = '', isActive = false, onMouseEnter, onMouseLeave }: any) => {
+  const lineRef = useRef(null);
+
+  const handleEnter = (e: any) => {
+    if (onMouseEnter) onMouseEnter(e);
+    if (isActive) return;
+    gsap.fromTo(lineRef.current, 
+      { scaleX: 0, transformOrigin: 'left center' },
+      { scaleX: 1, duration: 0.4, ease: 'power3.out' }
+    );
+  };
+
+  const handleLeave = (e: any) => {
+    if (onMouseLeave) onMouseLeave(e);
+    if (isActive) return;
+    gsap.to(lineRef.current, {
+      scaleX: 0,
+      transformOrigin: 'right center',
+      duration: 0.4,
+      ease: 'power3.inOut'
+    });
+  };
+
+  return (
+    <Link 
+      to={to} 
+      className={`relative inline-block ${className}`}
+      onMouseEnter={handleEnter}
+      onMouseLeave={handleLeave}
+    >
+      <span className="relative z-10">{children}</span>
+      <span 
+        ref={lineRef} 
+        className="absolute left-0 -bottom-1 h-[1.5px] w-full bg-[#1a1612]" 
+        style={{ transform: isActive ? 'scaleX(1)' : 'scaleX(0)', transformOrigin: isActive ? 'left center' : 'right center' }}
+      />
+    </Link>
+  );
+};
 
 interface SubmenuItem {
   name: string;
@@ -75,6 +115,7 @@ const SHOP_CATEGORIES: ShopCategory[] = [
 ];
 
 const Header: React.FC = () => {
+  const location = useLocation();
   const [searchQuery, setSearchQuery] = useState('');
   const [isShopOpen, setIsShopOpen] = useState(false);
   const [hoveredCategory, setHoveredCategory] = useState<string>('bedroom');
@@ -213,12 +254,12 @@ const Header: React.FC = () => {
 
           {/* Center: Desktop Navigation Links */}
           <nav className="hidden md:flex items-center gap-6 lg:gap-10 mt-1">
-            <Link to="/about" className="text-[12px] tracking-[0.1em] text-[#666] hover:text-black font-medium transition-colors uppercase">
+            <HoverUnderlineLink to="/about" isActive={location.pathname === '/about'} className="text-[12px] tracking-[0.1em] text-[#666] hover:text-black font-medium transition-colors uppercase py-1">
               ABOUT
-            </Link>
-            <Link to="/experience-centre" className="text-[12px] tracking-[0.1em] text-[#666] hover:text-black font-medium transition-colors uppercase">
+            </HoverUnderlineLink>
+            <HoverUnderlineLink to="/experience-centre" isActive={location.pathname === '/experience-centre'} className="text-[12px] tracking-[0.1em] text-[#666] hover:text-black font-medium transition-colors uppercase py-1">
               EXPERIENCE CENTRE
-            </Link>
+            </HoverUnderlineLink>
 
             {/* Shop (Collections) Dropdown */}
             <div 
@@ -226,15 +267,16 @@ const Header: React.FC = () => {
               onMouseEnter={handleShopMouseEnter}
               onMouseLeave={handleShopMouseLeave}
             >
-              <Link 
+              <HoverUnderlineLink 
                 to="/shop" 
-                className={`text-[12px] tracking-[0.1em] font-medium transition-colors uppercase cursor-pointer flex items-center gap-1.5 ${
+                isActive={location.pathname === '/shop'}
+                className={`text-[12px] tracking-[0.1em] font-medium transition-colors uppercase cursor-pointer flex items-center gap-1.5 py-1 ${
                   isShopOpen ? 'text-black' : 'text-[#666] hover:text-black'
                 }`}
               >
                 COLLECTIONS
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isShopOpen ? 'rotate-180' : ''}`} />
-              </Link>
+              </HoverUnderlineLink>
 
               {isShopOpen && (
                 <div 
@@ -314,12 +356,12 @@ const Header: React.FC = () => {
               )}
             </div>
 
-            <Link to="/news" className="text-[12px] tracking-[0.1em] text-[#666] hover:text-black font-medium transition-colors uppercase">
+            <HoverUnderlineLink to="/news" isActive={location.pathname === '/news'} className="text-[12px] tracking-[0.1em] text-[#666] hover:text-black font-medium transition-colors uppercase py-1">
               NEWS
-            </Link>
-            <Link to="/get-in-touch" className="text-[12px] tracking-[0.1em] text-[#666] hover:text-black font-medium transition-colors uppercase">
+            </HoverUnderlineLink>
+            <HoverUnderlineLink to="/get-in-touch" isActive={location.pathname === '/get-in-touch' || location.pathname === '/contact'} className="text-[12px] tracking-[0.1em] text-[#666] hover:text-black font-medium transition-colors uppercase py-1">
               GET IN TOUCH
-            </Link>
+            </HoverUnderlineLink>
           </nav>
 
           {/* Right: Empty (previously Cart) */}
