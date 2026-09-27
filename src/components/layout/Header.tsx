@@ -350,7 +350,7 @@ const Header: React.FC = () => {
                                   key={sub.name}
                                   to={sub.href}
                                   onClick={() => setIsShopOpen(false)}
-                                  className="text-[13px] text-[#6b6359] font-light hover:text-[#1a1612] hover:translate-x-1 transition-all duration-300"
+                                  className="text-[13px] text-[#4a4238] font-medium hover:text-[#1a1612] hover:translate-x-1 transition-all duration-300"
                                 >
                                   {sub.name}
                                 </Link>
@@ -360,7 +360,7 @@ const Header: React.FC = () => {
                             <Link
                               to={cat.href}
                               onClick={() => setIsShopOpen(false)}
-                              className="text-[12px] text-[#8a7f72] font-serif italic hover:text-[#1a1612] transition-colors mt-2"
+                              className="text-[12px] text-[#5a5248] font-serif italic font-medium hover:text-[#1a1612] transition-colors mt-2 block"
                             >
                               Explore piece &rarr;
                             </Link>
