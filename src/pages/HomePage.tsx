@@ -265,7 +265,7 @@ const HomePage: React.FC = () => {
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 pb-6 border-b border-[#ded7ca]">
             <div>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-['IBM_Plex_Sans',sans-serif] tracking-wider uppercase font-light text-[#1a1612] leading-tight">
-                WORKS OF QUIET <br /> ELEGANCE
+                OUR WORK
               </h2>
             </div>
             <div className="mt-4 md:mt-0 max-w-md text-left md:text-right flex flex-col items-start md:items-end">
