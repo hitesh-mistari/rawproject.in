@@ -95,6 +95,13 @@ const CategoryPage: React.FC = () => {
   ];
 
   const getBannerImage = (category: string) => {
+    if (products && products.length > 0 && products[0].images) {
+      if (products[0].images.length > 1) {
+        return products[0].images[1].src;
+      } else if (products[0].images.length > 0) {
+        return products[0].images[0].src;
+      }
+    }
     switch (category) {
       case 'dining': return '/images/home/carousel/slide_1.png';
       case 'living': return '/images/home/hero/hero_slide2.png';
