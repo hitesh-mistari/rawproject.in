@@ -38,11 +38,11 @@ const AboutPage: React.FC = () => {
       {/* Section 1: About Us Narrative */}
       <section className="bg-[#EDE8DE] pt-10 sm:pt-14 pb-14 sm:pb-20">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12">
-          <h1 className="text-[30px] sm:text-[38px] lg:text-[45px] font-light text-black font-['IBM_Plex_Sans',sans-serif] mb-6 sm:mb-8 tracking-normal">
+          <h1 className="text-[30px] sm:text-[38px] lg:text-[45px] font-medium text-black mb-6 sm:mb-8 tracking-normal">
             About Us
           </h1>
 
-          <div className="space-y-6 text-[16px] sm:text-[17px] font-light leading-[1.85] text-black font-['Commissioner',sans-serif] w-full text-left max-w-4xl">
+          <div className="space-y-6 text-[16px] sm:text-[17px] font-medium leading-[1.85] text-[#1a1612] w-full text-left max-w-4xl">
             <p>
               Hello everyone, I’m Amruta, and I pour my heart and soul into The Raw Project. It’s not just a venture; it’s a passion that celebrates the raw, untouched beauty of nature and the simple elegance of minimalistic design.
             </p>
@@ -74,7 +74,7 @@ const AboutPage: React.FC = () => {
       {/* Section 2: Meet Our Team */}
       <section className="bg-white py-14 sm:py-20 border-t border-[#e2dcd2]">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12">
-          <h2 className="text-[26px] sm:text-[34px] md:text-[40px] font-light text-black font-['IBM_Plex_Sans',sans-serif] text-center mb-10 sm:mb-14 tracking-tight">
+          <h2 className="text-[26px] sm:text-[34px] md:text-[40px] font-medium text-black text-center mb-10 sm:mb-14 tracking-tight">
             Meet Our Team
           </h2>
 
