@@ -1,8 +1,9 @@
-import React, { useEffect, useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { CartProvider } from "./context/CartContext";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
+import IntroLoader from "./components/layout/IntroLoader";
 
 import WhatsAppButton from "./components/layout/WhatsAppButton";
 import CartDrawer from "./components/common/CartDrawer";
@@ -53,10 +54,23 @@ function NotFoundPage() {
 }
 
 const App: React.FC = () => {
+  // Show intro only on very first page load per session, only on the homepage
+  const isHome = window.location.pathname === '/';
+  const hasSeenIntro = sessionStorage.getItem('intro_seen');
+  const [showIntro, setShowIntro] = useState(isHome && !hasSeenIntro);
+
+  const handleIntroComplete = () => {
+    sessionStorage.setItem('intro_seen', '1');
+    setShowIntro(false);
+  };
+
   return (
     <BrowserRouter>
       <CartProvider>
         <ScrollToTop />
+        {showIntro && (
+          <IntroLoader onComplete={handleIntroComplete} />
+        )}
         <div className="min-h-screen flex flex-col justify-between bg-[#eae5da] text-[#222222] selection:bg-[#c5a880] selection:text-stone-900">
           <Header />
           <main className="flex-1">
