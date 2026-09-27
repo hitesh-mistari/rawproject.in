@@ -257,6 +257,137 @@ const HomePage: React.FC = () => {
         </div>
       </div>
 
+      {/* 2.5 FEATURED PRODUCTS CAROUSEL */}
+      <section className="bg-[#eae5da] py-20 sm:py-28 lg:py-32 overflow-hidden border-b border-[#ded7ca] relative">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12 text-center mb-12">
+          <p className="text-[11px] tracking-[0.3em] uppercase text-[#8a7f72] font-bold mb-4">
+            Shop Collection
+          </p>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-light text-[#1a1612]">
+            Featured Objects
+          </h2>
+          <p className="text-[11px] text-[#8a7f72] font-medium tracking-[0.2em] uppercase mt-3">
+            Handcrafted Works &bull; Beds, Center Tables, Lounge Chairs, Sofas & Swings
+          </p>
+        </div>
+
+        {/* Carousel Container with Controls */}
+        <div className="relative w-full max-w-[1400px] mx-auto h-[380px] md:h-[520px] flex items-center justify-center px-4">
+          
+          {/* Left Arrow Button */}
+          <button
+            onClick={handlePrevProduct}
+            className="absolute left-4 sm:left-12 z-50 w-11 h-11 rounded-full bg-white/90 hover:bg-white text-[#1a1612] backdrop-blur-md shadow-lg border border-[#dfdbd2] flex items-center justify-center transition-all hover:scale-110 active:scale-95 group"
+            aria-label="Previous Product"
+          >
+            <ChevronLeft className="w-5 h-5 text-[#1a1612] group-hover:text-[#c5a880] transition-colors" />
+          </button>
+
+          {/* Right Arrow Button */}
+          <button
+            onClick={handleNextProduct}
+            className="absolute right-4 sm:right-12 z-50 w-11 h-11 rounded-full bg-white/90 hover:bg-white text-[#1a1612] backdrop-blur-md shadow-lg border border-[#dfdbd2] flex items-center justify-center transition-all hover:scale-110 active:scale-95 group"
+            aria-label="Next Product"
+          >
+            <ChevronRight className="w-5 h-5 text-[#1a1612] group-hover:text-[#c5a880] transition-colors" />
+          </button>
+
+          {featuredProducts.map((product, i) => {
+            // Calculate shortest distance in a circular array
+            let diff = i - featuredProductIndex;
+            if (diff > Math.floor(featuredProducts.length / 2)) diff -= featuredProducts.length;
+            if (diff < -Math.floor(featuredProducts.length / 2)) diff += featuredProducts.length;
+
+            const isCenter = diff === 0;
+            const isLeft = diff === -1;
+            const isRight = diff === 1;
+            const isFarLeft = diff === -2;
+            const isFarRight = diff === 2;
+            const isVisible = Math.abs(diff) <= 2;
+
+            // Positioning calculations
+            let translateX = "0%";
+            let scale = 0.5;
+            let opacity = 0;
+            let zIndex = 10;
+            let pointerEvents: 'auto' | 'none' = 'none';
+
+            if (isCenter) {
+              translateX = "0%";
+              scale = 1.1;
+              opacity = 1;
+              zIndex = 50;
+              pointerEvents = 'auto';
+            } else if (isLeft) {
+              translateX = "-115%";
+              scale = 0.8;
+              opacity = 0.85;
+              zIndex = 40;
+              pointerEvents = 'auto';
+            } else if (isRight) {
+              translateX = "115%";
+              scale = 0.8;
+              opacity = 0.85;
+              zIndex = 40;
+              pointerEvents = 'auto';
+            } else if (isFarLeft) {
+              translateX = "-210%";
+              scale = 0.6;
+              opacity = 0.4;
+              zIndex = 30;
+              pointerEvents = 'auto';
+            } else if (isFarRight) {
+              translateX = "210%";
+              scale = 0.6;
+              opacity = 0.4;
+              zIndex = 30;
+              pointerEvents = 'auto';
+            }
+
+            return (
+              <div
+                key={product.id}
+                onClick={() => setFeaturedProductIndex(i)}
+                className={`absolute top-1/2 left-1/2 w-[220px] md:w-[320px] aspect-[4/5] bg-[#e0ded8] shadow-md transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] cursor-pointer overflow-hidden group ${
+                  !isVisible ? "pointer-events-none" : ""
+                }`}
+                style={{
+                  transform: `translate(-50%, -50%) translateX(${translateX}) scale(${scale})`,
+                  opacity: opacity,
+                  zIndex: zIndex,
+                  pointerEvents: pointerEvents,
+                }}
+              >
+                <img
+                  src={product.image}
+                  alt={product.title}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                
+                {/* Title & Category overlay - only visible on center item */}
+                <div 
+                  className={`absolute bottom-6 left-1/2 -translate-x-1/2 text-center whitespace-nowrap transition-all duration-500 delay-200 bg-white/95 backdrop-blur-md px-6 py-3 shadow-lg border border-[#dfdbd2] rounded-sm ${isCenter ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}
+                >
+                  <span className="block text-[9px] tracking-[0.25em] font-semibold text-[#8a7f72] uppercase mb-1">
+                    {product.category}
+                  </span>
+                  <Link to={`/product/${product.slug}`} className="text-[12.5px] tracking-[0.18em] font-bold text-[#1a1612] hover:text-[#c5a880] transition-colors block">
+                    {product.title}
+                  </Link>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Counter indicator */}
+        <div className="flex items-center justify-center gap-3 mt-8">
+          <span className="text-xs font-mono tracking-widest text-[#8a7f72]">
+            {String(featuredProductIndex + 1).padStart(2, '0')} / {String(featuredProducts.length).padStart(2, '0')}
+          </span>
+        </div>
+      </section>
+
       {/* 1.5. WORKS OF QUIET ELEGANCE - 100VH ARCHITECTURAL SHOWCASE SECTION */}
       <section className="bg-[#faf9f6] min-h-screen flex flex-col justify-between py-12 sm:py-16 border-b border-[#ded7ca]">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12 w-full flex-1 flex flex-col justify-between">
@@ -474,6 +605,105 @@ const HomePage: React.FC = () => {
 
 
 
+      {/* 3. INSPIRATION SECTION */}
+      <section className="bg-[#eae5da] py-20 sm:py-28 lg:py-32 border-b border-[#ded7ca]">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 sm:gap-16 lg:gap-24 items-center">
+          
+          {/* Left Column: Inspiration narrative */}
+          <div className="lg:col-span-6 space-y-6 sm:space-y-8">
+            <p className="text-[11px] tracking-[0.3em] uppercase text-[#8a7f72] font-bold">
+              The Genesis
+            </p>
+            <h2 className="text-3xl md:text-5xl lg:text-[54px] font-serif font-light text-[#1a1612] leading-tight">
+              Inspired by <br/><i className="font-serif text-[#6b6359]">Nature's Canvas</i>
+            </h2>
+
+            <div className="space-y-5 text-[15px] text-[#2a251e] font-medium leading-[1.8] max-w-lg">
+              <p>
+                I've perpetually been captivated by the tapestries woven by nature itself.
+                From the exquisite intricacies of veins adorning a leaf to the mesmerizing
+                grains etched onto a wooden canvas, I remain enthralled by the manner in which
+                nature's elements collaborate to craft such breathtaking beauty.
+              </p>
+
+              <p>
+                It all began with a single, handcrafted bedside table, envisioned not just as a
+                piece of furniture but as a daily source of wonder. Each morning, I wake up to this
+                creation, in awe of nature's boundless artistry.
+              </p>
+            </div>
+
+            <div className="pt-8 border-t border-[#d8d2c4] inline-block">
+              <span className="block text-[11px] uppercase tracking-widest font-bold text-[#1a1612]">
+                Founder & Designer
+              </span>
+              <span className="block text-xl font-serif font-normal text-[#8a7f72] mt-2">
+                Ar. Amruta Bade
+              </span>
+            </div>
+          </div>
+
+          {/* Right Column: Inspiration photo slideshow */}
+          <div className="lg:col-span-6 flex justify-center lg:justify-end">
+            <div className="relative w-full max-w-[500px] aspect-[4/5] overflow-hidden bg-[#e0ded8] shadow-lg shadow-[#d2cdbf]">
+              {inspirationSlides.map((slide, idx) => (
+                <div
+                  key={slide.id}
+                  className="absolute inset-0 w-full h-full transition-all duration-[1200ms] ease-in-out"
+                  style={{
+                    opacity: inspirationIndex === idx ? 1 : 0,
+                    transform: `scale(${inspirationIndex === idx ? 1 : 1.05})`,
+                    zIndex: inspirationIndex === idx ? 2 : 1,
+                  }}
+                >
+                  <img
+                    src={slide.src}
+                    alt={slide.alt}
+                    className="w-full h-full object-cover object-center"
+                    loading={idx === 0 ? 'eager' : 'lazy'}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. WHY THE RAW PROJECT SECTION */}
+      <section 
+        className="relative h-screen min-h-[700px] flex items-center overflow-hidden bg-cover bg-center bg-fixed border-t border-[#2e2922]"
+        style={{ backgroundImage: `url('https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/0c0bd6249757095.6a0ef91474750.png')` }}
+      >
+        {/* Dark gradient overlay so the white text is readable */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent z-0"></div>
+        <div className="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
+          <div className="max-w-2xl text-left">
+            <div className="flex items-center gap-4 mb-4">
+              <p className="text-[12px] tracking-[0.25em] uppercase text-[#c5a880] font-medium">
+                Our Ethos
+              </p>
+              <div className="w-12 h-[1px] bg-[#c5a880]"></div>
+            </div>
+            
+            <h2 className="text-[42px] sm:text-5xl md:text-6xl lg:text-[70px] font-sans font-light text-white mb-6 leading-[1.1] tracking-tight">
+              Why The<br />Raw Project
+            </h2>
+            
+            <p className="text-[15px] sm:text-[17px] text-white/90 leading-[1.6] font-medium mb-10 max-w-[500px]">
+              Minimal, versatile, and built to last. We source FSC-certified timber and sustainable organic fabrics to let the raw beauty of the materials speak for themselves. Handcrafted by over 200 artisans across India, every piece is a celebration of traditional heritage, mindful design, and uncompromising quality.
+            </p>
+            
+            <Link 
+              to="/about"
+              className="inline-flex items-center gap-3 bg-[#fdfbf9] text-[#1a1612] px-7 py-3.5 text-[14px] font-medium tracking-wide hover:bg-[#eae5da] transition-colors"
+            >
+              Discover More
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* 2. OUR PROCESS SECTION */}
       <section className="bg-[#eae5da] py-20 sm:py-28 lg:py-32 border-b border-[#ded7ca]">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12">
@@ -560,201 +790,6 @@ const HomePage: React.FC = () => {
           </div>
         </div>
       </section>
-      {/* 2.5 FEATURED PRODUCTS CAROUSEL */}
-      <section className="bg-[#eae5da] py-20 sm:py-28 lg:py-32 overflow-hidden border-b border-[#ded7ca] relative">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12 text-center mb-12">
-          <p className="text-[11px] tracking-[0.3em] uppercase text-[#8a7f72] font-bold mb-4">
-            Shop Collection
-          </p>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-light text-[#1a1612]">
-            Featured Objects
-          </h2>
-          <p className="text-[11px] text-[#8a7f72] font-medium tracking-[0.2em] uppercase mt-3">
-            Handcrafted Works &bull; Beds, Center Tables, Lounge Chairs, Sofas & Swings
-          </p>
-        </div>
-
-        {/* Carousel Container with Controls */}
-        <div className="relative w-full max-w-[1400px] mx-auto h-[380px] md:h-[520px] flex items-center justify-center px-4">
-          
-          {/* Left Arrow Button */}
-          <button
-            onClick={handlePrevProduct}
-            className="absolute left-4 sm:left-12 z-50 w-11 h-11 rounded-full bg-white/90 hover:bg-white text-[#1a1612] backdrop-blur-md shadow-lg border border-[#dfdbd2] flex items-center justify-center transition-all hover:scale-110 active:scale-95 group"
-            aria-label="Previous Product"
-          >
-            <ChevronLeft className="w-5 h-5 text-[#1a1612] group-hover:text-[#c5a880] transition-colors" />
-          </button>
-
-          {/* Right Arrow Button */}
-          <button
-            onClick={handleNextProduct}
-            className="absolute right-4 sm:right-12 z-50 w-11 h-11 rounded-full bg-white/90 hover:bg-white text-[#1a1612] backdrop-blur-md shadow-lg border border-[#dfdbd2] flex items-center justify-center transition-all hover:scale-110 active:scale-95 group"
-            aria-label="Next Product"
-          >
-            <ChevronRight className="w-5 h-5 text-[#1a1612] group-hover:text-[#c5a880] transition-colors" />
-          </button>
-
-          {featuredProducts.map((product, i) => {
-            // Calculate shortest distance in a circular array
-            let diff = i - featuredProductIndex;
-            if (diff > Math.floor(featuredProducts.length / 2)) diff -= featuredProducts.length;
-            if (diff < -Math.floor(featuredProducts.length / 2)) diff += featuredProducts.length;
-
-            const isCenter = diff === 0;
-            const isLeft = diff === -1;
-            const isRight = diff === 1;
-            const isFarLeft = diff === -2;
-            const isFarRight = diff === 2;
-            const isVisible = Math.abs(diff) <= 2;
-
-            // Positioning calculations
-            let translateX = "0%";
-            let scale = 0.5;
-            let opacity = 0;
-            let zIndex = 10;
-            let pointerEvents: 'auto' | 'none' = 'none';
-
-            if (isCenter) {
-              translateX = "0%";
-              scale = 1.1;
-              opacity = 1;
-              zIndex = 50;
-              pointerEvents = 'auto';
-            } else if (isLeft) {
-              translateX = "-115%";
-              scale = 0.8;
-              opacity = 0.85;
-              zIndex = 40;
-              pointerEvents = 'auto';
-            } else if (isRight) {
-              translateX = "115%";
-              scale = 0.8;
-              opacity = 0.85;
-              zIndex = 40;
-              pointerEvents = 'auto';
-            } else if (isFarLeft) {
-              translateX = "-210%";
-              scale = 0.6;
-              opacity = 0.4;
-              zIndex = 30;
-              pointerEvents = 'auto';
-            } else if (isFarRight) {
-              translateX = "210%";
-              scale = 0.6;
-              opacity = 0.4;
-              zIndex = 30;
-              pointerEvents = 'auto';
-            }
-
-            return (
-              <div
-                key={product.id}
-                onClick={() => setFeaturedProductIndex(i)}
-                className={`absolute top-1/2 left-1/2 w-[220px] md:w-[320px] aspect-[4/5] bg-[#e0ded8] shadow-md transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] cursor-pointer overflow-hidden group ${
-                  !isVisible ? "pointer-events-none" : ""
-                }`}
-                style={{
-                  transform: `translate(-50%, -50%) translateX(${translateX}) scale(${scale})`,
-                  opacity: opacity,
-                  zIndex: zIndex,
-                  pointerEvents: pointerEvents,
-                }}
-              >
-                <img
-                  src={product.image}
-                  alt={product.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                
-                {/* Title & Category overlay - only visible on center item */}
-                <div 
-                  className={`absolute bottom-6 left-1/2 -translate-x-1/2 text-center whitespace-nowrap transition-all duration-500 delay-200 bg-white/95 backdrop-blur-md px-6 py-3 shadow-lg border border-[#dfdbd2] rounded-sm ${isCenter ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}
-                >
-                  <span className="block text-[9px] tracking-[0.25em] font-semibold text-[#8a7f72] uppercase mb-1">
-                    {product.category}
-                  </span>
-                  <Link to={`/product/${product.slug}`} className="text-[12.5px] tracking-[0.18em] font-bold text-[#1a1612] hover:text-[#c5a880] transition-colors block">
-                    {product.title}
-                  </Link>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Counter indicator */}
-        <div className="flex items-center justify-center gap-3 mt-8">
-          <span className="text-xs font-mono tracking-widest text-[#8a7f72]">
-            {String(featuredProductIndex + 1).padStart(2, '0')} / {String(featuredProducts.length).padStart(2, '0')}
-          </span>
-        </div>
-      </section>
-
-      {/* 3. INSPIRATION SECTION */}
-      <section className="bg-[#eae5da] py-20 sm:py-28 lg:py-32 border-b border-[#ded7ca]">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 sm:gap-16 lg:gap-24 items-center">
-          
-          {/* Left Column: Inspiration narrative */}
-          <div className="lg:col-span-6 space-y-6 sm:space-y-8">
-            <p className="text-[11px] tracking-[0.3em] uppercase text-[#8a7f72] font-bold">
-              The Genesis
-            </p>
-            <h2 className="text-3xl md:text-5xl lg:text-[54px] font-serif font-light text-[#1a1612] leading-tight">
-              Inspired by <br/><i className="font-serif text-[#6b6359]">Nature's Canvas</i>
-            </h2>
-
-            <div className="space-y-5 text-[15px] text-[#2a251e] font-medium leading-[1.8] max-w-lg">
-              <p>
-                I've perpetually been captivated by the tapestries woven by nature itself.
-                From the exquisite intricacies of veins adorning a leaf to the mesmerizing
-                grains etched onto a wooden canvas, I remain enthralled by the manner in which
-                nature's elements collaborate to craft such breathtaking beauty.
-              </p>
-
-              <p>
-                It all began with a single, handcrafted bedside table, envisioned not just as a
-                piece of furniture but as a daily source of wonder. Each morning, I wake up to this
-                creation, in awe of nature's boundless artistry.
-              </p>
-            </div>
-
-            <div className="pt-8 border-t border-[#d8d2c4] inline-block">
-              <span className="block text-[11px] uppercase tracking-widest font-bold text-[#1a1612]">
-                Founder & Designer
-              </span>
-              <span className="block text-xl font-serif font-normal text-[#8a7f72] mt-2">
-                Ar. Amruta Bade
-              </span>
-            </div>
-          </div>
-
-          {/* Right Column: Inspiration photo slideshow */}
-          <div className="lg:col-span-6 flex justify-center lg:justify-end">
-            <div className="relative w-full max-w-[500px] aspect-[4/5] overflow-hidden bg-[#e0ded8] shadow-lg shadow-[#d2cdbf]">
-              {inspirationSlides.map((slide, idx) => (
-                <div
-                  key={slide.id}
-                  className="absolute inset-0 w-full h-full transition-all duration-[1200ms] ease-in-out"
-                  style={{
-                    opacity: inspirationIndex === idx ? 1 : 0,
-                    transform: `scale(${inspirationIndex === idx ? 1 : 1.05})`,
-                    zIndex: inspirationIndex === idx ? 2 : 1,
-                  }}
-                >
-                  <img
-                    src={slide.src}
-                    alt={slide.alt}
-                    className="w-full h-full object-cover object-center"
-                    loading={idx === 0 ? 'eager' : 'lazy'}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* 4. FOLLOW OUR JOURNEY - ON INSTAGRAM */}
       <section className="bg-[#f2efe9] py-20 md:py-28 border-b border-[#ded7ca]">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12">
@@ -882,41 +917,6 @@ const HomePage: React.FC = () => {
                 View full journal
               </a>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 5. WHY THE RAW PROJECT SECTION */}
-      <section 
-        className="relative h-screen min-h-[700px] flex items-center overflow-hidden bg-cover bg-center bg-fixed border-t border-[#2e2922]"
-        style={{ backgroundImage: `url('https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/0c0bd6249757095.6a0ef91474750.png')` }}
-      >
-        {/* Dark gradient overlay so the white text is readable */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent z-0"></div>
-        <div className="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
-          <div className="max-w-2xl text-left">
-            <div className="flex items-center gap-4 mb-4">
-              <p className="text-[12px] tracking-[0.25em] uppercase text-[#c5a880] font-medium">
-                Our Ethos
-              </p>
-              <div className="w-12 h-[1px] bg-[#c5a880]"></div>
-            </div>
-            
-            <h2 className="text-[42px] sm:text-5xl md:text-6xl lg:text-[70px] font-sans font-light text-white mb-6 leading-[1.1] tracking-tight">
-              Why The<br />Raw Project
-            </h2>
-            
-            <p className="text-[15px] sm:text-[17px] text-white/90 leading-[1.6] font-medium mb-10 max-w-[500px]">
-              Minimal, versatile, and built to last. We source FSC-certified timber and sustainable organic fabrics to let the raw beauty of the materials speak for themselves. Handcrafted by over 200 artisans across India, every piece is a celebration of traditional heritage, mindful design, and uncompromising quality.
-            </p>
-            
-            <Link 
-              to="/about"
-              className="inline-flex items-center gap-3 bg-[#fdfbf9] text-[#1a1612] px-7 py-3.5 text-[14px] font-medium tracking-wide hover:bg-[#eae5da] transition-colors"
-            >
-              Discover More
-              <ArrowRight className="w-4 h-4" />
-            </Link>
           </div>
         </div>
       </section>
