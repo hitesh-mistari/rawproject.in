@@ -127,6 +127,17 @@ const Header: React.FC = () => {
   const megaMenuRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
+  // Force-close mega menu on every route change — prevents it from getting stuck
+  React.useEffect(() => {
+    if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
+    setIsShopOpen(false);
+    setIsMobileMenuOpen(false);
+    if (megaMenuRef.current) {
+      gsap.killTweensOf(megaMenuRef.current);
+      gsap.set(megaMenuRef.current, { autoAlpha: 0, display: 'none' });
+    }
+  }, [location.pathname]);
+
   React.useEffect(() => {
     if (!megaMenuRef.current) return;
     if (isShopOpen) {
@@ -276,7 +287,7 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <header className="bg-white w-full relative z-40">
+      <header className="bg-white w-full relative z-50 shadow-[0_1px_0_0_rgba(0,0,0,0.06)]">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12 py-5 flex items-center justify-between">
           
           {/* Left: Brand Logo */}
@@ -320,7 +331,7 @@ const Header: React.FC = () => {
 
               <div 
                   ref={megaMenuRef}
-                  className="absolute top-full left-1/2 -translate-x-1/2 mt-5 z-50 opacity-0"
+                  className="absolute top-full left-1/2 -translate-x-1/2 mt-5 z-[60] opacity-0"
                   style={{ display: "none" }}
                   onMouseEnter={handleShopMouseEnter}
                   onMouseLeave={handleShopMouseLeave}
