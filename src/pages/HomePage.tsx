@@ -89,54 +89,37 @@ const HomePage: React.FC = () => {
   ];
 
   const [featuredPost, setFeaturedPost] = useState(0);
-  const [activeFilter, setActiveFilter] = useState<{ type: string; sub: string }>({ type: 'architecture', sub: 'commercial' });
+  const [activeFilter, setActiveFilter] = useState<{ type: string; sub: string }>({ type: 'bedroom', sub: 'bed' });
 
-  const portfolioProjects = [
-    {
-      id: 'new-maris',
-      title: 'NEW MARIS',
-      categoryType: 'architecture',
-      subcategory: 'commercial',
-      category: 'Commercial',
-      scope: 'Architectural & Lighting Design',
-      location: 'Denmark',
-      mainImg: '/images/products/Toronto_website_product_page_slideshow_2042_x_1012.jpg',
-      detailImg: '/images/home/inspiration/3.jpg'
-    },
-    {
-      id: 'nagano-hq',
-      title: 'NAGANO HQ',
-      categoryType: 'architecture',
-      subcategory: 'hospitality',
-      category: 'Hospitality',
-      scope: 'Harmonious weave of materials',
-      location: 'Japan',
-      mainImg: '/images/products/CB_F23_WE_14_106_Vert_001_V1.jpg',
-      detailImg: '/images/products/DearbornQnPosterBed3QSSF23_3D.jpg'
-    },
-    {
-      id: 'linwood-hq',
-      title: 'LINWOOD HQ',
-      categoryType: 'interior',
-      subcategory: 'residential',
-      category: 'Residential',
-      scope: 'Warm light and natural textures',
-      location: 'India',
-      mainImg: '/images/home/inspiration/6.jpg',
-      detailImg: '/images/home/inspiration/4.jpg'
-    },
-    {
-      id: 'basao-tea-lounge',
-      title: 'BASAO TEA LOUNGE',
-      categoryType: 'furniture',
-      subcategory: 'atelier',
-      category: 'Atelier',
-      scope: 'Minimalist simplicity of Scandinavian',
-      location: 'Hong Kong',
-      mainImg: '/images/home/featured_sahara_sofa.png',
-      detailImg: '/images/home/featured_moh_swing.jpg'
+  const portfolioProjects = productsData.map((p) => {
+    const parentCats = ['bedroom', 'living', 'dining', 'one-of-one'];
+    let mainCategory = 'living';
+    let subcategory = 'all';
+
+    if (p.categories && p.categories.length > 0) {
+      const slugs = p.categories.map(c => c.slug);
+      if (slugs.includes('bedroom')) mainCategory = 'bedroom';
+      else if (slugs.includes('dining')) mainCategory = 'dining';
+      else if (slugs.includes('one-of-one')) mainCategory = 'one-of-one';
+      else if (slugs.includes('living')) mainCategory = 'living';
+      
+      const sub = p.categories.find(c => !parentCats.includes(c.slug));
+      if (sub) subcategory = sub.slug;
+      else subcategory = slugs[0];
     }
-  ];
+
+    return {
+      id: p.id.toString(),
+      title: p.name,
+      categoryType: mainCategory,
+      subcategory: subcategory,
+      category: p.categories && p.categories.length > 0 ? p.categories[0].name : 'Furniture',
+      scope: 'Handcrafted Solid Wood',
+      location: 'Atelier Collection',
+      mainImg: p.images && p.images.length > 0 ? p.images[0].src : '/images/products/Toronto_website_product_page_slideshow_2042_x_1012.jpg',
+      detailImg: p.images && p.images.length > 1 ? p.images[1].src : (p.images && p.images.length > 0 ? p.images[0].src : '/images/products/Toronto_website_product_page_slideshow_2042_x_1012.jpg')
+    };
+  });
 
 
 
@@ -315,24 +298,23 @@ const HomePage: React.FC = () => {
                 )}
               </div>
               
-              {/* Architecture Filter Group */}
+              {/* BEDROOM Filter Group */}
               <div className="flex items-center gap-3 shrink-0 lg:flex-col lg:items-stretch lg:gap-0">
                 <div className="font-semibold text-[#1a1612] flex items-center gap-2 lg:justify-between">
-                  <span>Architecture</span>
+                  <span>Bedroom</span>
                   <span className="hidden lg:inline text-[10px]">✕</span>
                   <span className="lg:hidden text-[#ded7ca]">|</span>
                 </div>
                 <div className="flex items-center gap-4 lg:flex-col lg:items-stretch lg:gap-0 lg:pl-3 lg:space-y-2 text-[#8a7f72] lg:mt-2.5">
                   {[
-                    { id: 'commercial', label: 'Commercial' },
-                    { id: 'hospitality', label: 'Hospitality' },
-                    { id: 'residential', label: 'Residential' },
+                    { id: 'bed', label: 'Bed' },
+                    { id: 'side-table', label: 'Side Table' },
                   ].map(sub => {
-                    const isSelected = activeFilter.type === 'architecture' && activeFilter.sub === sub.id;
+                    const isSelected = activeFilter.type === 'bedroom' && activeFilter.sub === sub.id;
                     return (
                       <div 
                         key={sub.id}
-                        onClick={() => setActiveFilter({ type: 'architecture', sub: sub.id })}
+                        onClick={() => setActiveFilter({ type: 'bedroom', sub: sub.id })}
                         className={`cursor-pointer transition-colors flex items-center gap-1.5 ${
                           isSelected ? 'font-bold text-[#1a1612]' : 'hover:text-[#1a1612]'
                         }`}
@@ -345,24 +327,30 @@ const HomePage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Interior Design Filter Group */}
+              {/* LIVING Filter Group */}
               <div className="flex items-center gap-3 shrink-0 lg:flex-col lg:items-stretch lg:gap-0 lg:border-t lg:border-[#ded7ca] lg:pt-3">
                 <div className="font-semibold text-[#1a1612] flex items-center gap-2 lg:justify-between">
-                  <span>Interior Design</span>
+                  <span>Living</span>
                   <span className="hidden lg:inline text-[10px]">✕</span>
                   <span className="lg:hidden text-[#ded7ca]">|</span>
                 </div>
                 <div className="flex items-center gap-4 lg:flex-col lg:items-stretch lg:gap-0 lg:pl-3 lg:space-y-2 text-[#8a7f72] lg:mt-2.5">
                   {[
-                    { id: 'commercial', label: 'Commercial' },
-                    { id: 'hospitality', label: 'Hospitality' },
-                    { id: 'residential', label: 'Residential' },
+                    { id: 'ottoman-bench', label: 'Ottoman & Bench' },
+                    { id: 'tv-unit', label: 'TV Unit' },
+                    { id: 'sofa', label: 'Sofa' },
+                    { id: 'side-table-living', label: 'Side Table Living' },
+                    { id: 'shoe-stand', label: 'Shoe Stand' },
+                    { id: 'lounge-chair', label: 'Lounge Chair' },
+                    { id: 'console-table', label: 'Console Unit' },
+                    { id: 'swing', label: 'Swing' },
+                    { id: 'center-table', label: 'Center Table' },
                   ].map(sub => {
-                    const isSelected = activeFilter.type === 'interior' && activeFilter.sub === sub.id;
+                    const isSelected = activeFilter.type === 'living' && activeFilter.sub === sub.id;
                     return (
                       <div 
                         key={sub.id}
-                        onClick={() => setActiveFilter({ type: 'interior', sub: sub.id })}
+                        onClick={() => setActiveFilter({ type: 'living', sub: sub.id })}
                         className={`cursor-pointer transition-colors flex items-center gap-1.5 ${
                           isSelected ? 'font-bold text-[#1a1612]' : 'hover:text-[#1a1612]'
                         }`}
@@ -375,23 +363,25 @@ const HomePage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Furniture Filter Group */}
+              {/* DINING Filter Group */}
               <div className="flex items-center gap-3 shrink-0 lg:flex-col lg:items-stretch lg:gap-0 lg:border-t lg:border-[#ded7ca] lg:pt-3">
                 <div className="font-semibold text-[#1a1612] flex items-center gap-2 lg:justify-between">
-                  <span>Furniture</span>
+                  <span>Dining</span>
                   <span className="hidden lg:inline text-[10px]">✕</span>
                   <span className="lg:hidden text-[#ded7ca]">|</span>
                 </div>
                 <div className="flex items-center gap-4 lg:flex-col lg:items-stretch lg:gap-0 lg:pl-3 lg:space-y-2 text-[#8a7f72] lg:mt-2.5">
                   {[
-                    { id: 'atelier', label: 'Atelier' },
-                    { id: 'bespoke', label: 'Bespoke' },
+                    { id: 'chairs', label: 'Chairs' },
+                    { id: 'bar-cabinates', label: 'Bar Cabinets' },
+                    { id: 'bar-chairs', label: 'Bar Chairs' },
+                    { id: 'dining-table', label: 'Dining Table' },
                   ].map(sub => {
-                    const isSelected = activeFilter.type === 'furniture' && activeFilter.sub === sub.id;
+                    const isSelected = activeFilter.type === 'dining' && activeFilter.sub === sub.id;
                     return (
                       <div 
                         key={sub.id}
-                        onClick={() => setActiveFilter({ type: 'furniture', sub: sub.id })}
+                        onClick={() => setActiveFilter({ type: 'dining', sub: sub.id })}
                         className={`cursor-pointer transition-colors flex items-center gap-1.5 ${
                           isSelected ? 'font-bold text-[#1a1612]' : 'hover:text-[#1a1612]'
                         }`}
@@ -403,6 +393,35 @@ const HomePage: React.FC = () => {
                   })}
                 </div>
               </div>
+
+              {/* ONE OF ONE Filter Group */}
+              <div className="flex items-center gap-3 shrink-0 lg:flex-col lg:items-stretch lg:gap-0 lg:border-t lg:border-[#ded7ca] lg:pt-3">
+                <div className="font-semibold text-[#1a1612] flex items-center gap-2 lg:justify-between">
+                  <span>One of One</span>
+                  <span className="hidden lg:inline text-[10px]">✕</span>
+                  <span className="lg:hidden text-[#ded7ca]">|</span>
+                </div>
+                <div className="flex items-center gap-4 lg:flex-col lg:items-stretch lg:gap-0 lg:pl-3 lg:space-y-2 text-[#8a7f72] lg:mt-2.5">
+                  {[
+                    { id: 'one-of-one', label: 'Explore piece' },
+                  ].map(sub => {
+                    const isSelected = activeFilter.type === 'one-of-one' && activeFilter.sub === sub.id;
+                    return (
+                      <div 
+                        key={sub.id}
+                        onClick={() => setActiveFilter({ type: 'one-of-one', sub: sub.id })}
+                        className={`cursor-pointer transition-colors flex items-center gap-1.5 ${
+                          isSelected ? 'font-bold text-[#1a1612]' : 'hover:text-[#1a1612]'
+                        }`}
+                      >
+                        <span>{sub.label}</span>
+                        {isSelected && <span className="text-[14px] leading-none text-[#1a1612] hidden lg:inline">•</span>}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
             </div>
 
             {/* Right Portfolio Projects List */}
@@ -414,6 +433,7 @@ const HomePage: React.FC = () => {
                     ? portfolioProjects.filter(proj => !(proj.categoryType === activeFilter.type && proj.subcategory === activeFilter.sub))
                     : []
                 )
+                .slice(0, 8)
                 .map((project) => (
                   <div key={project.id} className="gsap-project-card group space-y-3">
                     <div className="grid grid-cols-1 md:grid-cols-[2.2fr_1fr] gap-4">
