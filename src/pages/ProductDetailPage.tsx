@@ -144,10 +144,16 @@ const ProductDetailPage: React.FC = () => {
 
   const handleWhatsAppEnquiry = () => {
     let text = `Hello The Raw Project, I would like to enquire about the ${product?.name}.`;
+    
+    if (quantity > 1) {
+      text += `\nQuantity: ${quantity}`;
+    }
+
     if (Object.keys(selectedAttrs).length > 0) {
       const attrsStr = Object.entries(selectedAttrs).map(([k, v]) => `${k}: ${v}`).join(', ');
-      text += `\nPreferences - ${attrsStr}`;
+      text += `\nPreferences: ${attrsStr}`;
     }
+    
     window.open(`https://wa.me/918698814865?text=${encodeURIComponent(text)}`, '_blank');
   };
 
@@ -365,15 +371,31 @@ const ProductDetailPage: React.FC = () => {
           </div>
         )}
 
-        {/* Mobile Fixed Bottom Sticky Bar */}
-        <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-[#f0f0f0] px-5 py-3">
-          <button
-            type="button"
-            onClick={handleWhatsAppEnquiry}
-            className="w-full py-3.5 bg-[#8a6040] hover:bg-[#7a5030] active:bg-[#6a4020] text-white text-[15px] font-semibold rounded-full transition-all duration-200 active:scale-[0.98] shadow-sm flex items-center justify-center gap-2"
-          >
-            <span className="font-medium">Enquire on WhatsApp</span>
-          </button>
+        {/* Mobile Fixed Bottom Floating Action Bar */}
+        <div className="fixed bottom-4 left-4 right-4 z-50 pointer-events-none">
+          <div className="bg-white/95 backdrop-blur-md border border-[#e0e0e0] rounded-[30px] p-2 shadow-[0_8px_30px_rgb(0,0,0,0.12)] flex items-center gap-2 pointer-events-auto">
+            {/* Quantity Selector */}
+            <div className="flex items-center justify-between bg-[#f5f3f0] rounded-full px-4 h-[44px] w-[100px] shrink-0">
+              <button 
+                onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                className="text-[#1a1612] text-[18px] p-1 active:scale-95 leading-none mb-0.5"
+              >-</button>
+              <span className="text-[#1a1612] font-semibold text-[14px]">{quantity}</span>
+              <button 
+                onClick={() => setQuantity(quantity + 1)}
+                className="text-[#1a1612] text-[18px] p-1 active:scale-95 leading-none mb-0.5"
+              >+</button>
+            </div>
+            
+            {/* Action Button */}
+            <button
+              type="button"
+              onClick={handleWhatsAppEnquiry}
+              className="flex-1 h-[44px] bg-[#8a6040] hover:bg-[#7a5030] active:bg-[#6a4020] text-white text-[14px] font-semibold rounded-full transition-all duration-200 active:scale-[0.98] flex items-center justify-center gap-2 shadow-sm"
+            >
+              <span>Enquire on WhatsApp</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -525,12 +547,25 @@ const ProductDetailPage: React.FC = () => {
                 ))}
               </div>
 
-              {/* WhatsApp Enquiry Button */}
+              {/* Desktop Quantity & WhatsApp Enquiry Button */}
               <div className="flex items-center gap-4 pt-2">
+                {/* Quantity Selector */}
+                <div className="flex items-center justify-between bg-[#f5f3f0] rounded-full px-4 h-[48px] w-[120px] shrink-0 border border-[#e0e0e0]">
+                  <button 
+                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                    className="text-[#1a1612] text-[20px] p-1 hover:scale-110 active:scale-95 leading-none mb-0.5 transition-transform"
+                  >-</button>
+                  <span className="text-[#1a1612] font-semibold text-[15px]">{quantity}</span>
+                  <button 
+                    onClick={() => setQuantity(quantity + 1)}
+                    className="text-[#1a1612] text-[20px] p-1 hover:scale-110 active:scale-95 leading-none mb-0.5 transition-transform"
+                  >+</button>
+                </div>
+
                 <button
                   type="button"
                   onClick={handleWhatsAppEnquiry}
-                  className="flex-1 h-12 bg-[#8a6040] hover:bg-[#7a5030] text-white text-[15px] font-semibold rounded-full transition-all duration-200 active:scale-[0.98] shadow-sm flex items-center justify-center gap-2"
+                  className="flex-1 h-[48px] bg-[#8a6040] hover:bg-[#7a5030] text-white text-[15px] font-semibold rounded-full transition-all duration-200 active:scale-[0.98] shadow-sm flex items-center justify-center gap-2"
                 >
                   <span className="font-medium">Enquire on WhatsApp</span>
                 </button>
