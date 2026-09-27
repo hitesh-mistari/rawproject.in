@@ -270,12 +270,14 @@ const Header: React.FC = () => {
               <HoverUnderlineLink 
                 to="/shop" 
                 isActive={location.pathname === '/shop'}
-                className={`text-[12px] tracking-[0.1em] font-medium transition-colors uppercase cursor-pointer flex items-center gap-1.5 py-1 ${
+                className={`text-[12px] tracking-[0.1em] font-medium transition-colors uppercase cursor-pointer py-1 ${
                   isShopOpen ? 'text-black' : 'text-[#666] hover:text-black'
                 }`}
               >
-                COLLECTIONS
-                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isShopOpen ? 'rotate-180' : ''}`} />
+                <div className="flex items-center gap-1.5">
+                  COLLECTIONS
+                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isShopOpen ? 'rotate-180' : ''}`} />
+                </div>
               </HoverUnderlineLink>
 
               {isShopOpen && (
