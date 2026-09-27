@@ -437,15 +437,15 @@ const HomePage: React.FC = () => {
                 .slice(0, 8)
                 .map((project) => (
                   <Link to={`/product/${project.slug}`} key={project.id} className="gsap-project-card group space-y-3 block">
-                    <div className="grid grid-cols-1 md:grid-cols-[2.2fr_1fr] gap-4">
-                      <div className="aspect-[16/9] lg:aspect-[16/10] overflow-hidden bg-[#e0ded8]">
+                    <div className="grid grid-cols-[1.5fr_1fr] sm:grid-cols-[2fr_1fr] md:grid-cols-[2.2fr_1fr] gap-2 sm:gap-4">
+                      <div className="aspect-[4/3] sm:aspect-[16/9] lg:aspect-[16/10] overflow-hidden bg-[#e0ded8]">
                         <img 
                           src={project.mainImg} 
                           alt={project.title} 
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
                         />
                       </div>
-                      <div className="aspect-[4/3] md:aspect-auto overflow-hidden bg-[#e0ded8]">
+                      <div className="h-full overflow-hidden bg-[#e0ded8]">
                         <img 
                           src={project.detailImg} 
                           alt={`${project.title} Detail`} 
