@@ -131,7 +131,12 @@ const ProductDetailPage: React.FC = () => {
   }
   const currentImage = galleryImages[activeImageIndex] || { src: '/placeholder-image.jpg', alt: product.name };
 
-  const desc = product.description || '';
+  let desc = product.description || '';
+  if (desc.includes('<strong>NOTE:</strong>')) {
+    desc = desc.split('<strong>NOTE:</strong>')[0];
+  } else if (desc.includes('NOTE:')) {
+    desc = desc.split('NOTE:')[0];
+  }
   const shortDesc = getShortDesc(desc);
   const productCode = product.short_description ? stripHtml(product.short_description) : '';
   const dimensions = parseDimensions(desc);
@@ -314,7 +319,7 @@ const ProductDetailPage: React.FC = () => {
         {/* Accordion Details */}
         <div className="px-5 mt-2 divide-y divide-[#f0f0f0] border-t border-[#f0f0f0]">
           {[
-            { key: 'country', label: 'Country of Origin', content: 'Handcrafted in India by master artisans.' },
+            { key: 'country', label: 'Country of Origin', content: 'Handcrafted in India by master artisans. Note: Variations in the natural product color are possible due to photographic lighting sources.' },
             { key: 'returns', label: 'Returns & Cancellation', content: 'Cancellations accepted within 24 hrs. Returns accepted for transit damage or manufacturing defects within 7 days of delivery.' },
             { key: 'warranty', label: 'Warranty — 2 Years', content: '2-year structural warranty covering timber integrity, traditional joinery, and termite protection under normal residential usage.' },
             { key: 'care', label: 'Maintenance & Care', content: 'Wipe with a soft micro-fiber cloth. Avoid harsh chemicals or excess moisture. Protect cane from sharp objects and extreme heat.' },
@@ -574,7 +579,7 @@ const ProductDetailPage: React.FC = () => {
               {/* Desktop Accordions */}
               <div className="border-t border-[#f0eeeb] pt-2 divide-y divide-[#f0eeeb]">
                 {[
-                  { key: 'country', label: 'Country of Origin', content: 'Handcrafted in India by master artisans with decades of traditional craft experience.' },
+                  { key: 'country', label: 'Country of Origin', content: 'Handcrafted in India by master artisans with decades of traditional craft experience. Note: Variations in the natural product color are possible due to photographic lighting sources.' },
                   { key: 'returns', label: 'Returns & Cancellation', content: 'Each piece is made-to-order. Cancellations accepted within 24 hrs. Returns accepted for transit damage or manufacturing defects within 7 days of delivery.' },
                   { key: 'warranty', label: 'Warranty — 2 Years', content: '2-year structural warranty covering timber integrity, traditional joinery, and termite protection under normal residential usage.' },
                   { key: 'care', label: 'Maintenance & Care', content: 'Wipe with a soft micro-fiber cloth. Avoid harsh chemicals or excess moisture. Protect cane webbing from sharp objects and extreme heat.' },
