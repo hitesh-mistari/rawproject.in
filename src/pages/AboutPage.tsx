@@ -170,7 +170,7 @@ const AboutPage: React.FC = () => {
             Meet Our Team
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 lg:gap-8">
             {teamMembers.map((member, idx) => (
               <div
                 key={idx}
@@ -186,11 +186,11 @@ const AboutPage: React.FC = () => {
                 </div>
 
                 {/* Member Details */}
-                <div className="bg-[#EDE8DE] py-7 px-4 text-center flex flex-col justify-center items-center flex-grow">
-                  <h3 className="font-['IBM_Plex_Sans',sans-serif] text-[20px] font-normal text-[#222222] mb-1.5 tracking-[0.2px]">
+                <div className="bg-[#EDE8DE] py-4 sm:py-7 px-2 sm:px-4 text-center flex flex-col justify-center items-center flex-grow">
+                  <h3 className="font-['IBM_Plex_Sans',sans-serif] text-[15px] sm:text-[20px] font-normal text-[#222222] mb-1 sm:mb-1.5 tracking-[0.2px]">
                     {member.name}
                   </h3>
-                  <p className="font-['IBM_Plex_Sans',sans-serif] text-[14px] font-normal text-[#4A4A4A] tracking-[0.7px]">
+                  <p className="font-['IBM_Plex_Sans',sans-serif] text-[11px] sm:text-[14px] font-normal text-[#4A4A4A] tracking-[0.7px]">
                     {member.role}
                   </p>
                 </div>

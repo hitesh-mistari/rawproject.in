@@ -899,29 +899,22 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* 6. NEED DESIGN ADVICE ? */}
-      <section className="relative w-full h-[55vh] min-h-[400px] overflow-hidden bg-[#1a1612]">
-        <img
-          src="/images/products/Toronto_website_product_page_slideshow_2042_x_1012.jpg"
-          alt="Living room interior design"
-          className="absolute inset-0 w-full h-full object-cover object-center scale-105 opacity-40"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1a1612] via-transparent to-[#1a1612]/60 z-10" />
-        
-        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4">
+      <section className="w-full py-24 sm:py-32 bg-white">
+        <div className="flex flex-col items-center justify-center text-center px-4">
           <p className="text-[11px] tracking-[0.3em] uppercase text-[#a67c52] font-semibold mb-3">
             Bespoke Consultation
           </p>
-          <h2 className="text-3xl md:text-5xl font-serif text-[#eae5da] mb-4 tracking-wide">
+          <h2 className="text-3xl md:text-5xl font-serif text-[#1a1612] mb-4 tracking-wide">
             Need Design Advice?
           </h2>
-          <p className="text-[#eae5da]/80 font-light mb-8 max-w-lg leading-relaxed text-[15px]">
+          <p className="text-[#666] font-light mb-8 max-w-lg leading-relaxed text-[15px]">
             Speak to our design architects about custom dimensions, finishes, and bespoke commissions for your space.
           </p>
           <a
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-[#eae5da] text-[#1a1612] px-8 py-3.5 text-[11px] tracking-widest uppercase font-bold hover:bg-white transition-colors"
+            className="inline-flex items-center gap-2 bg-[#1a1612] text-[#eae5da] px-8 py-3.5 text-[11px] tracking-widest uppercase font-bold hover:bg-[#2a2622] transition-colors"
           >
             <MessageCircle className="w-4 h-4" />
             Chat with us
