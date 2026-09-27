@@ -134,7 +134,7 @@ const Header: React.FC = () => {
     setIsMobileMenuOpen(false);
     if (megaMenuRef.current) {
       gsap.killTweensOf(megaMenuRef.current);
-      gsap.set(megaMenuRef.current, { autoAlpha: 0, display: 'none' });
+      gsap.set(megaMenuRef.current, { autoAlpha: 0, display: 'none', pointerEvents: 'none' });
     }
   }, [location.pathname]);
 
@@ -150,7 +150,8 @@ const Header: React.FC = () => {
         transformOrigin: "top center",
         duration: 0.4,
         ease: "power3.out",
-        display: "block"
+        display: "flex",
+        pointerEvents: "auto",
       });
       // Stagger child elements
       gsap.fromTo(megaMenuRef.current.querySelectorAll('.mega-menu-col'),
@@ -168,9 +169,10 @@ const Header: React.FC = () => {
         y: -10,
         scale: 0.98,
         rotateX: -5,
-        duration: 0.3,
+        duration: 0.25,
         ease: "power2.in",
-        display: "none"
+        display: "none",
+        pointerEvents: "none",
       });
     }
   }, [isShopOpen]);
@@ -329,9 +331,17 @@ const Header: React.FC = () => {
                 </div>
               </HoverUnderlineLink>
 
+              {/* Click-outside backdrop */}
+              {isShopOpen && (
+                <div 
+                  className="fixed inset-0 z-[55]" 
+                  onClick={() => setIsShopOpen(false)}
+                />
+              )}
+
               <div 
                   ref={megaMenuRef}
-                  className="absolute top-full left-1/2 -translate-x-1/2 mt-5 z-[60] opacity-0"
+                  className="fixed top-[72px] left-0 right-0 flex justify-center z-[60] opacity-0 pointer-events-none"
                   style={{ display: "none" }}
                   onMouseEnter={handleShopMouseEnter}
                   onMouseLeave={handleShopMouseLeave}
