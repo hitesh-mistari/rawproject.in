@@ -58,8 +58,8 @@ const ScrubbedBentoGallery: React.FC = () => {
     '/images/products/WoudArcCoffeeTable42cmLifestyle3-1-scaled.webp',
     '/images/products/36801-HERO.jpg',
     '/images/products/SideTable_4.webp',
-    '/images/products/20210120-soft_deco_product_lifestyle1359-site_crop.jpg',
-    '/images/products/delta_side_table_2365.jpg',
+    '/images/products/swing-add-06.jpg',
+    '/images/home/hero/hero_slide2.png',
     '/images/products/IrieUpholsteredBed-2.webp',
     '/images/products/Toronto_website_product_page_slideshow_2042_x_1012.jpg',
   ];
