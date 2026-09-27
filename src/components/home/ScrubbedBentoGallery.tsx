@@ -6,43 +6,51 @@ import { Flip } from 'gsap/Flip';
 gsap.registerPlugin(ScrollTrigger, Flip);
 
 const ScrubbedBentoGallery: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
-    let ctx = gsap.context(() => {
-      const galleryElement = galleryRef.current;
-      if (!galleryElement || !containerRef.current) return;
+    let ctx = gsap.context(() => {});
 
-      const galleryItems = galleryElement.querySelectorAll('.gallery__item');
-      if (galleryItems.length === 0) return;
+    // Set a delay to ensure fonts, css, and layout shifts are resolved before computing bounds
+    const timer = setTimeout(() => {
+      ctx.add(() => {
+        const galleryElement = galleryRef.current;
+        if (!galleryElement || !wrapperRef.current) return;
 
-      // Ensure no final class is initially present
-      galleryElement.classList.remove('gallery--final');
+        const galleryItems = galleryElement.querySelectorAll('.gallery__item');
+        if (galleryItems.length === 0) return;
 
-      // Temporarily add final class to capture state
-      galleryElement.classList.add('gallery--final');
-      const flipState = Flip.getState(galleryItems);
-      galleryElement.classList.remove('gallery--final');
+        // Ensure no final class is initially present
+        galleryElement.classList.remove('gallery--final');
 
-      const flip = Flip.to(flipState, {
-        simple: true,
-        ease: 'expoScale(1, 5)',
+        // Temporarily add final class to capture state
+        galleryElement.classList.add('gallery--final');
+        const flipState = Flip.getState(galleryItems);
+        galleryElement.classList.remove('gallery--final');
+
+        const flip = Flip.to(flipState, {
+          simple: true,
+          ease: 'expoScale(1, 5)',
+        });
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: galleryElement,
+            start: 'center center',
+            end: '+=100%',
+            scrub: true,
+            pin: wrapperRef.current,
+          },
+        });
+        tl.add(flip);
       });
+    }, 150); // 150ms ensures React Strict mode layout is stable
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: galleryElement,
-          start: 'center center',
-          end: '+=100%',
-          scrub: true,
-          pin: containerRef.current,
-        },
-      });
-      tl.add(flip);
-    }, containerRef);
-
-    return () => ctx.revert();
+    return () => {
+      clearTimeout(timer);
+      ctx.revert();
+    };
   }, []);
 
   const images = [
@@ -57,18 +65,16 @@ const ScrubbedBentoGallery: React.FC = () => {
   ];
 
   return (
-    <div ref={containerRef} className="w-full h-[100vh] bg-[#faf9f5]">
-      <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
-        <div 
-          ref={galleryRef} 
-          className="gallery gallery--bento relative w-full h-full flex-none"
-        >
-          {images.map((src, i) => (
-            <div key={i} className="gallery__item flex-none relative bg-center bg-cover">
-              <img src={src} alt="" className="object-cover w-full h-full" />
-            </div>
-          ))}
-        </div>
+    <div ref={wrapperRef} className="gallery-wrap relative w-full h-[100vh] flex items-center justify-center overflow-hidden bg-[#faf9f5]">
+      <div 
+        ref={galleryRef} 
+        className="gallery gallery--bento relative w-full h-full flex-none"
+      >
+        {images.map((src, i) => (
+          <div key={i} className="gallery__item flex-none relative bg-center bg-cover">
+            <img src={src} alt="" className="object-cover w-full h-full" />
+          </div>
+        ))}
       </div>
     </div>
   );
