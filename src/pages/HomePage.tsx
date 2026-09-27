@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import ScrubbedBentoGallery from '../components/home/ScrubbedBentoGallery';
 import { Link } from 'react-router-dom';
 import { Play, Instagram, ChevronLeft, ChevronRight, Heart, MessageCircle, Send, Bookmark, Camera, ArrowRight } from 'lucide-react';
 import gsap from 'gsap';
@@ -195,6 +196,8 @@ const HomePage: React.FC = () => {
   return (
     <div ref={sectionRef} className="bg-white text-[#111111] min-h-screen font-sans">
       
+      <ScrubbedBentoGallery />
+
       {/* 1. HERO BANNER */}
       <div className="w-full bg-white">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12 py-0">
