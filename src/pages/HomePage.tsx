@@ -462,12 +462,20 @@ const HomePage: React.FC = () => {
 
       {/* 5. WHY THE RAW PROJECT SECTION */}
       <section 
-        className="relative h-screen min-h-[700px] flex items-center overflow-hidden bg-cover bg-center bg-fixed border-t border-[#2e2922]"
-        style={{ backgroundImage: `url('https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/0c0bd6249757095.6a0ef91474750.png')` }}
+        className="relative h-screen min-h-[700px] flex items-center overflow-hidden border-t border-[#2e2922]"
       >
+        <video 
+          autoPlay 
+          muted 
+          loop 
+          playsInline 
+          className="absolute inset-0 w-full h-full object-cover z-0"
+        >
+          <source src="/images/Video-76275.mp4" type="video/mp4" />
+        </video>
         {/* Dark gradient overlay so the white text is readable */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent z-0"></div>
-        <div className="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
+        <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/70 to-transparent z-10 pointer-events-none"></div>
+        <div className="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-12 relative z-20">
           <div className="max-w-2xl text-left">
             <div className="flex items-center gap-4 mb-4">
               <p className="text-[12px] tracking-[0.25em] uppercase text-[#c5a880] font-medium">
