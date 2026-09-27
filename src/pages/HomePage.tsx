@@ -111,6 +111,7 @@ const HomePage: React.FC = () => {
     return {
       id: p.id.toString(),
       title: p.name,
+      slug: p.slug,
       categoryType: mainCategory,
       subcategory: subcategory,
       category: p.categories && p.categories.length > 0 ? p.categories[0].name : 'Furniture',
@@ -435,7 +436,7 @@ const HomePage: React.FC = () => {
                 )
                 .slice(0, 8)
                 .map((project) => (
-                  <div key={project.id} className="gsap-project-card group space-y-3">
+                  <Link to={`/product/${project.slug}`} key={project.id} className="gsap-project-card group space-y-3 block">
                     <div className="grid grid-cols-1 md:grid-cols-[2.2fr_1fr] gap-4">
                       <div className="aspect-[16/9] lg:aspect-[16/10] overflow-hidden bg-[#e0ded8]">
                         <img 
@@ -454,18 +455,18 @@ const HomePage: React.FC = () => {
                     </div>
                     <div className="flex flex-wrap items-center justify-between pt-2 border-b border-[#ded7ca] pb-3">
                       <div>
-                        <h3 className="text-xl font-bold tracking-wider uppercase text-[#1a1612]">{project.title}</h3>
+                        <h3 className="text-xl font-bold tracking-wider uppercase text-[#1a1612] group-hover:text-[#8a7f72] transition-colors">{project.title}</h3>
                         <div className="flex gap-6 sm:gap-8 text-[11px] uppercase tracking-widest text-[#8a7f72] mt-1 flex-wrap">
                           <span>Category: {project.category}</span>
                           <span>Scope: {project.scope}</span>
                           <span>Location: {project.location}</span>
                         </div>
                       </div>
-                      <Link to="/shop" className="text-[11px] font-bold tracking-widest uppercase text-[#1a1612] hover:text-[#8a7f72] transition-colors mt-2 sm:mt-0">
+                      <span className="text-[11px] font-bold tracking-widest uppercase text-[#1a1612] group-hover:text-[#8a7f72] transition-colors mt-2 sm:mt-0">
                         VIEW DETAIL →
-                      </Link>
+                      </span>
                     </div>
-                  </div>
+                  </Link>
                 ))}
             </div>
           </div>
