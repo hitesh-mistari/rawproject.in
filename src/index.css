@@ -16,13 +16,13 @@
 
 @layer base {
   :root {
-    --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --font-serif: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-sans: 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-serif: 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
 
   html {
     scroll-behavior: smooth;
-    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     color: #1c1917;
     background-color: #faf9f5;
   }
@@ -31,14 +31,14 @@
     margin: 0;
     padding: 0;
     overflow-x: hidden;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Quicksand', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     max-width: 100vw;
   }
 
   h1, h2, h3, h4, h5, h6, p, span, a, button, input, select, textarea {
-    font-family: 'DM Sans', sans-serif !important;
+    font-family: 'Quicksand', sans-serif !important;
   }
 
   img, video, iframe {

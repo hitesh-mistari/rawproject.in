@@ -23,8 +23,8 @@ export default {
         }
       },
       fontFamily: {
-        serif: ['"DM Sans"', 'sans-serif'],
-        sans: ['"DM Sans"', 'sans-serif'],
+        serif: ['"Quicksand"', 'sans-serif'],
+        sans: ['"Quicksand"', 'sans-serif'],
       },
       boxShadow: {
         'luxury': '0 20px 40px -15px rgba(0, 0, 0, 0.5)',
