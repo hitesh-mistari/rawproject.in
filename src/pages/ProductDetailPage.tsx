@@ -391,7 +391,7 @@ const ProductDetailPage: React.FC = () => {
             <button
               type="button"
               onClick={handleWhatsAppEnquiry}
-              className="flex-1 h-[44px] bg-[#8a6040] hover:bg-[#7a5030] active:bg-[#6a4020] text-white text-[14px] font-semibold rounded-full transition-all duration-200 active:scale-[0.98] flex items-center justify-center gap-2 shadow-sm"
+              className="flex-1 h-[44px] bg-[#25D366] hover:bg-[#1da851] active:bg-[#168940] text-white text-[14px] font-semibold rounded-full transition-all duration-200 active:scale-[0.98] flex items-center justify-center gap-2 shadow-sm"
             >
               <span>Enquire on WhatsApp</span>
             </button>
@@ -565,7 +565,7 @@ const ProductDetailPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleWhatsAppEnquiry}
-                  className="flex-1 h-[48px] bg-[#8a6040] hover:bg-[#7a5030] text-white text-[15px] font-semibold rounded-full transition-all duration-200 active:scale-[0.98] shadow-sm flex items-center justify-center gap-2"
+                  className="flex-1 h-[48px] bg-[#25D366] hover:bg-[#1da851] active:bg-[#168940] text-white text-[15px] font-semibold rounded-full transition-all duration-200 active:scale-[0.98] shadow-sm flex items-center justify-center gap-2"
                 >
                   <span className="font-medium">Enquire on WhatsApp</span>
                 </button>
