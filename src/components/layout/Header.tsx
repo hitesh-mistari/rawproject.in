@@ -1,7 +1,7 @@
 import React, { useState, useRef, useLayoutEffect } from 'react';
 import gsap from 'gsap';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Search, ChevronDown, ChevronRight, Menu, X } from 'lucide-react';
+import { Search, ChevronDown, ChevronRight, Menu, X, Download } from 'lucide-react';
 
 const HoverUnderlineLink = ({ to, children, className = '', isActive = false, onMouseEnter, onMouseLeave }: any) => {
   const lineRef = useRef(null);
@@ -404,8 +404,17 @@ const Header: React.FC = () => {
             </HoverUnderlineLink>
           </nav>
 
-          {/* Right: Empty (previously Cart) */}
+          {/* Right: Download Catalog */}
           <div className="hidden md:flex items-center gap-5 mt-1">
+            <a 
+              href="/catalog.pdf" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="group flex items-center gap-2 px-5 py-2 bg-transparent border border-[#d3cec3] text-[#4a4238] hover:bg-[#1a1612] hover:text-[#eae5da] hover:border-[#1a1612] transition-all duration-300 rounded-full shadow-[0_2px_10px_rgba(0,0,0,0.02)]"
+            >
+              <span className="text-[10px] tracking-[0.15em] font-bold uppercase mt-px">Catalog</span>
+              <Download className="w-3.5 h-3.5 transition-transform duration-300 group-hover:-translate-y-0.5" strokeWidth={2.5} />
+            </a>
           </div>
 
           {/* Mobile menu toggle */}
