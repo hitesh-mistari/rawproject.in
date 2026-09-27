@@ -257,137 +257,6 @@ const HomePage: React.FC = () => {
         </div>
       </div>
 
-      {/* 2.5 FEATURED PRODUCTS CAROUSEL */}
-      <section className="bg-[#eae5da] py-20 sm:py-28 lg:py-32 overflow-hidden border-b border-[#ded7ca] relative">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12 text-center mb-12">
-          <p className="text-[11px] tracking-[0.3em] uppercase text-[#8a7f72] font-bold mb-4">
-            Shop Collection
-          </p>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-light text-[#1a1612]">
-            Featured Objects
-          </h2>
-          <p className="text-[11px] text-[#8a7f72] font-medium tracking-[0.2em] uppercase mt-3">
-            Handcrafted Works &bull; Beds, Center Tables, Lounge Chairs, Sofas & Swings
-          </p>
-        </div>
-
-        {/* Carousel Container with Controls */}
-        <div className="relative w-full max-w-[1400px] mx-auto h-[380px] md:h-[520px] flex items-center justify-center px-4">
-          
-          {/* Left Arrow Button */}
-          <button
-            onClick={handlePrevProduct}
-            className="absolute left-4 sm:left-12 z-50 w-11 h-11 rounded-full bg-white/90 hover:bg-white text-[#1a1612] backdrop-blur-md shadow-lg border border-[#dfdbd2] flex items-center justify-center transition-all hover:scale-110 active:scale-95 group"
-            aria-label="Previous Product"
-          >
-            <ChevronLeft className="w-5 h-5 text-[#1a1612] group-hover:text-[#c5a880] transition-colors" />
-          </button>
-
-          {/* Right Arrow Button */}
-          <button
-            onClick={handleNextProduct}
-            className="absolute right-4 sm:right-12 z-50 w-11 h-11 rounded-full bg-white/90 hover:bg-white text-[#1a1612] backdrop-blur-md shadow-lg border border-[#dfdbd2] flex items-center justify-center transition-all hover:scale-110 active:scale-95 group"
-            aria-label="Next Product"
-          >
-            <ChevronRight className="w-5 h-5 text-[#1a1612] group-hover:text-[#c5a880] transition-colors" />
-          </button>
-
-          {featuredProducts.map((product, i) => {
-            // Calculate shortest distance in a circular array
-            let diff = i - featuredProductIndex;
-            if (diff > Math.floor(featuredProducts.length / 2)) diff -= featuredProducts.length;
-            if (diff < -Math.floor(featuredProducts.length / 2)) diff += featuredProducts.length;
-
-            const isCenter = diff === 0;
-            const isLeft = diff === -1;
-            const isRight = diff === 1;
-            const isFarLeft = diff === -2;
-            const isFarRight = diff === 2;
-            const isVisible = Math.abs(diff) <= 2;
-
-            // Positioning calculations
-            let translateX = "0%";
-            let scale = 0.5;
-            let opacity = 0;
-            let zIndex = 10;
-            let pointerEvents: 'auto' | 'none' = 'none';
-
-            if (isCenter) {
-              translateX = "0%";
-              scale = 1.1;
-              opacity = 1;
-              zIndex = 50;
-              pointerEvents = 'auto';
-            } else if (isLeft) {
-              translateX = "-115%";
-              scale = 0.8;
-              opacity = 0.85;
-              zIndex = 40;
-              pointerEvents = 'auto';
-            } else if (isRight) {
-              translateX = "115%";
-              scale = 0.8;
-              opacity = 0.85;
-              zIndex = 40;
-              pointerEvents = 'auto';
-            } else if (isFarLeft) {
-              translateX = "-210%";
-              scale = 0.6;
-              opacity = 0.4;
-              zIndex = 30;
-              pointerEvents = 'auto';
-            } else if (isFarRight) {
-              translateX = "210%";
-              scale = 0.6;
-              opacity = 0.4;
-              zIndex = 30;
-              pointerEvents = 'auto';
-            }
-
-            return (
-              <div
-                key={product.id}
-                onClick={() => setFeaturedProductIndex(i)}
-                className={`absolute top-1/2 left-1/2 w-[220px] md:w-[320px] aspect-[4/5] bg-[#e0ded8] shadow-md transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] cursor-pointer overflow-hidden group ${
-                  !isVisible ? "pointer-events-none" : ""
-                }`}
-                style={{
-                  transform: `translate(-50%, -50%) translateX(${translateX}) scale(${scale})`,
-                  opacity: opacity,
-                  zIndex: zIndex,
-                  pointerEvents: pointerEvents,
-                }}
-              >
-                <img
-                  src={product.image}
-                  alt={product.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                
-                {/* Title & Category overlay - only visible on center item */}
-                <div 
-                  className={`absolute bottom-6 left-1/2 -translate-x-1/2 text-center whitespace-nowrap transition-all duration-500 delay-200 bg-white/95 backdrop-blur-md px-6 py-3 shadow-lg border border-[#dfdbd2] rounded-sm ${isCenter ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}
-                >
-                  <span className="block text-[9px] tracking-[0.25em] font-semibold text-[#8a7f72] uppercase mb-1">
-                    {product.category}
-                  </span>
-                  <Link to={`/product/${product.slug}`} className="text-[12.5px] tracking-[0.18em] font-bold text-[#1a1612] hover:text-[#c5a880] transition-colors block">
-                    {product.title}
-                  </Link>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Counter indicator */}
-        <div className="flex items-center justify-center gap-3 mt-8">
-          <span className="text-xs font-mono tracking-widest text-[#8a7f72]">
-            {String(featuredProductIndex + 1).padStart(2, '0')} / {String(featuredProducts.length).padStart(2, '0')}
-          </span>
-        </div>
-      </section>
-
       {/* 1.5. WORKS OF QUIET ELEGANCE - 100VH ARCHITECTURAL SHOWCASE SECTION */}
       <section className="bg-[#faf9f6] min-h-screen flex flex-col justify-between py-12 sm:py-16 border-b border-[#ded7ca]">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12 w-full flex-1 flex flex-col justify-between">
@@ -701,6 +570,137 @@ const HomePage: React.FC = () => {
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* 2.5 FEATURED PRODUCTS CAROUSEL */}
+      <section className="bg-[#eae5da] py-20 sm:py-28 lg:py-32 overflow-hidden border-b border-[#ded7ca] relative">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12 text-center mb-12">
+          <p className="text-[11px] tracking-[0.3em] uppercase text-[#8a7f72] font-bold mb-4">
+            Shop Collection
+          </p>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-light text-[#1a1612]">
+            Featured Objects
+          </h2>
+          <p className="text-[11px] text-[#8a7f72] font-medium tracking-[0.2em] uppercase mt-3">
+            Handcrafted Works &bull; Beds, Center Tables, Lounge Chairs, Sofas & Swings
+          </p>
+        </div>
+
+        {/* Carousel Container with Controls */}
+        <div className="relative w-full max-w-[1400px] mx-auto h-[380px] md:h-[520px] flex items-center justify-center px-4">
+          
+          {/* Left Arrow Button */}
+          <button
+            onClick={handlePrevProduct}
+            className="absolute left-4 sm:left-12 z-50 w-11 h-11 rounded-full bg-white/90 hover:bg-white text-[#1a1612] backdrop-blur-md shadow-lg border border-[#dfdbd2] flex items-center justify-center transition-all hover:scale-110 active:scale-95 group"
+            aria-label="Previous Product"
+          >
+            <ChevronLeft className="w-5 h-5 text-[#1a1612] group-hover:text-[#c5a880] transition-colors" />
+          </button>
+
+          {/* Right Arrow Button */}
+          <button
+            onClick={handleNextProduct}
+            className="absolute right-4 sm:right-12 z-50 w-11 h-11 rounded-full bg-white/90 hover:bg-white text-[#1a1612] backdrop-blur-md shadow-lg border border-[#dfdbd2] flex items-center justify-center transition-all hover:scale-110 active:scale-95 group"
+            aria-label="Next Product"
+          >
+            <ChevronRight className="w-5 h-5 text-[#1a1612] group-hover:text-[#c5a880] transition-colors" />
+          </button>
+
+          {featuredProducts.map((product, i) => {
+            // Calculate shortest distance in a circular array
+            let diff = i - featuredProductIndex;
+            if (diff > Math.floor(featuredProducts.length / 2)) diff -= featuredProducts.length;
+            if (diff < -Math.floor(featuredProducts.length / 2)) diff += featuredProducts.length;
+
+            const isCenter = diff === 0;
+            const isLeft = diff === -1;
+            const isRight = diff === 1;
+            const isFarLeft = diff === -2;
+            const isFarRight = diff === 2;
+            const isVisible = Math.abs(diff) <= 2;
+
+            // Positioning calculations
+            let translateX = "0%";
+            let scale = 0.5;
+            let opacity = 0;
+            let zIndex = 10;
+            let pointerEvents: 'auto' | 'none' = 'none';
+
+            if (isCenter) {
+              translateX = "0%";
+              scale = 1.1;
+              opacity = 1;
+              zIndex = 50;
+              pointerEvents = 'auto';
+            } else if (isLeft) {
+              translateX = "-115%";
+              scale = 0.8;
+              opacity = 0.85;
+              zIndex = 40;
+              pointerEvents = 'auto';
+            } else if (isRight) {
+              translateX = "115%";
+              scale = 0.8;
+              opacity = 0.85;
+              zIndex = 40;
+              pointerEvents = 'auto';
+            } else if (isFarLeft) {
+              translateX = "-210%";
+              scale = 0.6;
+              opacity = 0.4;
+              zIndex = 30;
+              pointerEvents = 'auto';
+            } else if (isFarRight) {
+              translateX = "210%";
+              scale = 0.6;
+              opacity = 0.4;
+              zIndex = 30;
+              pointerEvents = 'auto';
+            }
+
+            return (
+              <div
+                key={product.id}
+                onClick={() => setFeaturedProductIndex(i)}
+                className={`absolute top-1/2 left-1/2 w-[220px] md:w-[320px] aspect-[4/5] bg-[#e0ded8] shadow-md transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] cursor-pointer overflow-hidden group ${
+                  !isVisible ? "pointer-events-none" : ""
+                }`}
+                style={{
+                  transform: `translate(-50%, -50%) translateX(${translateX}) scale(${scale})`,
+                  opacity: opacity,
+                  zIndex: zIndex,
+                  pointerEvents: pointerEvents,
+                }}
+              >
+                <img
+                  src={product.image}
+                  alt={product.title}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                
+                {/* Title & Category overlay - only visible on center item */}
+                <div 
+                  className={`absolute bottom-6 left-1/2 -translate-x-1/2 text-center whitespace-nowrap transition-all duration-500 delay-200 bg-white/95 backdrop-blur-md px-6 py-3 shadow-lg border border-[#dfdbd2] rounded-sm ${isCenter ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}
+                >
+                  <span className="block text-[9px] tracking-[0.25em] font-semibold text-[#8a7f72] uppercase mb-1">
+                    {product.category}
+                  </span>
+                  <Link to={`/product/${product.slug}`} className="text-[12.5px] tracking-[0.18em] font-bold text-[#1a1612] hover:text-[#c5a880] transition-colors block">
+                    {product.title}
+                  </Link>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Counter indicator */}
+        <div className="flex items-center justify-center gap-3 mt-8">
+          <span className="text-xs font-mono tracking-widest text-[#8a7f72]">
+            {String(featuredProductIndex + 1).padStart(2, '0')} / {String(featuredProducts.length).padStart(2, '0')}
+          </span>
         </div>
       </section>
 
