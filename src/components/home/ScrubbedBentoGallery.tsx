@@ -54,14 +54,14 @@ const ScrubbedBentoGallery: React.FC = () => {
   }, []);
 
   const images = [
-    '/images/products/toronto_side_table_b91bbff4-b1f3-4c95-a00a-7f7408b00869.jpg',
-    '/images/products/WoudArcCoffeeTable42cmLifestyle3-1-scaled.webp',
-    '/images/products/36801-HERO.jpg',
-    '/images/products/SideTable_4.webp',
+    '/images/home/carousel/mainhero.png',
+    '/images/home/carousel/slide_1.png',
     '/images/products/swing-add-06.jpg',
+    '/images/home/carousel/slide_2.png',
+    '/images/home/carousel/slide_3.png',
     '/images/home/hero/hero_slide2.png',
-    '/images/products/IrieUpholsteredBed-2.webp',
-    '/images/products/Toronto_website_product_page_slideshow_2042_x_1012.jpg',
+    '/images/home/featured_sahara_sofa.png',
+    '/images/home/carousel/slide_4.png',
   ];
 
   return (
