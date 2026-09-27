@@ -25,14 +25,8 @@ const Footer: React.FC = () => {
     e.preventDefault();
     setIsSubmitted(true);
     
-    // Trigger catalog PDF download
-    const link = document.createElement('a');
-    const blob = new Blob(['THE RAW PROJECT - FURNITURE & INTERIORS CATALOG 2026'], { type: 'application/pdf' });
-    link.href = URL.createObjectURL(blob);
-    link.setAttribute('download', 'The-Raw-Project-Catalog.pdf');
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    // Redirect client to the Google Drive folder
+    window.location.href = 'https://drive.google.com/drive/folders/1hf4G4ZlPRviPm1nv-J47afITPD2nmiOG?usp=drive_link';
   };
 
   return (
