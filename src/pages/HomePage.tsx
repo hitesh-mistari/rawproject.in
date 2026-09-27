@@ -906,8 +906,8 @@ const HomePage: React.FC = () => {
               Why The<br />Raw Project
             </h2>
             
-            <p className="text-[14px] sm:text-[15px] text-white/90 leading-[1.7] font-light mb-10 max-w-[600px]">
-              Our designs are minimal, versatile, and timeless, allowing you to style them with different fabrics and patterns while letting the natural beauty of wood remain at the heart of every piece. We use soft, comfortable, and sustainable organic fabrics that bring a warm, natural feel while offering lasting quality. Our wood is sourced responsibly through forestry practices that support continuous replenishment, with a focus on recycled, upcycled, and FSC-certified materials wherever possible. Every piece is thoughtfully handcrafted by Indian local artisans, providing employment to over 200+ artisans while preserving the traditional craft of cane weaving and celebrating the skill, heritage, and craftsmanship behind every creation.
+            <p className="text-[15px] sm:text-[17px] text-white/90 leading-[1.6] font-light mb-10 max-w-[500px]">
+              Minimal, versatile, and built to last. We source FSC-certified timber and sustainable organic fabrics to let the raw beauty of the materials speak for themselves. Handcrafted by over 200 artisans across India, every piece is a celebration of traditional heritage, mindful design, and uncompromising quality.
             </p>
             
             <Link 
