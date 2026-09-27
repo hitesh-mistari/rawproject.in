@@ -285,7 +285,7 @@ const HomePage: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-10 lg:gap-14 items-start my-auto">
             
             {/* Left Filter Sidebar - Sticky */}
-            <div className="w-full flex items-center overflow-x-auto gap-8 pb-4 lg:pb-0 lg:flex-col lg:items-stretch lg:gap-0 lg:space-y-6 text-[12px] uppercase tracking-widest text-[#6b6359] lg:sticky lg:top-8 scrollbar-none whitespace-nowrap lg:whitespace-normal">
+            <div className="w-full flex items-center overflow-x-auto gap-8 pb-3 pt-3 lg:pt-0 lg:pb-0 lg:flex-col lg:items-stretch lg:gap-0 lg:space-y-6 text-[12px] uppercase tracking-widest text-[#6b6359] sticky top-0 z-30 bg-[#faf9f6] border-b border-[#ded7ca] lg:border-none shadow-sm lg:shadow-none lg:top-8 scrollbar-none whitespace-nowrap lg:whitespace-normal -mx-4 px-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0">
               
               <div className="font-bold text-[#1a1612] flex items-center gap-4 lg:pb-2 lg:border-b lg:border-[#ded7ca] lg:justify-between shrink-0 lg:w-full sticky left-0 bg-[#faf9f6] z-10 pr-4 lg:pr-0">
                 <span>Filter</span>
