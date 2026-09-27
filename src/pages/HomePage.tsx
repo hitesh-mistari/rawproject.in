@@ -13,12 +13,10 @@ const HomePage: React.FC = () => {
 
   const heroDesktopSlides = [
     '/images/home/carousel/mainhero.png',
-    '/images/home/hero/hero_slide2.png',
     '/images/home/hero/hero_slide1.jpg',
   ];
   const heroMobileSlides = [
     '/images/home/carousel/mainhero.png',
-    '/images/home/hero/hero_mobile2.webp',
     '/images/home/hero/hero_mobile3.webp',
   ];
   
