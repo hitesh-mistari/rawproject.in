@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Flip } from 'gsap/Flip';
@@ -9,37 +9,44 @@ const ScrubbedBentoGallery: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     let ctx = gsap.context(() => {
-      const galleryElement = galleryRef.current;
-      if (!galleryElement || !containerRef.current) return;
+      // Small timeout to ensure Vite dev CSS is fully injected before Flip calculates bounds
+      setTimeout(() => {
+        const galleryElement = galleryRef.current;
+        if (!galleryElement || !containerRef.current) return;
 
-      const galleryItems = galleryElement.querySelectorAll('.gallery__item');
-      if (galleryItems.length === 0) return;
+        const galleryItems = galleryElement.querySelectorAll('.gallery__item');
+        if (galleryItems.length === 0) return;
 
-      // Ensure no final class is initially present
-      galleryElement.classList.remove('gallery--final');
+        // Ensure no final class is initially present
+        galleryElement.classList.remove('gallery--final');
 
-      // Temporarily add final class to capture state
-      galleryElement.classList.add('gallery--final');
-      const flipState = Flip.getState(galleryItems);
-      galleryElement.classList.remove('gallery--final');
+        // Temporarily add final class to capture state
+        galleryElement.classList.add('gallery--final');
+        const flipState = Flip.getState(galleryItems);
+        galleryElement.classList.remove('gallery--final');
 
-      const flip = Flip.to(flipState, {
-        simple: true,
-        ease: 'expoScale(1, 5)',
-      });
+        const flip = Flip.to(flipState, {
+          simple: true,
+          ease: 'expoScale(1, 5)',
+        });
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: galleryElement,
-          start: 'center center',
-          end: '+=100%',
-          scrub: true,
-          pin: containerRef.current,
-        },
-      });
-      tl.add(flip);
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: galleryElement,
+            start: 'center center',
+            end: '+=100%',
+            scrub: true,
+            pin: containerRef.current,
+          },
+        });
+        tl.add(flip);
+
+        return () => {
+          gsap.set(galleryItems, { clearProps: 'all' });
+        };
+      }, 100);
     }, containerRef);
 
     return () => ctx.revert();
