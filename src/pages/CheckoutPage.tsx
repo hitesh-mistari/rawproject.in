@@ -270,9 +270,7 @@ const CheckoutPage: React.FC = () => {
                       <h4 className="font-serif font-medium text-stone-900">{item.name}</h4>
                       <p className="text-stone-400 text-[11px]">Qty: {item.quantity}</p>
                     </div>
-                    <span className="font-serif font-semibold text-stone-900">
-                      {formatCurrency(item.price * item.quantity)}
-                    </span>
+
                   </div>
                 ))}
               </div>
@@ -282,10 +280,7 @@ const CheckoutPage: React.FC = () => {
                   <span>Pan-India Delivery</span>
                   <span className="text-emerald-700 font-semibold">Complimentary</span>
                 </div>
-                <div className="flex justify-between font-serif text-base font-bold text-stone-950 pt-2 border-t border-sand-200">
-                  <span>Estimated Total</span>
-                  <span>{formatCurrency(totalPrice)}</span>
-                </div>
+
               </div>
 
               <button

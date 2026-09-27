@@ -8,16 +8,19 @@ const PolicyPage: React.FC = () => {
   let title = 'Shipping Policy';
   let content = (
     <div className="space-y-4 text-sm text-[#333] leading-relaxed">
+      <h3 className="text-base font-serif text-black pt-2 font-medium">Order Processing and Custom Delivery Times</h3>
       <p>
-        At <strong>The Raw Project</strong>, each piece of furniture is handcrafted to order by skilled artisans in solid Indian Teak wood and natural cane. Due to the bespoke nature of our craftsmanship, please allow 3 to 4 weeks for production and finishing.
+        All orders are processed within 1-3 business days. Our shipping policy includes custom delivery times based on the specifics of each order. Once your order is confirmed, we will provide you with an estimated delivery time frame tailored to your purchase.
       </p>
-      <h3 className="text-base font-serif text-black pt-2 font-medium">Pan-India White Glove Delivery</h3>
+      
+      <h3 className="text-base font-serif text-black pt-4 font-medium">Free Shipping</h3>
       <p>
-        We partner with specialized furniture transport handlers to ensure your pieces arrive in pristine condition. Deliveries include doorstep inspection and unpacking service in major metropolitan cities.
+        We are delighted to offer free shipping on all orders, regardless of size or value.
       </p>
-      <h3 className="text-base font-serif text-black pt-2 font-medium">Tracking &amp; Logistics</h3>
+      
+      <h3 className="text-base font-serif text-black pt-4 font-medium">Shipment Confirmation &amp; Order Tracking</h3>
       <p>
-        Once your piece leaves our atelier, you will receive real-time consignment tracking via SMS and WhatsApp. Our logistics coordinator will schedule a convenient delivery appointment with you prior to arrival.
+        You will receive a Shipment Confirmation email once your order has been processed, including your tracking number(s). The tracking information will be active within 24 hours.
       </p>
     </div>
   );
@@ -26,17 +29,70 @@ const PolicyPage: React.FC = () => {
     title = 'Terms of Service';
     content = (
       <div className="space-y-4 text-sm text-[#333] leading-relaxed">
-        <p>
-          Welcome to The Raw Project. By accessing and purchasing from our atelier, you agree to comply with our design terms and craftsmanship policies.
-        </p>
-        <h3 className="text-base font-serif text-black pt-2 font-medium">Natural Material Variations</h3>
-        <p>
-          Natural Indian Teak wood and handwoven cane inherently display individual grain patterns, subtle tonal shifts, and authentic variations. These are not imperfections; they are the hallmark of honest, living materials and artisanal heritage.
-        </p>
-        <h3 className="text-base font-serif text-black pt-2 font-medium">2-Year Structural Warranty</h3>
-        <p>
-          We stand by the longevity of our creations. Every piece carries a 2-year warranty covering joinery integrity and structural craftsmanship.
-        </p>
+        <p><strong>Introduction:</strong> Welcome to The Raw Project (referred to as “we,” “our,” or “us”). These Terms of Service (“Terms”) govern your use of our website, services, and any products purchased from us. By accessing and using our website, you agree to comply with and be bound by these Terms. Please read them carefully before proceeding with your use of our services.</p>
+        
+        <h3 className="text-base font-serif text-black pt-4 font-medium">Use of the Website:</h3>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>Your use of this website is subject to these Terms.</li>
+          <li>You must be at least 18 years old or have legal capacity to enter into contracts to use this website.</li>
+          <li>You agree not to use this website for any unlawful purpose.</li>
+        </ul>
+        
+        <h3 className="text-base font-serif text-black pt-4 font-medium">Privacy Policy:</h3>
+        <p>Please review our <Link to="/privacy-policy" className="underline hover:text-black">Privacy Policy</Link>, which also governs your use of our website and services. By using our website, you consent to the collection and use of your information as described in our Privacy Policy.</p>
+        
+        <h3 className="text-base font-serif text-black pt-4 font-medium">Orders and Purchases:</h3>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>When you place an order with us, you are making an offer to purchase the products in your cart.</li>
+          <li>We reserve the right to accept or reject your order for any reason.</li>
+          <li>All prices are in Rupees and are subject to change without notice.</li>
+        </ul>
+
+        <h3 className="text-base font-serif text-black pt-4 font-medium">Payment Terms:</h3>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>You agree to pay the full amount due for your order, including any applicable taxes and shipping fees.</li>
+          <li>We accept various payment methods, as specified on our Payment Methods page.</li>
+        </ul>
+
+        <h3 className="text-base font-serif text-black pt-4 font-medium">Shipping and Delivery:</h3>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>Shipping and delivery terms are detailed on our <Link to="/shipping-policy" className="underline hover:text-black">Shipping and Delivery</Link> page.</li>
+          <li>Delivery times are approximate and may vary based on location and other factors.</li>
+        </ul>
+
+        <h3 className="text-base font-serif text-black pt-4 font-medium">Returns and Refunds:</h3>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>Our Return and Refund policy is outlined on our Returns and Refunds page.</li>
+          <li>Products must be returned in their original condition to qualify for a refund or exchange.</li>
+        </ul>
+
+        <h3 className="text-base font-serif text-black pt-4 font-medium">Intellectual Property:</h3>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>All content on this website, including images, text, logos, and graphics, is our intellectual property.</li>
+          <li>You may not use our content without our written consent.</li>
+        </ul>
+
+        <h3 className="text-base font-serif text-black pt-4 font-medium">Limitation of Liability:</h3>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>We are not liable for any direct, indirect, or consequential damages resulting from your use of this website or any products purchased from us.</li>
+          <li>We do not guarantee that our website will be free from errors or interruptions.</li>
+        </ul>
+
+        <h3 className="text-base font-serif text-black pt-4 font-medium">Termination:</h3>
+        <p>We reserve the right to terminate your access to our website and services at our discretion.</p>
+
+        <h3 className="text-base font-serif text-black pt-4 font-medium">Governing Law:</h3>
+        <p>These Terms are governed by and interpreted in accordance with the laws of Maharashtra, India, and you agree to submit to the exclusive jurisdiction of the courts located within Maharashtra, India.</p>
+
+        <h3 className="text-base font-serif text-black pt-4 font-medium">Changes to the Terms:</h3>
+        <p>We may update these Terms from time to time. Please review these Terms periodically for any changes.</p>
+
+        <h3 className="text-base font-serif text-black pt-4 font-medium">Contact Information:</h3>
+        <p>If you have any questions or concerns about these Terms, please contact us using the following information:</p>
+        <ul className="space-y-1">
+          <li><strong>Customer Support Email:</strong> <a href="mailto:therawprojectt@gmail.com" className="underline hover:text-black">therawprojectt@gmail.com</a></li>
+          <li><strong>Customer Support Phone:</strong> <a href="tel:+918698814865" className="underline hover:text-black">+91 8698814865</a></li>
+        </ul>
       </div>
     );
   } else if (pathname.includes('cancellation') || pathname.includes('refund')) {

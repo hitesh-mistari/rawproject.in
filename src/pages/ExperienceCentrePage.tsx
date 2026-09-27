@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, MapPin, Clock, Info } from 'lucide-react';
 import BeInspiredSection from '../components/common/BeInspiredSection';
 
 const ExperienceCentrePage: React.FC = () => {
@@ -130,16 +130,31 @@ const ExperienceCentrePage: React.FC = () => {
             </h1>
 
             {/* Store details: Left-aligned, matching original font and line breaks */}
-            <div className="space-y-4 text-[14px] sm:text-[15px] text-[#111111] leading-relaxed mb-6 font-sans">
-              <p>
-                Experience our timeless designs with intricate detailing at Omyaa Designs.
-              </p>
-              <p>
-                Store Address: GRPF+W6, Defence Colony, Porvorim, Panaji, Aradi Socorro, Goa 403521.
-              </p>
-              <p>
-                Mon-Sat ( 11am – 6pm )
-              </p>
+            <div className="flex flex-col gap-5 text-[14px] sm:text-[15px] text-[#111111] leading-relaxed mb-8 font-sans">
+              
+              <div className="flex items-start gap-4 p-4 bg-white/40 rounded-sm border border-[#dfdbd2]">
+                <Info className="w-5 h-5 text-[#8a7f72] shrink-0 mt-0.5" />
+                <p className="text-[#333] font-medium">
+                  Experience our timeless designs with intricate detailing at <strong className="text-black font-semibold">Omyaa Designs</strong>.
+                </p>
+              </div>
+
+              <div className="flex items-start gap-4 px-2">
+                <MapPin className="w-5 h-5 text-[#8a7f72] shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-semibold text-black uppercase tracking-wider text-[11px] mb-1">Store Address</p>
+                  <p className="text-[#444]">GRPF+W6, Defence Colony, Porvorim, Panaji, Aradi Socorro, Goa 403521</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 px-2">
+                <Clock className="w-5 h-5 text-[#8a7f72] shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-semibold text-black uppercase tracking-wider text-[11px] mb-1">Opening Hours</p>
+                  <p className="text-[#444]">Mon - Sat (11:00 AM – 6:00 PM)</p>
+                </div>
+              </div>
+              
             </div>
 
             {/* Exact Google Map Embed from WordPress */}

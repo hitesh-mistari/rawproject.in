@@ -1,44 +1,50 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 
 const collections = [
   {
     title: 'KASARA',
     subtitle: 'Lounge & Living',
-    image: 'https://images.unsplash.com/photo-1592078615290-033ee584e267?q=80&w=1000&auto=format&fit=crop',
+    image: '/images/home/instagram/post1.jpg',
     link: '/category/living'
   },
   {
     title: 'MONOLITH',
     subtitle: 'Tables & Accents',
-    image: 'https://images.unsplash.com/photo-1533090481720-856c6e3c1fdc?q=80&w=1000&auto=format&fit=crop',
+    image: '/images/home/instagram/post2.jpg',
     link: '/category/tables'
   },
   {
     title: 'VERONICA',
     subtitle: 'Chairs & Seating',
-    image: 'https://images.unsplash.com/photo-1503602642458-232111445657?q=80&w=1000&auto=format&fit=crop',
+    image: '/images/home/instagram/post4.jpg',
     link: '/category/chairs'
   },
   {
     title: 'RELIC',
     subtitle: 'Sculptural Objects',
-    image: 'https://images.unsplash.com/photo-1615529182904-14819c35db37?q=80&w=1000&auto=format&fit=crop',
+    image: '/images/site/Design-Within-Reach-on-Instagram_-Teak-peek_-The-Kayu-Teak-Dining-Table-and-Moller-Model-55-Armchair-make-an-appearance-in-the-eclectic-home-of-actress-@hollandroden-–-as-Copy-768x960.jpg',
     link: '/category/objects'
   },
   {
     title: 'MOH SWING',
     subtitle: 'Indoor Swing',
-    image: 'https://images.unsplash.com/photo-1540932239986-30128078f3c5?q=80&w=1000&auto=format&fit=crop',
+    image: '/images/home/instagram/post9.jpg',
     link: '/category/swing'
   }
 ];
 
 const PreFooterCollections: React.FC = () => {
+  const location = useLocation();
+  
+  if (['/contact', '/contact-us', '/get-in-touch', '/about', '/about-us'].includes(location.pathname)) {
+    return null;
+  }
+
   return (
-    <section className="bg-[#faf9f5] pt-20 pb-12 px-6 lg:px-16">
-      <div className="max-w-[1400px] mx-auto">
+    <section className="bg-[#faf9f5] pt-20 pb-12">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12">
         
         {/* Header Area */}
         <div className="flex flex-col md:flex-row justify-between items-start mb-14">

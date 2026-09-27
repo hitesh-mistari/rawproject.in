@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, ShoppingBag, ChevronDown, ChevronRight, Menu, X } from 'lucide-react';
-import { useCart } from '../../context/CartContext';
+import { Search, ChevronDown, ChevronRight, Menu, X } from 'lucide-react';
 
 interface SubmenuItem {
   name: string;
@@ -83,7 +82,7 @@ const Header: React.FC = () => {
 
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const navigate = useNavigate();
-  const { totalItems, setIsCartOpen } = useCart();
+  
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -113,27 +112,27 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <header className="bg-[#FAF9F6] w-full border-b border-[#ded7ca] border-t-4 border-t-[#18484B] sticky top-0 z-40">
+      <header className="bg-white w-full relative z-40">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12 py-5 flex items-center justify-between">
           
           {/* Left: Brand Logo */}
           <div className="flex-shrink-0">
             <Link to="/" className="group flex flex-col" onClick={closeMobileMenu}>
-              <span className="font-['IBM_Plex_Sans',sans-serif] text-[20px] sm:text-[24px] md:text-[28px] tracking-[0.12em] font-normal text-[#222] leading-tight mb-1">
-                THE RAW PROJECT
-              </span>
-              <span className="text-[9px] sm:text-[10px] md:text-[11px] tracking-[0.25em] text-[#666] font-medium uppercase">
-                FURNITURE <span className="mx-1.5 opacity-60">•</span> OBJECTS <span className="mx-1.5 opacity-60">•</span> INTERIORS
+              <span className="font-recoleta text-[24px] sm:text-[28px] md:text-[32px] text-[#1a1612] leading-tight mb-1" style={{ letterSpacing: '0.02em' }}>
+                the <strong className="font-bold">raw</strong> project
               </span>
             </Link>
           </div>
 
           {/* Center: Desktop Navigation Links */}
           <nav className="hidden md:flex items-center gap-6 lg:gap-10 mt-1">
-            <Link to="/work" className="text-[12px] tracking-[0.1em] text-[#666] hover:text-black font-medium transition-colors uppercase">
-              WORK
+            <Link to="/about" className="text-[12px] tracking-[0.1em] text-[#666] hover:text-black font-medium transition-colors uppercase">
+              ABOUT
             </Link>
-            
+            <Link to="/experience-centre" className="text-[12px] tracking-[0.1em] text-[#666] hover:text-black font-medium transition-colors uppercase">
+              EXPERIENCE CENTRE
+            </Link>
+
             {/* Shop (Collections) Dropdown */}
             <div 
               className="relative"
@@ -228,55 +227,20 @@ const Header: React.FC = () => {
               )}
             </div>
 
-            <Link to="/process" className="text-[12px] tracking-[0.1em] text-[#666] hover:text-black font-medium transition-colors uppercase">
-              PROCESS
+            <Link to="/news" className="text-[12px] tracking-[0.1em] text-[#666] hover:text-black font-medium transition-colors uppercase">
+              NEWS
             </Link>
-            <Link to="/about" className="text-[12px] tracking-[0.1em] text-[#666] hover:text-black font-medium transition-colors uppercase">
-              ABOUT
-            </Link>
-            <Link to="/journal" className="text-[12px] tracking-[0.1em] text-[#666] hover:text-black font-medium transition-colors uppercase">
-              JOURNAL
+            <Link to="/get-in-touch" className="text-[12px] tracking-[0.1em] text-[#666] hover:text-black font-medium transition-colors uppercase">
+              GET IN TOUCH
             </Link>
           </nav>
 
-          {/* Right: Contact & Cart */}
+          {/* Right: Empty (previously Cart) */}
           <div className="hidden md:flex items-center gap-5 mt-1">
-            <div className="h-4 w-px bg-[#ccc]"></div>
-            <Link 
-              to="/contact"
-              className="text-[12px] tracking-[0.1em] text-[#666] hover:text-black font-medium transition-colors uppercase"
-            >
-              CONTACT
-            </Link>
-            
-            {/* Cart trigger button */}
-            <button
-              onClick={() => setIsCartOpen(true)}
-              className="flex items-center hover:opacity-75 transition-opacity relative p-1 cursor-pointer ml-2"
-              aria-label="Shopping Cart"
-            >
-              <ShoppingBag className="w-5 h-5 text-[#444] stroke-[1.5]" />
-              {totalItems > 0 && (
-                <span className="bg-black text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center absolute -top-1 -right-1">
-                  {totalItems}
-                </span>
-              )}
-            </button>
           </div>
 
-          {/* Mobile menu toggle & Cart */}
+          {/* Mobile menu toggle */}
           <div className="md:hidden flex items-center gap-4">
-             <button
-               onClick={() => setIsCartOpen(true)}
-               className="flex items-center hover:opacity-75 transition-opacity relative p-1 cursor-pointer"
-             >
-               <ShoppingBag className="w-5 h-5 text-[#222]" />
-               {totalItems > 0 && (
-                 <span className="bg-black text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center absolute -top-1 -right-1">
-                   {totalItems}
-                 </span>
-               )}
-             </button>
              <button
                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                className="p-1 text-[#222] cursor-pointer"
@@ -325,24 +289,25 @@ const Header: React.FC = () => {
             {/* Nav Links */}
             <nav className="flex-1 px-5 py-2 text-[16px]">
               <Link 
-                to="/" 
+                to="/about" 
                 onClick={closeMobileMenu} 
-                className="flex items-center py-3.5 border-b border-[#d8d2c4] text-black font-light hover:text-[#6b6359] transition-colors"
+                className="flex items-center py-3.5 border-b border-[#d8d2c4] text-black font-light hover:text-[#6b6359] transition-colors uppercase"
               >
-                HOME
+                ABOUT
               </Link>
               <Link 
-                to="/work" 
+                to="/experience-centre" 
                 onClick={closeMobileMenu} 
-                className="flex items-center py-3.5 border-b border-[#d8d2c4] text-black font-light hover:text-[#6b6359] transition-colors"
+                className="flex items-center py-3.5 border-b border-[#d8d2c4] text-black font-light hover:text-[#6b6359] transition-colors uppercase"
               >
-                WORK
+                EXPERIENCE CENTRE
               </Link>
+
               
               {/* Shop Accordion */}
               <div className="border-b border-[#d8d2c4]">
                 <div className="flex items-center justify-between py-3.5 cursor-pointer text-black font-light">
-                  <Link to="/shop" onClick={closeMobileMenu} className="flex-1 hover:text-[#6b6359] transition-colors">COLLECTIONS</Link>
+                  <Link to="/shop" onClick={closeMobileMenu} className="flex-1 hover:text-[#6b6359] transition-colors uppercase">COLLECTIONS</Link>
                   <button
                     onClick={() => setMobileExpandedCat(mobileExpandedCat === '__shop__' ? null : '__shop__')}
                     className="p-1"
@@ -394,32 +359,18 @@ const Header: React.FC = () => {
               </div>
 
               <Link 
-                to="/process" 
+                to="/news" 
                 onClick={closeMobileMenu} 
-                className="flex items-center py-3.5 border-b border-[#d8d2c4] text-black font-light hover:text-[#6b6359] transition-colors"
+                className="flex items-center py-3.5 border-b border-[#d8d2c4] text-black font-light hover:text-[#6b6359] transition-colors uppercase"
               >
-                PROCESS
+                NEWS
               </Link>
               <Link 
-                to="/about" 
+                to="/get-in-touch" 
                 onClick={closeMobileMenu} 
-                className="flex items-center py-3.5 border-b border-[#d8d2c4] text-black font-light hover:text-[#6b6359] transition-colors"
+                className="flex items-center py-3.5 border-b border-[#d8d2c4] text-black font-light hover:text-[#6b6359] transition-colors uppercase"
               >
-                ABOUT
-              </Link>
-              <Link 
-                to="/journal" 
-                onClick={closeMobileMenu} 
-                className="flex items-center py-3.5 border-b border-[#d8d2c4] text-black font-light hover:text-[#6b6359] transition-colors"
-              >
-                JOURNAL
-              </Link>
-              <Link 
-                to="/contact" 
-                onClick={closeMobileMenu} 
-                className="flex items-center py-3.5 border-b border-[#d8d2c4] text-black font-light hover:text-[#6b6359] transition-colors"
-              >
-                CONTACT
+                GET IN TOUCH
               </Link>
               <a 
                 href="tel:+918698814865"

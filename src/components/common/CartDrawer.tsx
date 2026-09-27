@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { X, Trash2, Plus, Minus, ShoppingBag, ArrowRight } from "lucide-react";
 import { useCart } from "../../context/CartContext";
@@ -35,7 +35,7 @@ export const CartDrawer: React.FC = () => {
 
         {/* Free Shipping / Bespoke Banner */}
         <div className="bg-[#1a1815] border-b border-[#2d261e] px-6 py-2.5 text-xs text-[#d6c4a8] flex items-center justify-between">
-          <span>✨ Complimentary White Glove Delivery on orders above ₹1,00,000</span>
+          <span>✨ Complimentary White Glove Delivery on all orders</span>
         </div>
 
         {/* Items List */}
@@ -123,9 +123,7 @@ export const CartDrawer: React.FC = () => {
                         <Plus className="w-3.5 h-3.5" />
                       </button>
                     </div>
-                    <span className="text-sm font-semibold text-[#c5a880]">
-                      {formatPrice(item.price * item.quantity)}
-                    </span>
+
                   </div>
                 </div>
               </div>
@@ -136,12 +134,7 @@ export const CartDrawer: React.FC = () => {
         {/* Footer */}
         {items.length > 0 && (
           <div className="p-6 bg-[#171717] border-t border-[#252525] space-y-4">
-            <div className="flex justify-between items-baseline">
-              <span className="text-xs text-[#888] uppercase tracking-wider">Subtotal</span>
-              <span className="font-serif text-xl font-bold text-white tracking-wide">
-                {formatPrice(cartTotal)}
-              </span>
-            </div>
+
             <p className="text-[11px] text-[#777]">
               Taxes and customized delivery options calculated at checkout.
             </p>

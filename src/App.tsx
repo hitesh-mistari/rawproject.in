@@ -13,12 +13,12 @@ import ShopPage from "./pages/ShopPage";
 import CategoryPage from "./pages/CategoryPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import CartPage from "./pages/CartPage";
+import NewsPage from "./pages/NewsPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import AboutPage from "./pages/AboutPage";
 import ExperienceCentrePage from "./pages/ExperienceCentrePage";
 import RequestQuotePage from "./pages/RequestQuotePage";
 import ContactPage from "./pages/ContactPage";
-import NewsPage from "./pages/NewsPage";
 import PolicyPage from "./pages/PolicyPage";
 
 // Scroll to top on route change
@@ -62,6 +62,8 @@ const App: React.FC = () => {
             <Routes>
               {/* Home */}
               <Route path="/" element={<HomePage />} />
+              <Route path="/news" element={<NewsPage />} />
+              <Route path="/get-in-touch" element={<ContactPage />} />
 
               {/* Shop & Catalog */}
               <Route path="/shop" element={<ShopPage />} />
@@ -86,7 +88,6 @@ const App: React.FC = () => {
               <Route path="/about" element={<AboutPage />} />
               <Route path="/about-us" element={<AboutPage />} />
               <Route path="/experience-centre" element={<ExperienceCentrePage />} />
-              <Route path="/news" element={<NewsPage />} />
               <Route path="/request-quote" element={<RequestQuotePage />} />
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/contact-us" element={<ContactPage />} />
@@ -107,7 +108,6 @@ const App: React.FC = () => {
 
           {/* Persistent global widgets */}
           <CartDrawer />
-          <WhatsAppButton />
         </div>
       </CartProvider>
     </BrowserRouter>

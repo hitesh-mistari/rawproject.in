@@ -43,7 +43,7 @@ const RequestQuotePage: React.FC = () => {
               </div>
               <h3 className="font-serif text-2xl text-stone-900 font-medium">Quotation Request Received</h3>
               <p className="text-stone-600 text-xs sm:text-sm max-w-md mx-auto font-light leading-relaxed">
-                Thank you, {formData.name}. Our senior architect will review your project parameters and contact you at {formData.phone} or {formData.email} with swatch options and pricing.
+                Thank you, {formData.name}. Our senior architect will review your project parameters and contact you at {formData.phone} or {formData.email} with swatch options.
               </p>
             </div>
           ) : (
@@ -124,21 +124,7 @@ const RequestQuotePage: React.FC = () => {
                   </select>
                 </div>
 
-                <div>
-                  <label className="block text-xs uppercase tracking-wider text-stone-700 font-medium mb-1">
-                    Estimated Budget Bracket
-                  </label>
-                  <select
-                    value={formData.budgetRange}
-                    onChange={(e) => setFormData({ ...formData, budgetRange: e.target.value })}
-                    className="w-full border border-sand-300 px-3.5 py-2.5 text-xs focus:outline-none focus:border-stone-900 rounded-none bg-white"
-                  >
-                    <option value="₹1,50,000 – ₹3,00,000">₹1,50,000 – ₹3,00,000</option>
-                    <option value="₹3,00,000 – ₹7,00,000">₹3,00,000 – ₹7,00,000</option>
-                    <option value="₹7,00,000 – ₹15,00,000">₹7,00,000 – ₹15,00,000</option>
-                    <option value="₹15,00,000+">Above ₹15,00,000</option>
-                  </select>
-                </div>
+
               </div>
 
               <div>

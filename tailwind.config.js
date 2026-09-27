@@ -23,8 +23,8 @@ export default {
         }
       },
       fontFamily: {
-        serif: ['"Playfair Display"', 'serif'],
-        sans: ['"Outfit"', 'sans-serif'],
+        serif: ['"DM Sans"', 'sans-serif'],
+        sans: ['"DM Sans"', 'sans-serif'],
       },
       boxShadow: {
         'luxury': '0 20px 40px -15px rgba(0, 0, 0, 0.5)',

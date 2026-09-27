@@ -1,115 +1,278 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Instagram, Facebook, Linkedin, Twitter, ArrowRight } from 'lucide-react';
+import { ArrowUpRight, Download, X, Mail, Phone, User, CheckCircle2, Instagram } from 'lucide-react';
 
 const Footer: React.FC = () => {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [name, setName] = useState('');
+  const [contactType, setContactType] = useState<'email' | 'phone'>('email');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+    setIsSubmitted(false);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitted(true);
+    
+    // Trigger catalog PDF download
+    const link = document.createElement('a');
+    const blob = new Blob(['THE RAW PROJECT - FURNITURE & INTERIORS CATALOG 2026'], { type: 'application/pdf' });
+    link.href = URL.createObjectURL(blob);
+    link.setAttribute('download', 'The-Raw-Project-Catalog.pdf');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
-    <footer className="bg-[#905a39] text-[#f4efe8] font-sans overflow-hidden">
-      
-      {/* Top Grid Area */}
-      <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[#a16b49]">
-        
-        {/* Left Column */}
-        <div className="p-8 lg:p-12 xl:p-16 flex flex-col justify-between min-h-[320px]">
-          <div>
-            <h2 className="text-3xl font-bold tracking-tight mb-4">THE RAW PROJECT</h2>
-            <p className="text-[14px] text-white/80 leading-relaxed max-w-xs">
-              Every week we share the latest arrivals, best deals, and exclusive offers.
-            </p>
+    <>
+      <footer className="bg-[#1e1c1a] text-[#e8e3da] font-sans overflow-hidden">
+        {/* Main Content Area */}
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12 py-10 sm:py-14">
+
+          {/* Top Row: Tagline + Download Catalog */}
+          <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-10 md:gap-16 mb-10 sm:mb-12">
+
+            {/* Left: Tagline + Download Catalog Action */}
+            <div className="max-w-[380px]">
+
+              {/* Download Catalog Trigger */}
+              <button
+                type="button"
+                onClick={handleOpenModal}
+                className="w-full flex items-center justify-between border-b border-[#3d3a36] pb-2.5 gap-3 group text-left hover:border-[#c5a880] transition-colors"
+              >
+                <span className="text-[14px] text-[#e8e3da] font-medium group-hover:text-[#c5a880] transition-colors flex items-center gap-2">
+                  <Download className="w-4 h-4 text-[#c5a880]" />
+                  Download Our Catalog
+                </span>
+                <span className="w-7 h-7 rounded-full border border-[#3d3a36] flex items-center justify-center group-hover:bg-[#c5a880] group-hover:text-[#1e1c1a] group-hover:border-[#c5a880] transition-all shrink-0">
+                  <ArrowUpRight className="w-3.5 h-3.5" strokeWidth={1.5} />
+                </span>
+              </button>
+            </div>
+
+            {/* Right: 2 Navigation Columns */}
+            <div className="grid grid-cols-2 gap-8 sm:gap-14">
+              {/* Collections */}
+              <div>
+                <h4 className="text-[11px] uppercase tracking-[0.18em] text-[#6b6560] font-medium mb-4">
+                  Collections
+                </h4>
+                <ul className="space-y-2.5">
+                  {[
+                    { label: 'Bedroom', href: '/product-category/bedroom' },
+                    { label: 'Living Room', href: '/product-category/living' },
+                    { label: 'Dining', href: '/product-category/dining' },
+                    { label: 'Seating', href: '/product-category/living/lounge-chair' },
+                    { label: 'Storage', href: '/shop' },
+                  ].map(({ label, href }) => (
+                    <li key={label}>
+                      <Link to={href} className="text-[13px] text-[#a09890] hover:text-[#e8e3da] transition-colors leading-tight block">
+                        {label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Studio */}
+              <div>
+                <h4 className="text-[11px] uppercase tracking-[0.18em] text-[#6b6560] font-medium mb-4">
+                  Studio
+                </h4>
+                <ul className="space-y-2.5">
+                  {[
+                    { label: 'About', href: '/about' },
+                    { label: 'Contact', href: '/contact' },
+                  ].map(({ label, href }) => (
+                    <li key={label}>
+                      <Link to={href} className="text-[13px] text-[#a09890] hover:text-[#e8e3da] transition-colors leading-tight block">
+                        {label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           </div>
-          <div className="mt-12 flex flex-col sm:flex-row sm:items-center gap-4">
-            <span className="text-[10px] uppercase tracking-widest font-semibold text-white/70">Follow us on</span>
-            <div className="flex gap-2">
-              <a href="https://instagram.com" target="_blank" rel="noreferrer" className="w-8 h-8 border border-[#a16b49] flex items-center justify-center hover:bg-white hover:text-[#905a39] transition-colors"><Instagram className="w-3.5 h-3.5" /></a>
-              <a href="https://facebook.com" target="_blank" rel="noreferrer" className="w-8 h-8 border border-[#a16b49] flex items-center justify-center hover:bg-white hover:text-[#905a39] transition-colors"><Facebook className="w-3.5 h-3.5" /></a>
-              <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="w-8 h-8 border border-[#a16b49] flex items-center justify-center hover:bg-white hover:text-[#905a39] transition-colors"><Linkedin className="w-3.5 h-3.5" /></a>
-              <a href="https://twitter.com" target="_blank" rel="noreferrer" className="w-8 h-8 border border-[#a16b49] flex items-center justify-center hover:bg-white hover:text-[#905a39] transition-colors"><Twitter className="w-3.5 h-3.5" /></a>
+
+          {/* Bottom Strip */}
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-[#2e2b28] pt-5">
+            <p className="text-[12px] text-[#6b6560] tracking-wide">
+              2026 © The Raw Project. All rights reserved.
+            </p>
+            <div className="flex items-center gap-6">
+              <a href="https://www.instagram.com/therawproject.in/" target="_blank" rel="noreferrer" className="text-[#6b6560] hover:text-[#c5a880] transition-colors" aria-label="Instagram">
+                <Instagram className="w-4 h-4" />
+              </a>
+              <Link to="/shipping-policy" className="text-[12px] text-[#6b6560] hover:text-[#a09890] transition-colors">Shipping Policy</Link>
+              <Link to="/privacy-policy" className="text-[12px] text-[#6b6560] hover:text-[#a09890] transition-colors">Privacy Policy</Link>
+              <Link to="/terms-of-service" className="text-[12px] text-[#6b6560] hover:text-[#a09890] transition-colors">Terms of Use</Link>
+              <button onClick={scrollToTop} className="text-[12px] text-[#6b6560] hover:text-[#a09890] transition-colors">
+                Back to Top ↑
+              </button>
             </div>
           </div>
         </div>
+      </footer>
 
-        {/* Middle Column */}
-        <div className="p-8 lg:p-12 xl:p-16 flex flex-col justify-center min-h-[320px] md:items-center">
-          <ul className="space-y-4 inline-block">
-            {['Home', 'About Us', 'Services', 'Projects', 'Contact'].map(link => (
-              <li key={link}>
-                <Link to="#" className="text-[14px] text-white/90 hover:text-white transition-colors flex items-center gap-3">
-                  <span className="w-1 h-1 rounded-full bg-white/50"></span> {link}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Right Column */}
-        <div className="p-8 lg:p-12 xl:p-16 flex flex-col justify-center min-h-[320px]">
-          <h3 className="text-2xl md:text-[28px] font-light mb-4 tracking-tight">
-            Download <em className="font-serif italic text-white pr-1">Catalog</em>
-          </h3>
-          <p className="text-[13px] text-white/80 leading-relaxed mb-8 max-w-sm">
-            Enter your email to receive our exclusive furniture and interior collections PDF directly.
-          </p>
-          <form 
-            className="flex border border-[#a16b49] w-full max-w-md bg-transparent" 
-            onSubmit={(e) => {
-              e.preventDefault();
-              alert('Thank you! The catalog PDF will begin downloading shortly.');
-              // window.open('/catalog-placeholder.pdf', '_blank');
-            }}
-          >
-            <input 
-              type="email" 
-              placeholder="Your email address" 
-              className="bg-transparent px-4 py-3.5 text-[13px] text-white placeholder-white/50 focus:outline-none flex-1" 
-              required
-            />
-            <button type="submit" className="bg-white text-[#905a39] px-5 flex items-center justify-center hover:bg-gray-100 transition-colors group">
-              <span className="text-[11px] font-bold tracking-widest uppercase mr-2 group-hover:mr-3 transition-all">Get PDF</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </form>
-        </div>
-      </div>
-
-      {/* Middle Footer Strip */}
-      <div className="border-t border-[#a16b49]">
-        <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[#a16b49]">
-          
-          <div className="p-5 lg:px-12 xl:px-16 flex items-center justify-center md:justify-start">
-            <p className="text-[12px] text-white/70 tracking-wide">
-              2026 ©The Raw Project. All rights reserved
-            </p>
-          </div>
-
-          <div className="p-5 lg:px-12 xl:px-16 flex items-center justify-center">
-            <button onClick={scrollToTop} className="text-[13px] text-white/90 font-medium hover:text-white transition-colors tracking-wide">
-              Back to Top
-            </button>
-          </div>
-
-          <div className="p-5 lg:px-12 xl:px-16 flex items-center justify-center md:justify-end gap-6 md:gap-8">
-            <Link to="#" className="text-[12px] text-white/70 hover:text-white transition-colors">Privacy Policy</Link>
-            <Link to="#" className="text-[12px] text-white/70 hover:text-white transition-colors">Terms of Use</Link>
-            <Link to="#" className="text-[12px] text-white/70 hover:text-white transition-colors">Contact Us</Link>
-          </div>
-        </div>
-      </div>
-
-      {/* Massive Typography Bottom */}
-      <div className="w-full pt-12 md:pt-20 px-4 flex justify-center translate-y-4 md:translate-y-8 select-none">
-        <h1 
-          className="text-[11vw] leading-[0.7] font-bold tracking-tighter text-white whitespace-nowrap"
-          style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}
+      {/* Download Catalog Popup Modal - Editorial High-Fashion Luxury Styling */}
+      {isModalOpen && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn"
+          onClick={handleCloseModal}
         >
-          THE RAW PROJECT
-        </h1>
-      </div>
+          <div 
+            className="relative w-full max-w-md bg-[#181614] border border-[#332f2b] p-8 sm:p-10 text-[#e8e3da] shadow-2xl rounded-none"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Minimalist Close Button */}
+            <button
+              onClick={handleCloseModal}
+              className="absolute top-6 right-6 p-2 text-[#736c63] hover:text-[#e8e3da] transition-colors"
+              aria-label="Close modal"
+            >
+              <X className="w-5 h-5" strokeWidth={1.5} />
+            </button>
 
-    </footer>
+            {!isSubmitted ? (
+              <>
+                <div className="mb-8 pr-6">
+                  <p className="text-[10px] tracking-[0.3em] font-semibold text-[#c5a880] uppercase mb-2">
+                    Catalogue Request
+                  </p>
+                  <h3 className="font-serif text-2xl sm:text-3xl font-light text-[#e8e3da] tracking-wide leading-tight mb-2">
+                    Download Our Collection
+                  </h3>
+                  <p className="text-[12.5px] text-[#8c857b] font-light leading-relaxed">
+                    Enter your credentials to receive our complete 2026 furniture & interior design portfolio.
+                  </p>
+                </div>
+
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  {/* Name Input */}
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-[0.25em] text-[#8c857b] mb-2 font-medium">
+                      Full Name *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="e.g. Architectural Client"
+                      className="w-full bg-transparent border-b border-[#332f2b] focus:border-[#c5a880] py-2.5 text-[13px] text-[#e8e3da] placeholder-[#544e47] focus:outline-none transition-colors font-light tracking-wide rounded-none"
+                    />
+                  </div>
+
+                  {/* Contact Type Segmented Toggle */}
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-[0.25em] text-[#8c857b] mb-2 font-medium">
+                      Preferred Contact *
+                    </label>
+                    <div className="flex border-b border-[#332f2b]">
+                      <button
+                        type="button"
+                        onClick={() => setContactType('email')}
+                        className={`flex-1 py-2.5 text-[11px] tracking-[0.2em] uppercase font-medium transition-all text-center border-b-2 ${
+                          contactType === 'email'
+                            ? 'border-[#c5a880] text-[#c5a880]'
+                            : 'border-transparent text-[#736c63] hover:text-[#a09890]'
+                        }`}
+                      >
+                        Email Address
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setContactType('phone')}
+                        className={`flex-1 py-2.5 text-[11px] tracking-[0.2em] uppercase font-medium transition-all text-center border-b-2 ${
+                          contactType === 'phone'
+                            ? 'border-[#c5a880] text-[#c5a880]'
+                            : 'border-transparent text-[#736c63] hover:text-[#a09890]'
+                        }`}
+                      >
+                        Phone Number
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Dynamic Input Field */}
+                  {contactType === 'email' ? (
+                    <div>
+                      <label className="block text-[10px] uppercase tracking-[0.25em] text-[#8c857b] mb-2 font-medium">
+                        Email Address *
+                      </label>
+                      <input
+                        type="email"
+                        required
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="client@studio.com"
+                        className="w-full bg-transparent border-b border-[#332f2b] focus:border-[#c5a880] py-2.5 text-[13px] text-[#e8e3da] placeholder-[#544e47] focus:outline-none transition-colors font-light tracking-wide rounded-none"
+                      />
+                    </div>
+                  ) : (
+                    <div>
+                      <label className="block text-[10px] uppercase tracking-[0.25em] text-[#8c857b] mb-2 font-medium">
+                        Phone Number *
+                      </label>
+                      <input
+                        type="tel"
+                        required
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        placeholder="+91 98765 43210"
+                        className="w-full bg-transparent border-b border-[#332f2b] focus:border-[#c5a880] py-2.5 text-[13px] text-[#e8e3da] placeholder-[#544e47] focus:outline-none transition-colors font-light tracking-wide rounded-none"
+                      />
+                    </div>
+                  )}
+
+                  {/* Submit Button */}
+                  <button
+                    type="submit"
+                    className="w-full mt-4 bg-[#c5a880] hover:bg-[#b0936b] text-[#181614] text-[11px] tracking-[0.25em] font-semibold uppercase py-4 transition-all flex items-center justify-center gap-2 group rounded-none"
+                  >
+                    <span>Download Catalogue PDF</span>
+                    <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" strokeWidth={2} />
+                  </button>
+                </form>
+              </>
+            ) : (
+              <div className="py-8 text-center space-y-5">
+                <span className="text-[10px] tracking-[0.3em] font-semibold text-[#c5a880] uppercase block">
+                  Request Confirmed
+                </span>
+                <h3 className="font-serif text-2xl font-light text-[#e8e3da]">
+                  Thank You, {name || 'Valued Guest'}
+                </h3>
+                <p className="text-[13px] text-[#8c857b] font-light leading-relaxed max-w-xs mx-auto">
+                  Your catalogue PDF download has been initiated. We look forward to creating exceptional spaces together.
+                </p>
+                <button
+                  type="button"
+                  onClick={handleCloseModal}
+                  className="mt-6 inline-block border border-[#332f2b] hover:border-[#c5a880] text-[#e8e3da] hover:text-[#c5a880] text-[11px] tracking-[0.2em] font-medium uppercase px-8 py-3 transition-colors rounded-none"
+                >
+                  Close Window
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

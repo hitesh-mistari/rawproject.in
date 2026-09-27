@@ -2,15 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Recoleta';
+  src: url('/images/Recoleta-RegularDEMO.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-recoleta {
+  font-family: 'Recoleta', serif !important;
+}
+
 @layer base {
   :root {
-    --font-serif: Playfair Display, Georgia, serif;
-    --font-sans: Outfit, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+    --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-serif: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
 
   html {
     scroll-behavior: smooth;
-    font-family: var(--font-sans);
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     color: #1c1917;
     background-color: #faf9f5;
   }
@@ -19,18 +31,14 @@
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    font-family: 'DM Sans', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     max-width: 100vw;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-serif);
-    letter-spacing: -0.01em;
-  }
-
-  *, *::before, *::after {
-    box-sizing: border-box;
+  h1, h2, h3, h4, h5, h6, p, span, a, button, input, select, textarea {
+    font-family: 'DM Sans', sans-serif !important;
   }
 
   img, video, iframe {

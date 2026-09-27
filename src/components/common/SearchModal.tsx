@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Search, X, Loader2, ArrowRight } from "lucide-react";
 import { api } from "../../services/api";
@@ -124,9 +124,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                       <p className="text-xs text-[#888]">{product.categories?.[0]?.name || "Luxury Furniture"}</p>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-semibold text-[#c5a880]">
-                        {formatPrice(product.prices?.price)}
-                      </p>
+
                       <span className="text-[10px] text-[#25D366]">In Stock</span>
                     </div>
                   </Link>

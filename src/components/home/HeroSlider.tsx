@@ -1,171 +1,232 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
-
-interface Slide {
-  id: number;
-  title: string;
-  subtitle: string;
-  description: string;
-  image: string;
-  ctaText: string;
-  ctaLink: string;
-  secondaryCtaText?: string;
-  secondaryCtaLink?: string;
-}
-
-const slides: Slide[] = [
-  {
-    id: 1,
-    title: "Sculptural Modernity",
-    subtitle: "The New Living Collection",
-    description: "Architectural proportions, organic curves, and bespoke upholstery tailored to high-end residential interiors.",
-    image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=1920&auto=format&fit=crop",
-    ctaText: "Explore Collection",
-    ctaLink: "/category/living",
-    secondaryCtaText: "Experience Centre",
-    secondaryCtaLink: "/experience-centre",
-  },
-  {
-    id: 2,
-    title: "Sanctuary of Rest",
-    subtitle: "Bespoke Bedroom Suites",
-    description: "Designed for profound rest. Hand-tufted headboards, floating pedestals, and concealed acoustic craftsmanship.",
-    image: "https://images.unsplash.com/photo-1540518614846-7ede433c4ef0?q=80&w=1920&auto=format&fit=crop",
-    ctaText: "Discover Bedrooms",
-    ctaLink: "/category/bedroom",
-    secondaryCtaText: "Request a Quote",
-    secondaryCtaLink: "/request-quote",
-  },
-  {
-    id: 3,
-    title: "The Art of Gathering",
-    subtitle: "Monolithic Dining",
-    description: "Exotic natural marble surfaces paired with solid smoked oak bases. Crafted to become the focal point of conversation.",
-    image: "https://images.unsplash.com/photo-1617806118233-18e1de247200?q=80&w=1920&auto=format&fit=crop",
-    ctaText: "View Dining Tables",
-    ctaLink: "/category/dining",
-    secondaryCtaText: "Custom Commission",
-    secondaryCtaLink: "/request-quote",
-  },
-];
+import { Play } from "lucide-react";
 
 const HeroSlider: React.FC = () => {
-  const [current, setCurrent] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
+  const [angle, setAngle] = useState(0);
+  const [videoOpen, setVideoOpen] = useState(false);
+  const rafRef = useRef<number>(0);
+  const lastTimeRef = useRef<number>(0);
 
+  // Rotate the circular badge text
   useEffect(() => {
-    if (isPaused) return;
-    const timer = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % slides.length);
-    }, 6500);
-    return () => clearInterval(timer);
-  }, [isPaused]);
+    const animate = (time: number) => {
+      if (lastTimeRef.current) {
+        const delta = time - lastTimeRef.current;
+        setAngle((prev) => (prev + delta * 0.025) % 360);
+      }
+      lastTimeRef.current = time;
+      rafRef.current = requestAnimationFrame(animate);
+    };
+    rafRef.current = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, []);
 
-  const prevSlide = () => {
-    setCurrent((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
-  };
-
-  const nextSlide = () => {
-    setCurrent((prev) => (prev + 1) % slides.length);
-  };
+  const badgeText = "THE RAW PROJECT · HANDCRAFTED FURNITURE · ";
 
   return (
-    <div
-      className="relative h-[80vh] min-h-[580px] max-h-[900px] w-full bg-stone-950 overflow-hidden"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
-    >
-      {slides.map((slide, idx) => {
-        const isActive = idx === current;
-        return (
-          <div
-            key={slide.id}
-            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-              isActive ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
-            }`}
-          >
-            {/* Background Image with parallax zoom */}
-            <div
-              className={`absolute inset-0 bg-cover bg-center transition-transform duration-[7000ms] ease-out ${
-                isActive ? "scale-105" : "scale-100"
-              }`}
-              style={{ backgroundImage: `url(${slide.image})` }}
+    <>
+      {/* Hero Section */}
+      <div className="w-full px-4 pt-4 pb-2">
+        <div
+          className="relative w-full overflow-hidden rounded-[20px]"
+          style={{
+            background: "linear-gradient(135deg, #c8b89a 0%, #bfac91 40%, #b5a080 100%)",
+            minHeight: "86vh",
+            maxHeight: "92vh",
+          }}
+        >
+          {/* ── Circular rotating badge (top-left) ── */}
+          <div className="absolute top-6 left-6 z-20 w-20 h-20 md:w-24 md:h-24">
+            <svg
+              viewBox="0 0 100 100"
+              className="w-full h-full"
+              style={{ transform: `rotate(${angle}deg)` }}
             >
-              {/* Dark subtle gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-r from-stone-950/85 via-stone-950/50 to-stone-950/30" />
+              <defs>
+                <path
+                  id="circlePath"
+                  d="M 50,50 m -35,0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0"
+                />
+              </defs>
+              <text
+                fontSize="10.5"
+                fill="rgba(255,255,255,0.85)"
+                fontFamily="Outfit, sans-serif"
+                fontWeight="500"
+                letterSpacing="1.5"
+              >
+                <textPath href="#circlePath">{badgeText}</textPath>
+              </text>
+            </svg>
+            {/* Centre dot */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-2 h-2 rounded-full bg-white/70" />
+            </div>
+          </div>
+
+          {/* ── Main Content ── */}
+          <div className="relative z-10 h-full flex flex-col justify-between px-6 md:px-12 pt-10 pb-8 md:pt-14 md:pb-10"
+               style={{ minHeight: "86vh" }}>
+
+            {/* Top area: tagline + brand name + right text */}
+            <div className="flex items-start justify-between mt-6">
+              {/* Left: tagline + giant brand */}
+              <div className="flex-1">
+                <p className="text-white/80 text-sm md:text-base font-light tracking-widest mb-1 flex items-center gap-3">
+                  For Luxury Living
+                  <span className="inline-block w-8 h-px bg-white/60" />
+                </p>
+                <h1
+                  className="font-serif leading-none text-white select-none"
+                  style={{
+                    fontSize: "clamp(3.5rem, 11vw, 9.5rem)",
+                    letterSpacing: "-0.02em",
+                    textShadow: "0 4px 40px rgba(0,0,0,0.18)",
+                  }}
+                >
+                  The Raw
+                  <br />
+                  Project
+                </h1>
+              </div>
+
+              {/* Right: tagline description */}
+              <div className="hidden md:block max-w-[200px] text-right pt-2">
+                <p
+                  className="text-white/80 text-sm md:text-base leading-relaxed font-light"
+                  style={{ fontFamily: "Outfit, sans-serif" }}
+                >
+                  We believe that great craftsmanship should be easy to live with.
+                </p>
+              </div>
             </div>
 
-            {/* Slide Content */}
-            <div className="relative z-20 h-full container-custom flex items-center">
-              <div className="max-w-2xl text-white space-y-5 animate-fade-in">
-                <span className="inline-block text-xs md:text-sm uppercase tracking-[0.3em] text-gold-400 font-medium">
-                  {slide.subtitle}
-                </span>
-                <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-semibold leading-[1.15] text-white tracking-tight">
-                  {slide.title}
-                </h1>
-                <p className="text-stone-300 text-sm md:text-base font-light leading-relaxed max-w-lg">
-                  {slide.description}
-                </p>
+            {/* Centre: product image floating */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
+              <img
+                src="/images/home/hero/hero_slide1.jpg"
+                alt="Featured furniture"
+                className="object-contain"
+                style={{
+                  maxHeight: "78vh",
+                  maxWidth: "70vw",
+                  filter: "drop-shadow(0 30px 60px rgba(0,0,0,0.25))",
+                }}
+              />
+            </div>
 
-                <div className="pt-4 flex flex-wrap gap-4 items-center">
-                  <Link
-                    to={slide.ctaLink}
-                    className="inline-flex items-center gap-3 bg-white text-stone-950 hover:bg-gold-500 hover:text-stone-950 px-7 py-3.5 text-xs uppercase tracking-widest font-semibold transition-all duration-300 shadow-lg"
-                  >
-                    <span>{slide.ctaText}</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
+            {/* Bottom row: CTAs left + video card right */}
+            <div className="relative z-20 flex items-end justify-between">
+              {/* CTA Buttons */}
+              <div className="flex flex-col gap-3">
+                <Link
+                  to="/collections"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs uppercase tracking-widest font-semibold transition-all duration-300"
+                  style={{
+                    background: "rgba(255,255,255,0.22)",
+                    backdropFilter: "blur(12px)",
+                    border: "1px solid rgba(255,255,255,0.45)",
+                    color: "#fff",
+                  }}
+                  onMouseEnter={(e) =>
+                    ((e.currentTarget as HTMLAnchorElement).style.background =
+                      "rgba(255,255,255,0.38)")
+                  }
+                  onMouseLeave={(e) =>
+                    ((e.currentTarget as HTMLAnchorElement).style.background =
+                      "rgba(255,255,255,0.22)")
+                  }
+                >
+                  Shop Ready Stock
+                </Link>
+                <Link
+                  to="/request-quote"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs uppercase tracking-widest font-semibold transition-all duration-300"
+                  style={{
+                    background: "rgba(255,255,255,0.22)",
+                    backdropFilter: "blur(12px)",
+                    border: "1px solid rgba(255,255,255,0.45)",
+                    color: "#fff",
+                  }}
+                  onMouseEnter={(e) =>
+                    ((e.currentTarget as HTMLAnchorElement).style.background =
+                      "rgba(255,255,255,0.38)")
+                  }
+                  onMouseLeave={(e) =>
+                    ((e.currentTarget as HTMLAnchorElement).style.background =
+                      "rgba(255,255,255,0.22)")
+                  }
+                >
+                  Custom Commission
+                </Link>
+              </div>
 
-                  {slide.secondaryCtaText && (
-                    <Link
-                      to={slide.secondaryCtaLink || "/request-quote"}
-                      className="inline-flex items-center gap-2 border border-white/70 hover:border-gold-400 text-white hover:text-gold-400 px-6 py-3.5 text-xs uppercase tracking-widest font-medium transition-all duration-300"
+              {/* Video preview card */}
+              <div
+                className="relative cursor-pointer group"
+                onClick={() => setVideoOpen(true)}
+                style={{ width: "clamp(120px, 18vw, 220px)" }}
+              >
+                <div
+                  className="relative overflow-hidden rounded-2xl shadow-2xl"
+                  style={{ aspectRatio: "4/3" }}
+                >
+                  <img
+                    src="/images/home/need_design_advice.png"
+                    alt="Watch our story"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  {/* Dark overlay */}
+                  <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors duration-300" />
+                  {/* Play button */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div
+                      className="w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
+                      style={{
+                        background: "rgba(255,255,255,0.9)",
+                        backdropFilter: "blur(8px)",
+                      }}
                     >
-                      <span>{slide.secondaryCtaText}</span>
-                    </Link>
-                  )}
+                      <Play className="w-4 h-4 md:w-5 md:h-5 text-stone-900 ml-0.5" fill="currentColor" />
+                    </div>
+                  </div>
                 </div>
+                <p className="mt-2 text-white/80 text-[10px] md:text-xs uppercase tracking-wider text-center font-medium">
+                  Watch Our Story
+                </p>
               </div>
             </div>
           </div>
-        );
-      })}
-
-      {/* Slide Navigation Arrows */}
-      <button
-        onClick={prevSlide}
-        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-black/30 hover:bg-black/70 text-white transition-all backdrop-blur-sm"
-        aria-label="Previous slide"
-      >
-        <ChevronLeft className="w-5 h-5" />
-      </button>
-
-      <button
-        onClick={nextSlide}
-        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-black/30 hover:bg-black/70 text-white transition-all backdrop-blur-sm"
-        aria-label="Next slide"
-      >
-        <ChevronRight className="w-5 h-5" />
-      </button>
-
-      {/* Slide Indicators */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2">
-        {slides.map((_, idx) => (
-          <button
-            key={idx}
-            onClick={() => setCurrent(idx)}
-            className={`transition-all duration-300 rounded-full ${
-              idx === current
-                ? "w-8 h-1.5 bg-gold-400"
-                : "w-2 h-1.5 bg-white/50 hover:bg-white"
-            }`}
-            aria-label={`Go to slide ${idx + 1}`}
-          />
-        ))}
+        </div>
       </div>
-    </div>
+
+      {/* Video Modal */}
+      {videoOpen && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm"
+          onClick={() => setVideoOpen(false)}
+        >
+          <div
+            className="relative w-full max-w-4xl mx-4 rounded-2xl overflow-hidden shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <video
+              src="/videos/Meet-our-Artisans.mp4"
+              controls
+              autoPlay
+              className="w-full h-auto"
+            />
+            <button
+              onClick={() => setVideoOpen(false)}
+              className="absolute top-3 right-3 w-9 h-9 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black transition-colors text-lg font-light"
+            >
+              ×
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

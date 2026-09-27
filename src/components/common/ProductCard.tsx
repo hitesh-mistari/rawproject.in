@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { Heart } from "lucide-react";
 import { Product } from "../../types";
 
 interface ProductCardProps {
@@ -9,48 +10,57 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const imageUrl = product.images?.[0]?.src || "/placeholder-image.jpg";
   const hoverImageUrl = product.images?.[1]?.src || imageUrl;
+  const [wished, setWished] = useState(false);
+
+  const price = parseFloat(product.prices?.price || "0");
+  const priceStr = "₹ " + price.toLocaleString("en-IN", { minimumFractionDigits: 2 });
+  const categoryName = product.categories?.[0]?.name || "";
 
   return (
-    <div className="group flex flex-col">
-      {/* Image Container */}
-      <Link to={`/product/${product.slug}`} className="relative aspect-[4/5] overflow-hidden bg-[#e0ded8] mb-5 border border-[#dfdbd2] shadow-sm">
-        <img 
-          src={imageUrl} 
+    <div className="group flex flex-col bg-white rounded-sm overflow-hidden">
+      {/* Image */}
+      <Link to={`/product/${product.slug}`} className="relative aspect-square overflow-hidden bg-[#f5f3f0] block">
+        <img
+          src={imageUrl}
           alt={product.name}
-          className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105 group-hover:opacity-0"
+          className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:opacity-0 group-hover:scale-105"
         />
-        <img 
-          src={hoverImageUrl} 
+        <img
+          src={hoverImageUrl}
           alt={product.name}
-          className="absolute inset-0 w-full h-full object-cover opacity-0 transition-all duration-700 group-hover:scale-105 group-hover:opacity-100"
+          className="absolute inset-0 w-full h-full object-cover opacity-0 transition-all duration-700 group-hover:opacity-100 group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-[#3a352d]/0 group-hover:bg-[#3a352d]/5 transition-colors duration-500 z-10 pointer-events-none" />
+
+        {/* Wishlist Heart */}
+        <button
+          onClick={(e) => { e.preventDefault(); e.stopPropagation(); setWished(w => !w); }}
+          className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm hover:scale-110 transition-transform"
+          aria-label="Add to wishlist"
+        >
+          <Heart className={`w-4 h-4 transition-colors ${wished ? 'fill-red-500 text-red-500' : 'text-[#999]'}`} strokeWidth={1.5} />
+        </button>
       </Link>
 
-      {/* Info Container */}
-      <div className="flex flex-col px-1">
-        {/* Categories */}
-        <div className="text-[10px] tracking-[0.2em] uppercase text-[#8a7f72] font-bold mb-2 flex flex-wrap gap-1.5">
-          {product.categories?.map((cat, idx) => (
-            <React.Fragment key={cat.id}>
-              <Link to={`/shop?category=${cat.slug}`} className="hover:text-[#1a1612] transition-colors relative z-10">
-                {cat.name}
-              </Link>
-              {idx < product.categories.length - 1 && <span className="opacity-50">/</span>}
-            </React.Fragment>
-          ))}
-        </div>
-
-        {/* Title */}
-        <Link to={`/product/${product.slug}`} className="text-[15px] font-semibold text-[#1a1612] tracking-[0.1em] uppercase mb-1.5 hover:text-[#8a7f72] transition-colors">
+      {/* Info */}
+      <div className="px-3 pt-3 pb-4 flex flex-col gap-1">
+        {categoryName && (
+          <span className="text-[10px] text-[#999] uppercase tracking-wider font-medium">{categoryName}</span>
+        )}
+        <Link
+          to={`/product/${product.slug}`}
+          className="text-[14px] sm:text-[15px] font-normal text-[#1a1a1a] hover:text-[#8a6040] transition-colors leading-snug line-clamp-2"
+        >
           {product.name}
         </Link>
-        
-        {/* Price */}
-        <div className="text-[13.5px] text-[#6b6359] font-medium tracking-wide">
-          <span dangerouslySetInnerHTML={{ __html: product.prices.currency_symbol || '₹' }} />
-          <span> {parseFloat(product.prices.price).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
-        </div>
+
+
+        {/* View Details */}
+        <Link
+          to={`/product/${product.slug}`}
+          className="mt-2 w-full flex items-center justify-center py-2 rounded-full border border-[#e0e0e0] text-[12px] font-medium text-[#1a1a1a] hover:border-[#8a6040] hover:bg-[#8a6040] hover:text-white transition-all duration-200"
+        >
+          View details
+        </Link>
       </div>
     </div>
   );

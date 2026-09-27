@@ -111,40 +111,30 @@ const AboutPage: React.FC = () => {
         playsInline
       />
 
-      {/* Floating Sound Toggle Pill (Bottom Left, so it doesn't overlap WhatsApp button on bottom right) */}
+      {/* Floating Sound Toggle Pill (Icon only, Bottom Left) */}
       <div className="fixed bottom-6 left-6 z-50">
         <button
           onClick={toggleSound}
-          className="flex items-center gap-2 px-3 py-2 bg-black/85 hover:bg-black text-white text-xs tracking-wide rounded-full shadow-xl backdrop-blur-sm transition-all duration-300 hover:scale-105 border border-white/20 cursor-pointer"
+          className="flex items-center justify-center p-3 bg-black/85 hover:bg-black text-white rounded-full shadow-xl backdrop-blur-sm transition-all duration-300 hover:scale-110 border border-white/20 cursor-pointer"
+          aria-label={isMuted || !isPlaying ? 'Play ambient audio' : 'Mute ambient audio'}
           title={isMuted || !isPlaying ? 'Click to play ambient audio' : 'Click to mute audio'}
         >
           {isMuted || !isPlaying ? (
-            <>
-              <VolumeX className="w-4 h-4 text-[#d8c3a5]" />
-              <span className="font-medium">Artisan Ambient: Muted</span>
-            </>
+            <VolumeX className="w-5 h-5 text-[#d8c3a5]" />
           ) : (
-            <>
-              <Volume2 className="w-4 h-4 text-[#8fe388] animate-pulse" />
-              <span className="font-medium">Artisan Ambient: Playing</span>
-              <span className="flex gap-0.5 items-center h-3">
-                <span className="w-0.5 h-2 bg-[#8fe388] animate-pulse" />
-                <span className="w-0.5 h-3 bg-[#8fe388] animate-pulse" style={{ animationDelay: '150ms' }} />
-                <span className="w-0.5 h-2 bg-[#8fe388] animate-pulse" style={{ animationDelay: '300ms' }} />
-              </span>
-            </>
+            <Volume2 className="w-5 h-5 text-[#8fe388] animate-pulse" />
           )}
         </button>
       </div>
 
       {/* Section 1: About Us Narrative */}
-      <section className="bg-[#EDE8DE] pt-10 sm:pt-14 pb-14 sm:pb-20 px-4 sm:px-6 lg:px-12">
-        <div className="max-w-[1400px] mx-auto">
+      <section className="bg-[#EDE8DE] pt-10 sm:pt-14 pb-14 sm:pb-20">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12">
           <h1 className="text-[30px] sm:text-[38px] lg:text-[45px] font-light text-black font-['IBM_Plex_Sans',sans-serif] mb-6 sm:mb-8 tracking-normal">
             About Us
           </h1>
 
-          <div className="space-y-6 text-[16px] sm:text-[17px] font-light leading-[1.85] text-black font-['Commissioner',sans-serif] w-full text-left">
+          <div className="space-y-6 text-[16px] sm:text-[17px] font-light leading-[1.85] text-black font-['Commissioner',sans-serif] w-full text-left max-w-4xl">
             <p>
               Hello everyone, I’m Amruta, and I pour my heart and soul into The Raw Project. It’s not just a venture; it’s a passion that celebrates the raw, untouched beauty of nature and the simple elegance of minimalistic design.
             </p>
@@ -174,8 +164,8 @@ const AboutPage: React.FC = () => {
       </section>
 
       {/* Section 2: Meet Our Team */}
-      <section className="bg-white py-14 sm:py-20 px-4 sm:px-6 lg:px-12 border-t border-[#e2dcd2]">
-        <div className="max-w-[1400px] mx-auto">
+      <section className="bg-white py-14 sm:py-20 border-t border-[#e2dcd2]">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12">
           <h2 className="text-[26px] sm:text-[34px] md:text-[40px] font-light text-black font-['IBM_Plex_Sans',sans-serif] text-center mb-10 sm:mb-14 tracking-tight">
             Meet Our Team
           </h2>
@@ -210,8 +200,6 @@ const AboutPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Section 3: Be Inspired */}
-      <BeInspiredSection />
     </div>
   );
 };

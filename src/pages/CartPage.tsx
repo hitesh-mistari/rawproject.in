@@ -110,14 +110,7 @@ const CartPage: React.FC = () => {
                           </button>
                         </div>
 
-                        <div className="text-right">
-                          <div className="font-serif text-base font-semibold text-stone-900">
-                            {formatCurrency(subtotal)}
-                          </div>
-                          <span className="text-[10px] text-stone-400">
-                            {formatCurrency(item.price)} each
-                          </span>
-                        </div>
+
                       </div>
                     </div>
                   </div>
@@ -146,10 +139,7 @@ const CartPage: React.FC = () => {
               </h3>
 
               <div className="space-y-3 text-xs text-stone-600">
-                <div className="flex justify-between">
-                  <span>Subtotal</span>
-                  <span className="font-medium text-stone-900">{formatCurrency(totalPrice)}</span>
-                </div>
+
                 <div className="flex justify-between">
                   <span>White-Glove Pan-India Delivery</span>
                   <span className="text-emerald-700 font-semibold">Complimentary</span>
@@ -164,12 +154,7 @@ const CartPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="border-t border-sand-200 pt-4 flex justify-between items-baseline">
-                <span className="font-serif text-base font-semibold text-stone-900">Estimated Total</span>
-                <span className="font-serif text-2xl font-bold text-stone-950">
-                  {formatCurrency(totalPrice)}
-                </span>
-              </div>
+
 
               <Link
                 to="/checkout"

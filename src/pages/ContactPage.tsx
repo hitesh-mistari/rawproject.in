@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { Phone, Mail, MapPin, Clock, Check } from 'lucide-react';
 import BeInspiredSection from '../components/common/BeInspiredSection';
 
@@ -209,8 +209,6 @@ const ContactPage: React.FC = () => {
         />
       </div>
 
-      {/* Be Inspired Section */}
-      <BeInspiredSection />
     </div>
   );
 };
