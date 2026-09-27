@@ -189,7 +189,7 @@ const Header: React.FC = () => {
 
   const renderAnimatedText = (text: string, isBold: boolean = false) => {
     return text.split('').map((char, index) => (
-      <span key={`${char}-${index}`} className={`inline-block logo-char ${isBold ? 'font-bold' : ''}`} style={{ whiteSpace: char === ' ' ? 'pre' : 'normal' }}>
+      <span key={`${char}-${index}`} className={`inline-block logo-char font-recoleta ${isBold ? 'font-bold' : ''}`} style={{ whiteSpace: char === ' ' ? 'pre' : 'normal' }}>
         {char}
       </span>
     ));
