@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { CartProvider } from "./context/CartContext";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
+import GlobalAudio from "./components/layout/GlobalAudio";
 import WhatsAppButton from "./components/layout/WhatsAppButton";
 import CartDrawer from "./components/common/CartDrawer";
 
@@ -106,6 +107,7 @@ const App: React.FC = () => {
           <Footer />
 
           {/* Persistent global widgets */}
+          <GlobalAudio />
           <CartDrawer />
         </div>
       </CartProvider>

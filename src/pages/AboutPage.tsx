@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Volume2, VolumeX } from 'lucide-react';
 import BeInspiredSection from '../components/common/BeInspiredSection';
 
 interface TeamMember {
@@ -32,100 +31,9 @@ const teamMembers: TeamMember[] = [
 ];
 
 const AboutPage: React.FC = () => {
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [isMuted, setIsMuted] = useState<boolean>(false);
-
-  useEffect(() => {
-    // Scroll to top on page mount
-    window.scrollTo(0, 0);
-
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    audio.volume = 0.6;
-    audio.loop = true;
-
-    // Try playing audio immediately
-    const startAudio = async () => {
-      try {
-        await audio.play();
-        setIsPlaying(true);
-      } catch {
-        // Autoplay policy prevented playback until user interaction
-        const handleInteraction = () => {
-          if (audio) {
-            audio.play().then(() => {
-              setIsPlaying(true);
-            }).catch(() => {});
-          }
-          window.removeEventListener('click', handleInteraction);
-          window.removeEventListener('scroll', handleInteraction);
-          window.removeEventListener('touchstart', handleInteraction);
-          window.removeEventListener('keydown', handleInteraction);
-        };
-
-        window.addEventListener('click', handleInteraction, { once: true });
-        window.addEventListener('scroll', handleInteraction, { once: true });
-        window.addEventListener('touchstart', handleInteraction, { once: true });
-        window.addEventListener('keydown', handleInteraction, { once: true });
-      }
-    };
-
-    startAudio();
-
-    return () => {
-      if (audio) {
-        audio.pause();
-      }
-    };
-  }, []);
-
-  const toggleSound = () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    if (audio.paused) {
-      audio.play().then(() => {
-        setIsPlaying(true);
-        setIsMuted(false);
-      }).catch(() => {});
-    } else {
-      if (isMuted) {
-        audio.muted = false;
-        setIsMuted(false);
-      } else {
-        audio.muted = true;
-        setIsMuted(true);
-      }
-    }
-  };
 
   return (
     <div className="bg-[#EDE8DE] min-h-screen text-[#000000]">
-      {/* Background audio element streaming authentic workshop sounds from Meet-our-Artisans.mp4 */}
-      <audio
-        ref={audioRef}
-        src="/videos/Meet-our-Artisans.mp4"
-        preload="auto"
-        playsInline
-      />
-
-      {/* Floating Sound Toggle Pill (Icon only, Bottom Left) */}
-      <div className="fixed bottom-6 left-6 z-50">
-        <button
-          onClick={toggleSound}
-          className="flex items-center justify-center p-3 bg-black/85 hover:bg-black text-white rounded-full shadow-xl backdrop-blur-sm transition-all duration-300 hover:scale-110 border border-white/20 cursor-pointer"
-          aria-label={isMuted || !isPlaying ? 'Play ambient audio' : 'Mute ambient audio'}
-          title={isMuted || !isPlaying ? 'Click to play ambient audio' : 'Click to mute audio'}
-        >
-          {isMuted || !isPlaying ? (
-            <VolumeX className="w-5 h-5 text-[#d8c3a5]" />
-          ) : (
-            <Volume2 className="w-5 h-5 text-[#8fe388] animate-pulse" />
-          )}
-        </button>
-      </div>
 
       {/* Section 1: About Us Narrative */}
       <section className="bg-[#EDE8DE] pt-10 sm:pt-14 pb-14 sm:pb-20">
