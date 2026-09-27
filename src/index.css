@@ -149,18 +149,3 @@
   column-gap: 4px;
 }
 
-/* Fullscreen state for Bento Gallery target item */
-.gallery__item--fullscreen {
-  position: absolute !important;
-  top: 0 !important;
-  left: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  z-index: 50 !important;
-  margin: 0 !important;
-}
-.gallery__item--fullscreen img {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
-}

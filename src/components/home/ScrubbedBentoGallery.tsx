@@ -1,19 +1,19 @@
 import React, { useRef, useLayoutEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Flip } from 'gsap/Flip';
 
-gsap.registerPlugin(ScrollTrigger, Flip);
+gsap.registerPlugin(ScrollTrigger);
 
 const ScrubbedBentoGallery: React.FC = () => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
+  const cloneRef = useRef<HTMLDivElement>(null);
 
   const images = [
     '/images/home/carousel/mainhero.webp',
     '/images/experience/exp1.webp',
     '/images/home/instagram/post1.webp',
-    '/images/experience/exp2.webp', // Target (middle-ish)
+    '/images/experience/exp2.webp', // Target
     '/images/home/instagram/post2.webp',
     '/images/home/hero/hero_slide2.webp',
     '/images/home/inspiration/8.webp',
@@ -24,48 +24,68 @@ const ScrubbedBentoGallery: React.FC = () => {
 
   useLayoutEffect(() => {
     let ctx = gsap.context(() => {
-      const galleryElement = galleryRef.current;
-      if (!galleryElement || !wrapperRef.current) return;
+      if (!wrapperRef.current || !galleryRef.current || !cloneRef.current) return;
 
-      const targetItem = galleryElement.querySelector('.target-item');
-      const otherItems = galleryElement.querySelectorAll('.gallery__item:not(.target-item)');
-      if (!targetItem) return;
+      const targetElement = galleryRef.current.querySelector('.target-item') as HTMLElement;
+      if (!targetElement) return;
 
-      // 1. Capture initial state
-      const initialState = Flip.getState(targetItem);
+      // 1. Get dimensions of the target item in the masonry grid
+      const setClonePosition = () => {
+        const wrapperRect = wrapperRef.current!.getBoundingClientRect();
+        const targetRect = targetElement.getBoundingClientRect();
+        
+        // Position clone exactly over the target image
+        gsap.set(cloneRef.current, {
+          top: targetRect.top - wrapperRect.top,
+          left: targetRect.left - wrapperRect.left,
+          width: targetRect.width,
+          height: targetRect.height,
+        });
+      };
 
-      // 2. Add full-screen class to capture final state
-      targetItem.classList.add('gallery__item--fullscreen');
-      const finalState = Flip.getState(targetItem);
-      
-      // 3. Revert to initial state before animating
-      targetItem.classList.remove('gallery__item--fullscreen');
+      // Ensure fonts/layout is fully painted before getting rects
+      const timer = setTimeout(() => {
+        setClonePosition();
+        
+        // Hide original target so we only see the clone
+        gsap.set(targetElement, { opacity: 0 });
 
-      // 4. Create the Flip tween
-      const flipTween = Flip.to(finalState, {
-        simple: true,
-        ease: 'none', // linear for smooth scrubbing
-      });
+        // 2. Build the scroll timeline
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: wrapperRef.current,
+            start: 'top top',
+            end: '+=150%', // duration of scroll pin
+            scrub: true,
+            pin: true,
+          },
+        });
 
-      // 5. Build timeline tied to scroll
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: wrapperRef.current,
-          start: 'top top',
-          end: '+=150%', // Scroll distance for the animation
-          scrub: true,
-          pin: true,
-        },
-      });
-
-      // Animate flip and fade out others simultaneously
-      tl.add(flipTween, 0)
-        .to(otherItems, { 
-          opacity: 0, 
-          scale: 0.8,
-          duration: flipTween.duration(), 
-          ease: 'power1.inOut' 
+        // Animate clone to fill the entire wrapper perfectly
+        tl.to(cloneRef.current, {
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          ease: 'none',
         }, 0);
+
+        // Fade out and shrink the masonry grid in the background
+        tl.to(galleryRef.current, {
+          opacity: 0,
+          scale: 0.9,
+          duration: 0.5, // fade out early during the scrub
+          ease: 'power2.inOut',
+        }, 0);
+
+      }, 100);
+
+      // Handle resize recalculations
+      window.addEventListener('resize', setClonePosition);
+      return () => {
+        clearTimeout(timer);
+        window.removeEventListener('resize', setClonePosition);
+      };
 
     }, wrapperRef);
 
@@ -73,7 +93,9 @@ const ScrubbedBentoGallery: React.FC = () => {
   }, []);
 
   return (
-    <div ref={wrapperRef} className="gallery-wrap relative w-full h-[100vh] flex items-center justify-center overflow-hidden bg-[#faf9f5]">
+    <div ref={wrapperRef} className="gallery-wrap relative w-full h-[100vh] flex items-start justify-center overflow-hidden bg-[#faf9f5]">
+      
+      {/* The actual masonry grid */}
       <div 
         ref={galleryRef} 
         className="gallery gallery--bento w-full"
@@ -87,6 +109,15 @@ const ScrubbedBentoGallery: React.FC = () => {
           </div>
         ))}
       </div>
+
+      {/* The clone that zooms to full screen */}
+      <div 
+        ref={cloneRef} 
+        className="absolute z-20 overflow-hidden bg-center bg-cover shadow-2xl"
+      >
+        <img src={images[targetIndex]} alt="" className="w-full h-full object-cover" />
+      </div>
+
     </div>
   );
 };
