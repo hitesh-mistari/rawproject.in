@@ -117,19 +117,20 @@ const CategoryPage: React.FC = () => {
     <div className="bg-[#f7f5f2] min-h-screen text-[#222222]">
       {/* 1. Category Header Banner (Dark & Elegant) */}
       <section 
-        className="bg-[#1a1612] text-[#eae5da] pt-32 pb-24 px-6 sm:px-12 text-center relative overflow-hidden bg-cover bg-center"
+        className="bg-[#1a1612] text-[#eae5da] px-6 sm:px-12 relative overflow-hidden bg-cover bg-center min-h-[50vh] md:min-h-[60vh] flex flex-col justify-end pb-12 sm:pb-16 pt-32"
         style={{ backgroundImage: `url(${getBannerImage(activeCat)})` }}
       >
-        <div className="absolute inset-0 bg-black/60 z-0" />
-        <div className="max-w-[800px] mx-auto relative z-10">
-          <h1 className="text-[32px] sm:text-[40px] md:text-[52px] font-light tracking-tight mb-4 font-['IBM_Plex_Sans',sans-serif]">
+        <div className="absolute inset-0 bg-black/40 z-0" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1a1612]/90 via-[#1a1612]/30 to-transparent z-0" />
+        <div className="w-full max-w-[1400px] mx-auto relative z-10 text-left">
+          <h1 className="text-[40px] sm:text-[50px] md:text-[64px] font-medium tracking-tight mb-3 sm:mb-4 drop-shadow-lg leading-none">
             {parentCatTitle ? (
-              <>{parentCatTitle} <em className="font-serif italic text-[#a67c52] pr-1">{catTitle}</em></>
+              <>{parentCatTitle} <em className="font-serif italic text-[#d8c3a5] pr-1">{catTitle}</em></>
             ) : (
-              <>{catTitle} <em className="font-serif italic text-[#a67c52] pr-1">Collection</em></>
+              <>{catTitle} <em className="font-serif italic text-[#d8c3a5] pr-1">Collection</em></>
             )}
           </h1>
-          <p className="text-[13px] sm:text-[14px] leading-relaxed text-white/90 max-w-lg mx-auto">
+          <p className="text-[14px] sm:text-[15px] md:text-[16px] leading-[1.8] text-[#eae5da]/90 max-w-xl drop-shadow-md">
             Explore our definitive selection of handcrafted {catTitle.toLowerCase()}. Designed for those who appreciate pure architecture, natural materials, and uncompromised quality.
           </p>
         </div>
