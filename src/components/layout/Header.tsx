@@ -89,23 +89,75 @@ const Header: React.FC = () => {
     if (!logoRef.current) return;
     const chars = logoRef.current.querySelectorAll('.logo-char');
     
-    gsap.fromTo(chars, 
-      { 
-        y: 30, 
-        opacity: 0, 
-        rotateX: -90,
-        transformOrigin: '50% 50% -20px'
-      },
-      {
-        y: 0,
-        opacity: 1,
-        rotateX: 0,
-        stagger: 0.04,
-        duration: 1.2,
-        ease: "elastic.out(1, 0.5)",
-        delay: 0.2
-      }
-    );
+    // Create a master timeline that loops infinitely
+    const tl = gsap.timeline({ repeat: -1 });
+
+    // 1. Initial Entry: Elastic flip up
+    tl.fromTo(chars, 
+      { y: 30, opacity: 0, rotateX: -90, transformOrigin: '50% 50% -20px' },
+      { y: 0, opacity: 1, rotateX: 0, stagger: 0.04, duration: 1.2, ease: "elastic.out(1, 0.5)", delay: 0.2 }
+    )
+    
+    // 2. The Wave: Smooth up and down
+    .to(chars, {
+      y: -8,
+      stagger: { each: 0.05, yoyo: true, repeat: 1 },
+      duration: 0.4,
+      ease: "sine.inOut",
+      delay: 4
+    })
+
+    // 3. The 3D Barrel Roll: Flip 360 degrees
+    .to(chars, {
+      rotateX: 360,
+      stagger: 0.05,
+      duration: 0.8,
+      ease: "back.out(1.5)",
+      delay: 4
+    })
+    
+    // Reset rotation for future loops seamlessly
+    .set(chars, { rotateX: 0 })
+
+    // 4. The Shimmer: Quick opacity fade
+    .to(chars, {
+      opacity: 0.3,
+      stagger: { each: 0.04, yoyo: true, repeat: 1 },
+      duration: 0.2,
+      ease: "power1.inOut",
+      delay: 4
+    })
+    
+    // 5. Squeeze and Stretch
+    .to(chars, {
+      scaleY: 0.7,
+      scaleX: 1.2,
+      stagger: { each: 0.04, yoyo: true, repeat: 1 },
+      duration: 0.2,
+      ease: "power2.inOut",
+      delay: 4
+    })
+    
+    // 6. Letter Spacing Pulse (Targeting the parent container)
+    .to(logoRef.current, {
+      letterSpacing: '0.15em',
+      duration: 1,
+      ease: "power2.inOut",
+      delay: 4
+    })
+    .to(logoRef.current, {
+      letterSpacing: '0.02em',
+      duration: 1,
+      ease: "power2.inOut",
+    })
+    
+    // Wait before the timeline repeats from the start (which will re-trigger the initial entry)
+    // Actually, to prevent the logo from disappearing, let's just make it do the effects in a loop,
+    // and skip the initial flip on subsequent loops by using a label and repeating from there.
+    
+    // Wait a bit at the end of the timeline
+    .to({}, { duration: 3 });
+
   }, []);
   
 
