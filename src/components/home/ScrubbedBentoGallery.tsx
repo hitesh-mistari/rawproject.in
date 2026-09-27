@@ -29,14 +29,20 @@ const ScrubbedBentoGallery: React.FC = () => {
 
       // Ensure Fonts/CSS are fully loaded before capturing Flip bounds
       const timer = setTimeout(() => {
-        // 1. Capture initial state
-        const state = Flip.getState(items);
+        // 1. Capture initial state WITH opacity
+        const initialState = Flip.getState(items, { props: 'opacity' });
 
-        // 2. Add switch class to change CSS layout to full-screen target
+        // 2. Add switch class to calculate final positions
         galleryElement.classList.add('gallery--switch');
 
-        // 3. Create the Flip animation
-        const flipTween = Flip.from(state, {
+        // 3. Capture final state WITH opacity
+        const finalState = Flip.getState(items, { props: 'opacity' });
+
+        // 4. Revert DOM back to initial Bento grid immediately
+        galleryElement.classList.remove('gallery--switch');
+
+        // 5. Create the Flip animation using Flip.to
+        const flipTween = Flip.to(finalState, {
           ease: 'none',
           absolute: true, // Prevents layout collapsing during the scrub
           scale: true,
