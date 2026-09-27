@@ -65,7 +65,7 @@ const ScrubbedBentoGallery: React.FC = () => {
   ];
 
   return (
-    <div ref={wrapperRef} className="gallery-wrap relative w-full bg-[#faf9f5]">
+    <div ref={wrapperRef} className="gallery-wrap relative w-full h-[100vh] overflow-hidden bg-[#faf9f5]">
       <div 
         ref={galleryRef} 
         className="gallery gallery--bento"
