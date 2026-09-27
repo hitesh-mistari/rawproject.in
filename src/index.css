@@ -111,20 +111,25 @@
   background-size: cover;
   flex: none;
   position: relative;
+  break-inside: avoid;
+  margin-bottom: 4px;
+  width: 100%;
 }
 
 .gallery__item img {
-  object-fit: cover;
   width: 100%;
-  height: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
 }
 
+/* Full-bleed masonry — no max-width, no side margins */
 .gallery--bento {
   column-count: 1;
-  column-gap: 1vw;
-  width: 95vw;
-  max-width: 1400px;
-  margin: 0 auto;
+  column-gap: 4px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 @media (min-width: 640px) {
@@ -139,21 +144,8 @@
   }
 }
 
-.gallery__item {
-  break-inside: avoid;
-  margin-bottom: 1vw;
-  width: 100%;
-}
-
-.gallery__item img {
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: contain;
-}
-
 .gallery--final.gallery--bento {
   width: 300vw;
   max-width: none;
-  column-gap: 3vw;
+  column-gap: 4px;
 }
