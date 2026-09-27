@@ -301,8 +301,9 @@ const HomePage: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-10 lg:gap-14 items-start my-auto">
             
             {/* Left Filter Sidebar - Sticky */}
-            <div className="space-y-6 text-[12px] uppercase tracking-widest text-[#6b6359] lg:sticky lg:top-8">
-              <div className="font-bold text-[#1a1612] pb-2 border-b border-[#ded7ca] flex items-center justify-between">
+            <div className="w-full flex items-center overflow-x-auto gap-8 pb-4 lg:pb-0 lg:flex-col lg:items-stretch lg:gap-0 lg:space-y-6 text-[12px] uppercase tracking-widest text-[#6b6359] lg:sticky lg:top-8 scrollbar-none whitespace-nowrap lg:whitespace-normal">
+              
+              <div className="font-bold text-[#1a1612] flex items-center gap-4 lg:pb-2 lg:border-b lg:border-[#ded7ca] lg:justify-between shrink-0 lg:w-full sticky left-0 bg-[#faf9f6] z-10 pr-4 lg:pr-0">
                 <span>Filter</span>
                 {activeFilter.sub !== 'all' && (
                   <button 
@@ -315,12 +316,13 @@ const HomePage: React.FC = () => {
               </div>
               
               {/* Architecture Filter Group */}
-              <div className="space-y-2.5">
-                <div className="font-semibold text-[#1a1612] flex items-center justify-between">
+              <div className="flex items-center gap-3 shrink-0 lg:flex-col lg:items-stretch lg:gap-0">
+                <div className="font-semibold text-[#1a1612] flex items-center gap-2 lg:justify-between">
                   <span>Architecture</span>
-                  <span className="text-[10px]">✕</span>
+                  <span className="hidden lg:inline text-[10px]">✕</span>
+                  <span className="lg:hidden text-[#ded7ca]">|</span>
                 </div>
-                <div className="pl-3 space-y-2 text-[#8a7f72]">
+                <div className="flex items-center gap-4 lg:flex-col lg:items-stretch lg:gap-0 lg:pl-3 lg:space-y-2 text-[#8a7f72] lg:mt-2.5">
                   {[
                     { id: 'commercial', label: 'Commercial' },
                     { id: 'hospitality', label: 'Hospitality' },
@@ -336,7 +338,7 @@ const HomePage: React.FC = () => {
                         }`}
                       >
                         <span>{sub.label}</span>
-                        {isSelected && <span className="text-[14px] leading-none text-[#1a1612]">•</span>}
+                        {isSelected && <span className="text-[14px] leading-none text-[#1a1612] hidden lg:inline">•</span>}
                       </div>
                     );
                   })}
@@ -344,12 +346,13 @@ const HomePage: React.FC = () => {
               </div>
 
               {/* Interior Design Filter Group */}
-              <div className="space-y-2.5 border-t border-[#ded7ca] pt-3">
-                <div className="font-semibold text-[#1a1612] flex items-center justify-between">
+              <div className="flex items-center gap-3 shrink-0 lg:flex-col lg:items-stretch lg:gap-0 lg:border-t lg:border-[#ded7ca] lg:pt-3">
+                <div className="font-semibold text-[#1a1612] flex items-center gap-2 lg:justify-between">
                   <span>Interior Design</span>
-                  <span className="text-[10px]">✕</span>
+                  <span className="hidden lg:inline text-[10px]">✕</span>
+                  <span className="lg:hidden text-[#ded7ca]">|</span>
                 </div>
-                <div className="pl-3 space-y-2 text-[#8a7f72]">
+                <div className="flex items-center gap-4 lg:flex-col lg:items-stretch lg:gap-0 lg:pl-3 lg:space-y-2 text-[#8a7f72] lg:mt-2.5">
                   {[
                     { id: 'commercial', label: 'Commercial' },
                     { id: 'hospitality', label: 'Hospitality' },
@@ -365,7 +368,7 @@ const HomePage: React.FC = () => {
                         }`}
                       >
                         <span>{sub.label}</span>
-                        {isSelected && <span className="text-[14px] leading-none text-[#1a1612]">•</span>}
+                        {isSelected && <span className="text-[14px] leading-none text-[#1a1612] hidden lg:inline">•</span>}
                       </div>
                     );
                   })}
@@ -373,12 +376,13 @@ const HomePage: React.FC = () => {
               </div>
 
               {/* Furniture Filter Group */}
-              <div className="space-y-2.5 border-t border-[#ded7ca] pt-3">
-                <div className="font-semibold text-[#1a1612] flex items-center justify-between">
+              <div className="flex items-center gap-3 shrink-0 lg:flex-col lg:items-stretch lg:gap-0 lg:border-t lg:border-[#ded7ca] lg:pt-3">
+                <div className="font-semibold text-[#1a1612] flex items-center gap-2 lg:justify-between">
                   <span>Furniture</span>
-                  <span className="text-[10px]">✕</span>
+                  <span className="hidden lg:inline text-[10px]">✕</span>
+                  <span className="lg:hidden text-[#ded7ca]">|</span>
                 </div>
-                <div className="pl-3 space-y-2 text-[#8a7f72]">
+                <div className="flex items-center gap-4 lg:flex-col lg:items-stretch lg:gap-0 lg:pl-3 lg:space-y-2 text-[#8a7f72] lg:mt-2.5">
                   {[
                     { id: 'atelier', label: 'Atelier' },
                     { id: 'bespoke', label: 'Bespoke' },
@@ -393,7 +397,7 @@ const HomePage: React.FC = () => {
                         }`}
                       >
                         <span>{sub.label}</span>
-                        {isSelected && <span className="text-[14px] leading-none text-[#1a1612]">•</span>}
+                        {isSelected && <span className="text-[14px] leading-none text-[#1a1612] hidden lg:inline">•</span>}
                       </div>
                     );
                   })}
