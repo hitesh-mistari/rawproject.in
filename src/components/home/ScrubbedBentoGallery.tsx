@@ -54,14 +54,14 @@ const ScrubbedBentoGallery: React.FC = () => {
   }, []);
 
   const images = [
-    '/images/home/carousel/mainhero.png',
-    '/images/experience/exp1.jpg',
-    '/images/home/instagram/post1.jpg',
-    '/images/experience/exp2.jpg',
-    '/images/home/instagram/post2.jpg',
-    '/images/home/hero/hero_slide2.png',
-    '/images/home/inspiration/8.jpg',
-    '/images/experience/exp3.jpg',
+    '/images/home/carousel/mainhero.webp',
+    '/images/experience/exp1.webp',
+    '/images/home/instagram/post1.webp',
+    '/images/experience/exp2.webp',
+    '/images/home/instagram/post2.webp',
+    '/images/home/hero/hero_slide2.webp',
+    '/images/home/inspiration/8.webp',
+    '/images/experience/exp3.webp',
   ];
 
   return (
