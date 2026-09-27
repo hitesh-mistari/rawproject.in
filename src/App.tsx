@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { CartProvider } from "./context/CartContext";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
-import PreFooterCollections from "./components/layout/PreFooterCollections";
 import WhatsAppButton from "./components/layout/WhatsAppButton";
 import CartDrawer from "./components/common/CartDrawer";
 
@@ -103,7 +102,6 @@ const App: React.FC = () => {
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </main>
-          <PreFooterCollections />
           <Footer />
 
           {/* Persistent global widgets */}

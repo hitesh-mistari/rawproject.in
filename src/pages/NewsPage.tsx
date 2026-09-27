@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
+import instagramImages from '../data/instagram_images.json';
 
 const NewsPage: React.FC = () => {
-  // Generate array of 191 images
-  const images = Array.from({ length: 191 }, (_, i) => `/instagram/image_${i + 1}.jpg`);
+  const [visibleCount, setVisibleCount] = useState(20);
+
+  const handleShowMore = () => {
+    setVisibleCount(prev => Math.min(prev + 20, instagramImages.length));
+  };
 
   return (
-    <div className="pt-24 pb-16 min-h-[60vh] bg-[#eae5da]">
+    <div className="pt-24 pb-24 min-h-[60vh] bg-[#eae5da]">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12">
         <div className="text-center mb-12 sm:mb-16">
           <p className="text-[11px] tracking-[0.3em] uppercase text-[#a67c52] font-bold mb-4">
@@ -20,7 +24,7 @@ const NewsPage: React.FC = () => {
         </div>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-          {images.map((src, index) => (
+          {instagramImages.slice(0, visibleCount).map((src, index) => (
             <div key={index} className="aspect-square bg-[#e0dcd1] overflow-hidden group relative border border-[#dfdbd2]">
               <img 
                 src={src} 
@@ -38,6 +42,18 @@ const NewsPage: React.FC = () => {
             </div>
           ))}
         </div>
+
+        {/* Pagination: Show More Button */}
+        {visibleCount < instagramImages.length && (
+          <div className="mt-16 flex justify-center">
+            <button
+              onClick={handleShowMore}
+              className="inline-flex items-center justify-center border border-[#1a1612] text-[#1a1612] px-8 py-3.5 text-[13px] font-medium tracking-[0.1em] uppercase hover:bg-[#1a1612] hover:text-[#eae5da] transition-all duration-300"
+            >
+              Show More
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

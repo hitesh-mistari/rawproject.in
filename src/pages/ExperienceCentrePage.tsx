@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight, MapPin, Clock, Info } from 'lucide-react';
-import BeInspiredSection from '../components/common/BeInspiredSection';
 
 const ExperienceCentrePage: React.FC = () => {
   // Exact 6 high-resolution original photos from WordPress uploads for Experience Centre
@@ -175,8 +174,6 @@ const ExperienceCentrePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Be Inspired Instagram Section */}
-      <BeInspiredSection />
     </div>
   );
 };
