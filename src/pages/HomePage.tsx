@@ -458,8 +458,6 @@ const HomePage: React.FC = () => {
                         <h3 className="text-xl font-bold tracking-wider uppercase text-[#1a1612] group-hover:text-[#8a7f72] transition-colors">{project.title}</h3>
                         <div className="flex gap-6 sm:gap-8 text-[11px] uppercase tracking-widest text-[#8a7f72] mt-1 flex-wrap">
                           <span>Category: {project.category}</span>
-                          <span>Scope: {project.scope}</span>
-                          <span>Location: {project.location}</span>
                         </div>
                       </div>
                       <span className="text-[11px] font-bold tracking-widest uppercase text-[#1a1612] group-hover:text-[#8a7f72] transition-colors mt-2 sm:mt-0">
