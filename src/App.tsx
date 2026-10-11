@@ -1,6 +1,7 @@
 import React, { useEffect, useLayoutEffect, useState, lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { CartProvider } from "./context/CartContext";
+import { CatalogModalProvider } from "./context/CatalogModalContext";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import IntroLoader from "./components/layout/IntroLoader";
@@ -69,65 +70,67 @@ const App: React.FC = () => {
   return (
     <BrowserRouter>
       <CartProvider>
-        <ScrollToTop />
-        {showIntro && (
-          <IntroLoader onComplete={handleIntroComplete} />
-        )}
-        <div className="min-h-screen flex flex-col justify-between bg-[#eae5da] text-[#222222] selection:bg-[#c5a880] selection:text-stone-900">
-          <Header />
-          <main className="flex-1">
-            <Suspense fallback={<div className="min-h-[50vh] bg-[#eae5da]" />}>
-              <Routes>
-                {/* Home */}
-                <Route path="/" element={<HomePage />} />
-                <Route path="/news" element={<NewsPage />} />
-                <Route path="/get-in-touch" element={<ContactPage />} />
+        <CatalogModalProvider>
+          <ScrollToTop />
+          {showIntro && (
+            <IntroLoader onComplete={handleIntroComplete} />
+          )}
+          <div className="min-h-screen flex flex-col justify-between bg-[#eae5da] text-[#222222] selection:bg-[#c5a880] selection:text-stone-900">
+            <Header />
+            <main className="flex-1">
+              <Suspense fallback={<div className="min-h-[50vh] bg-[#eae5da]" />}>
+                <Routes>
+                  {/* Home */}
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/news" element={<NewsPage />} />
+                  <Route path="/get-in-touch" element={<ContactPage />} />
 
-                {/* Shop & Catalog */}
-                <Route path="/shop" element={<ShopPage />} />
-                <Route path="/product/:slug" element={<ProductDetailPage />} />
+                  {/* Shop & Catalog */}
+                  <Route path="/shop" element={<ShopPage />} />
+                  <Route path="/product/:slug" element={<ProductDetailPage />} />
 
-                {/* WooCommerce Standard Category & Subcategory Routes */}
-                <Route path="/product-category/:category" element={<CategoryPage />} />
-                <Route path="/product-category/:category/:subcategory" element={<CategoryPage />} />
-                <Route path="/category/:slug" element={<CategoryPage />} />
-                
-                {/* Direct Category Shortcuts */}
-                <Route path="/living" element={<CategoryPage />} />
-                <Route path="/bedroom" element={<CategoryPage />} />
-                <Route path="/dining" element={<CategoryPage />} />
-                <Route path="/one-of-one" element={<CategoryPage />} />
+                  {/* WooCommerce Standard Category & Subcategory Routes */}
+                  <Route path="/product-category/:category" element={<CategoryPage />} />
+                  <Route path="/product-category/:category/:subcategory" element={<CategoryPage />} />
+                  <Route path="/category/:slug" element={<CategoryPage />} />
+                  
+                  {/* Direct Category Shortcuts */}
+                  <Route path="/living" element={<CategoryPage />} />
+                  <Route path="/bedroom" element={<CategoryPage />} />
+                  <Route path="/dining" element={<CategoryPage />} />
+                  <Route path="/one-of-one" element={<CategoryPage />} />
 
-                {/* Cart & Checkout */}
-                <Route path="/cart" element={<CartPage />} />
-                <Route path="/checkout" element={<CheckoutPage />} />
+                  {/* Cart & Checkout */}
+                  <Route path="/cart" element={<CartPage />} />
+                  <Route path="/checkout" element={<CheckoutPage />} />
 
-                {/* Information & Atelier */}
-                <Route path="/about" element={<AboutPage />} />
-                <Route path="/about-us" element={<AboutPage />} />
-                <Route path="/experience-centre" element={<ExperienceCentrePage />} />
-                <Route path="/request-quote" element={<RequestQuotePage />} />
-                <Route path="/contact" element={<ContactPage />} />
-                <Route path="/contact-us" element={<ContactPage />} />
-                <Route path="/get-in-touch" element={<ContactPage />} />
-                
-                {/* Policies */}
-                <Route path="/shipping-policy" element={<PolicyPage />} />
-                <Route path="/terms-of-service" element={<PolicyPage />} />
-                <Route path="/privacy-policy" element={<PolicyPage />} />
-                <Route path="/policies" element={<PolicyPage />} />
+                  {/* Information & Atelier */}
+                  <Route path="/about" element={<AboutPage />} />
+                  <Route path="/about-us" element={<AboutPage />} />
+                  <Route path="/experience-centre" element={<ExperienceCentrePage />} />
+                  <Route path="/request-quote" element={<RequestQuotePage />} />
+                  <Route path="/contact" element={<ContactPage />} />
+                  <Route path="/contact-us" element={<ContactPage />} />
+                  <Route path="/get-in-touch" element={<ContactPage />} />
+                  
+                  {/* Policies */}
+                  <Route path="/shipping-policy" element={<PolicyPage />} />
+                  <Route path="/terms-of-service" element={<PolicyPage />} />
+                  <Route path="/privacy-policy" element={<PolicyPage />} />
+                  <Route path="/policies" element={<PolicyPage />} />
 
-                {/* Catch-all */}
-                <Route path="*" element={<NotFoundPage />} />
-              </Routes>
-            </Suspense>
-          </main>
-          <Footer />
+                  {/* Catch-all */}
+                  <Route path="*" element={<NotFoundPage />} />
+                </Routes>
+              </Suspense>
+            </main>
+            <Footer />
 
-          {/* Persistent global widgets */}
-          
-          <CartDrawer />
-        </div>
+            {/* Persistent global widgets */}
+            
+            <CartDrawer />
+          </div>
+        </CatalogModalProvider>
       </CartProvider>
     </BrowserRouter>
   );

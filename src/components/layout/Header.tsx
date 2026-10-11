@@ -2,6 +2,7 @@ import React, { useState, useRef, useLayoutEffect } from 'react';
 import gsap from 'gsap';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Search, ChevronDown, ChevronRight, Menu, X, Download } from 'lucide-react';
+import { useCatalogModal } from '../../context/CatalogModalContext';
 
 const HoverUnderlineLink = ({ to, children, className = '', isActive = false, onMouseEnter, onMouseLeave, onClick }: any) => {
   const lineRef = useRef(null);
@@ -117,6 +118,7 @@ const SHOP_CATEGORIES: ShopCategory[] = [
 
 const Header: React.FC = () => {
   const location = useLocation();
+  const { openCatalog } = useCatalogModal();
   const [searchQuery, setSearchQuery] = useState('');
   const [isShopOpen, setIsShopOpen] = useState(false);
   const [hoveredCategory, setHoveredCategory] = useState<string>('bedroom');
@@ -439,28 +441,28 @@ const Header: React.FC = () => {
 
           {/* Right: Download Catalog (Desktop >= 1024px) */}
           <div className="hidden lg:flex items-center gap-5 mt-1 shrink-0">
-            <a 
-              href="/catalog.pdf" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="group flex items-center gap-2 px-4 xl:px-5 py-2 bg-transparent border border-[#d3cec3] text-[#4a4238] hover:bg-[#1a1612] hover:text-[#eae5da] hover:border-[#1a1612] transition-all duration-300 rounded-full shadow-[0_2px_10px_rgba(0,0,0,0.02)] whitespace-nowrap"
+            <button 
+              type="button"
+              onClick={openCatalog}
+              className="group flex items-center gap-2 px-4 xl:px-5 py-2 bg-transparent border border-[#d3cec3] text-[#4a4238] hover:bg-[#1a1612] hover:text-[#eae5da] hover:border-[#1a1612] transition-all duration-300 rounded-full shadow-[0_2px_10px_rgba(0,0,0,0.02)] whitespace-nowrap cursor-pointer active:scale-95"
+              aria-label="Download Catalogue"
             >
               <span className="text-[10px] tracking-[0.15em] font-bold uppercase mt-px">Catalog</span>
               <Download className="w-3.5 h-3.5 transition-transform duration-300 group-hover:-translate-y-0.5" strokeWidth={2.5} />
-            </a>
+            </button>
           </div>
 
           {/* Tablet & Mobile Right Actions (< 1024px) */}
           <div className="lg:hidden flex items-center gap-3 sm:gap-4">
-            <a 
-              href="/catalog.pdf" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-transparent border border-[#d3cec3] text-[#4a4238] hover:bg-[#1a1612] hover:text-[#eae5da] hover:border-[#1a1612] transition-all duration-300 rounded-full text-[10px] tracking-[0.12em] font-bold uppercase whitespace-nowrap shadow-sm"
+            <button 
+              type="button"
+              onClick={openCatalog}
+              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-transparent border border-[#d3cec3] text-[#4a4238] hover:bg-[#1a1612] hover:text-[#eae5da] hover:border-[#1a1612] transition-all duration-300 rounded-full text-[10px] tracking-[0.12em] font-bold uppercase whitespace-nowrap shadow-sm cursor-pointer active:scale-95"
+              aria-label="Download Catalogue"
             >
               <span>Catalog</span>
               <Download className="w-3 h-3" strokeWidth={2.5} />
-            </a>
+            </button>
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="p-1.5 text-[#1a1612] hover:text-black focus:outline-none cursor-pointer rounded-md hover:bg-black/5 transition-colors"
@@ -595,16 +597,17 @@ const Header: React.FC = () => {
               </Link>
 
               {/* Download Catalog inside Drawer */}
-              <a 
-                href="/catalog.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={closeMobileMenu}
-                className="flex items-center justify-between py-3.5 border-b border-[#d8d2c4] text-[#1a1612] font-medium hover:text-[#6b6359] transition-colors uppercase tracking-[0.05em]"
+              <button 
+                type="button"
+                onClick={() => {
+                  closeMobileMenu();
+                  openCatalog();
+                }}
+                className="w-full flex items-center justify-between py-3.5 border-b border-[#d8d2c4] text-[#1a1612] font-medium hover:text-[#6b6359] transition-colors uppercase tracking-[0.05em] text-left cursor-pointer"
               >
                 <span>DOWNLOAD CATALOG</span>
                 <Download className="w-4 h-4 text-[#4a4238]" />
-              </a>
+              </button>
 
               <a 
                 href="tel:+918698814865"
