@@ -2,14 +2,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight, MapPin, Clock, Info } from 'lucide-react';
 
 const ExperienceCentrePage: React.FC = () => {
-  // Exact 6 high-resolution original photos from WordPress uploads for Experience Centre
+  // Exact 6 high-resolution optimized WebP photos for Experience Centre
   const sliderImages = [
-    { src: '/images/experience/exp1.jpg', alt: 'The Raw Project Atelier - Dining Area with Cane Detailing' },
-    { src: '/images/experience/exp2.jpg', alt: 'The Raw Project Atelier - Cane Console and Paper Pendant Light' },
-    { src: '/images/experience/exp3.jpg', alt: 'The Raw Project Atelier - Daybed Lounger with Decorative Plates' },
-    { src: '/images/experience/exp4.jpg', alt: 'The Raw Project Atelier - Cane Sofa and Coffee Table Living Setup' },
-    { src: '/images/experience/exp5.jpg', alt: 'The Raw Project Atelier - Bespoke Armchair and Side Table Setting' },
-    { src: '/images/experience/exp6.jpg', alt: 'The Raw Project Atelier - Signature Cane Armchair with Tiger Motif Pillow' },
+    { src: '/images/experience/exp1.webp', alt: 'The Raw Project Atelier - Dining Area with Cane Detailing' },
+    { src: '/images/experience/exp2.webp', alt: 'The Raw Project Atelier - Cane Console and Paper Pendant Light' },
+    { src: '/images/experience/exp3.webp', alt: 'The Raw Project Atelier - Daybed Lounger with Decorative Plates' },
+    { src: '/images/experience/exp4.webp', alt: 'The Raw Project Atelier - Cane Sofa and Coffee Table Living Setup' },
+    { src: '/images/experience/exp5.webp', alt: 'The Raw Project Atelier - Bespoke Armchair and Side Table Setting' },
+    { src: '/images/experience/exp6.webp', alt: 'The Raw Project Atelier - Signature Cane Armchair with Tiger Motif Pillow' },
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -79,6 +79,8 @@ const ExperienceCentrePage: React.FC = () => {
                       alt={img.alt}
                       className="w-full h-full object-cover object-center"
                       loading={idx === 0 ? 'eager' : 'lazy'}
+                      decoding="async"
+                      {...(idx === 0 ? { fetchPriority: 'high' as const } : { fetchPriority: 'low' as const })}
                     />
                   </div>
                 ))}

@@ -103,13 +103,13 @@ const CategoryPage: React.FC = () => {
       }
     }
     switch (category) {
-      case 'dining': return '/images/home/carousel/slide_1.png';
-      case 'living': return '/images/home/hero/hero_slide2.png';
-      case 'bedroom': return '/images/home/carousel/slide_3.png';
-      case 'storage': return '/images/home/carousel/slide_4.png';
-      case 'decor': return '/images/home/carousel/slide_2.png';
-      case 'seating': return '/images/home/carousel/mainhero.png';
-      default: return '/images/home/hero/hero_slide1.jpg';
+      case 'dining': return '/images/home/carousel/slide_1.webp';
+      case 'living': return '/images/home/hero/hero_slide2.webp';
+      case 'bedroom': return '/images/home/carousel/slide_3.webp';
+      case 'storage': return '/images/home/carousel/slide_4.webp';
+      case 'decor': return '/images/home/carousel/slide_2.webp';
+      case 'seating': return '/images/home/carousel/mainhero.webp';
+      default: return '/images/home/hero/hero_slide1.webp';
     }
   };
 

@@ -4,19 +4,19 @@ import { Instagram } from 'lucide-react';
 const BeInspiredSection: React.FC = () => {
   const images = [
     {
-      src: '/images/home/be-inspired/be1.jpg',
+      src: '/images/home/be-inspired/be1.webp',
       alt: 'Cane Armchair and coffee tables in natural sunlight',
     },
     {
-      src: '/images/home/be-inspired/be2.jpg',
+      src: '/images/home/be-inspired/be2.webp',
       alt: 'Artisan Woodcraft Wall Art Piece',
     },
     {
-      src: '/images/home/be-inspired/be3.jpg',
+      src: '/images/home/be-inspired/be3.webp',
       alt: 'Arched dining room doorway with round dining table and chandelier',
     },
     {
-      src: '/images/home/be-inspired/be4.jpg',
+      src: '/images/home/be-inspired/be4.webp',
       alt: 'Handcrafted Cane Bench and stool detailing',
     }
   ];
@@ -54,6 +54,8 @@ const BeInspiredSection: React.FC = () => {
               <img
                 src={img.src}
                 alt={img.alt}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover"
               />
             </a>

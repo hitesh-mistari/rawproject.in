@@ -195,6 +195,8 @@ const ProductDetailPage: React.FC = () => {
           <img
             src={currentImage.src}
             alt={currentImage.alt || product.name}
+            fetchPriority="high"
+            decoding="async"
             className="w-full h-full object-contain p-4"
           />
         </div>
@@ -212,7 +214,13 @@ const ProductDetailPage: React.FC = () => {
                     : 'border-[#e5e5e5] hover:border-[#ccc]'
                 }`}
               >
-                <img src={img.src} alt={`View ${idx + 1}`} className="w-full h-full object-cover bg-[#f5f3f0]" />
+                <img 
+                  src={img.src} 
+                  alt={`View ${idx + 1}`} 
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover bg-[#f5f3f0]" 
+                />
               </button>
             ))}
           </div>
@@ -357,6 +365,8 @@ const ProductDetailPage: React.FC = () => {
                     <img
                       src={item.image}
                       alt={item.name}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
@@ -436,6 +446,8 @@ const ProductDetailPage: React.FC = () => {
                 <img
                   src={currentImage.src}
                   alt={currentImage.alt || product.name}
+                  fetchPriority="high"
+                  decoding="async"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute top-4 left-4 bg-[#8a6040] text-white text-[11px] font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full">
@@ -454,7 +466,13 @@ const ProductDetailPage: React.FC = () => {
                         activeImageIndex === idx ? 'border-[#8a6040] shadow-sm' : 'border-[#e5e5e5] hover:border-[#ccc]'
                       }`}
                     >
-                      <img src={img.src} alt={`View ${idx + 1}`} className="w-full h-full object-cover bg-[#f5f3f0]" />
+                      <img 
+                        src={img.src} 
+                        alt={`View ${idx + 1}`} 
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-full object-cover bg-[#f5f3f0]" 
+                      />
                     </button>
                   ))}
                 </div>
@@ -615,7 +633,13 @@ const ProductDetailPage: React.FC = () => {
                 {relatedItems.map(item => (
                   <Link key={item.id} to={`/product/${item.slug}`} className="group flex flex-col">
                     <div className="aspect-[4/5] bg-[#f5f3f0] overflow-hidden rounded-sm mb-3 relative">
-                      <img src={item.image} alt={item.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                      <img 
+                        src={item.image} 
+                        alt={item.name} 
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                      />
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300 flex items-end justify-center pb-4 opacity-0 group-hover:opacity-100">
                         <span className="bg-white text-[#1a1a1a] text-[11px] font-semibold uppercase tracking-wider px-5 py-2 rounded-full shadow-sm">View Details</span>
                       </div>

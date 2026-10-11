@@ -66,7 +66,13 @@ export const CartDrawer: React.FC = () => {
                 {/* Image */}
                 <div className="w-20 h-20 bg-[#222] rounded overflow-hidden flex-shrink-0">
                   {item.image ? (
-                    <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                    <img 
+                      src={item.image} 
+                      alt={item.name} 
+                      loading="lazy" 
+                      decoding="async" 
+                      className="w-full h-full object-cover" 
+                    />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-[10px] text-[#555]">RAW</div>
                   )}

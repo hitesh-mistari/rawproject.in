@@ -11,22 +11,22 @@ const teamMembers: TeamMember[] = [
   {
     name: 'Ar. Amruta Bade',
     role: 'Founder & Principal Designer',
-    image: '/images/about/amruta.png',
+    image: '/images/about/amruta.webp',
   },
   {
     name: 'Disha Rawal',
     role: 'Head Furniture Designer',
-    image: '/images/about/disha.png',
+    image: '/images/about/disha.webp',
   },
   {
     name: 'Sanjay Bade',
     role: 'Chief Executive Manager',
-    image: '/images/about/sanjay.png',
+    image: '/images/about/sanjay.webp',
   },
   {
     name: 'Mihir Bade',
     role: 'Project Head',
-    image: '/images/about/mihir.png',
+    image: '/images/about/mihir.webp',
   },
 ];
 
@@ -129,6 +129,8 @@ const AboutPage: React.FC = () => {
                   <img
                     src={member.image}
                     alt={member.name}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>

@@ -34,6 +34,8 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ images, productName }) 
               <img
                 src={img.thumbnail || img.src}
                 alt={img.alt || `${productName} thumbnail ${idx + 1}`}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover object-center"
               />
             </button>
@@ -46,6 +48,8 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ images, productName }) 
         <img
           src={currentImage.src}
           alt={currentImage.alt || productName}
+          fetchPriority="high"
+          decoding="async"
           className={`w-full h-full object-cover object-center transition-transform duration-500 ${
             isZoomed ? "scale-125 cursor-zoom-out" : "group-hover:scale-105 cursor-zoom-in"
           }`}

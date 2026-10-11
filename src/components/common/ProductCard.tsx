@@ -23,11 +23,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <img
           src={imageUrl}
           alt={product.name}
+          loading="lazy"
+          decoding="async"
           className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:opacity-0 group-hover:scale-105"
         />
         <img
           src={hoverImageUrl}
           alt={product.name}
+          loading="lazy"
+          decoding="async"
           className="absolute inset-0 w-full h-full object-cover opacity-0 transition-all duration-700 group-hover:opacity-100 group-hover:scale-105"
         />
 

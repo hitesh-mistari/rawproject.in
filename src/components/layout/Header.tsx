@@ -63,7 +63,7 @@ const SHOP_CATEGORIES: ShopCategory[] = [
     id: 'bedroom',
     name: 'Bedroom',
     href: '/product-category/bedroom',
-    featuredImage: '/images/home/featured_nibrite_bed.png',
+    featuredImage: '/images/home/featured_nibrite_bed.webp',
     featuredTitle: 'Nibrite Bed',
     featuredLink: '/product-category/bedroom/bed',
     subcategories: [
@@ -75,7 +75,7 @@ const SHOP_CATEGORIES: ShopCategory[] = [
     id: 'living',
     name: 'Living',
     href: '/product-category/living',
-    featuredImage: '/images/home/featured_sahara_sofa.png',
+    featuredImage: '/images/home/featured_sahara_sofa.webp',
     featuredTitle: 'Sahara Sofa',
     featuredLink: '/product-category/living/sofa',
     subcategories: [
@@ -108,7 +108,7 @@ const SHOP_CATEGORIES: ShopCategory[] = [
     id: 'one-of-one',
     name: 'One of one',
     href: '/shop?collection=one-of-one',
-    featuredImage: '/images/home/featured_moh_swing.jpg',
+    featuredImage: '/images/home/featured_moh_swing.webp',
     featuredTitle: 'Moh Swing',
     featuredLink: '/shop?collection=one-of-one'
   }
@@ -394,8 +394,11 @@ const Header: React.FC = () => {
                     <div className="hidden lg:block w-[320px] bg-[#eae5da] relative overflow-hidden group border border-[#dfdbd2] mega-menu-featured">
                       <img 
                         key={currentCategoryData?.featuredImage}
-                        src={currentCategoryData?.featuredImage || '/images/home/featured_sahara_sofa.png'} 
+                        src={currentCategoryData?.featuredImage || '/images/home/featured_sahara_sofa.webp'} 
                         alt={currentCategoryData?.featuredTitle || 'Featured'} 
+                        loading="lazy"
+                        fetchPriority="low"
+                        decoding="async"
                         className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 animate-[fadeIn_0.5s_ease-in-out]"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#2a251e]/80 via-[#2a251e]/20 to-transparent group-hover:from-[#2a251e]/90 transition-colors duration-500" />

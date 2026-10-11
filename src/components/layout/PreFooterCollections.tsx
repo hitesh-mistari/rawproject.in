@@ -6,31 +6,31 @@ const collections = [
   {
     title: 'KASARA',
     subtitle: 'Lounge & Living',
-    image: '/images/home/instagram/post1.jpg',
+    image: '/images/home/instagram/post1.webp',
     link: '/category/living'
   },
   {
     title: 'MONOLITH',
     subtitle: 'Tables & Accents',
-    image: '/images/home/instagram/post2.jpg',
+    image: '/images/home/instagram/post2.webp',
     link: '/category/tables'
   },
   {
     title: 'VERONICA',
     subtitle: 'Chairs & Seating',
-    image: '/images/home/instagram/post4.jpg',
+    image: '/images/home/instagram/post4.webp',
     link: '/category/chairs'
   },
   {
     title: 'RELIC',
     subtitle: 'Sculptural Objects',
-    image: '/images/site/Design-Within-Reach-on-Instagram_-Teak-peek_-The-Kayu-Teak-Dining-Table-and-Moller-Model-55-Armchair-make-an-appearance-in-the-eclectic-home-of-actress-@hollandroden-–-as-Copy-768x960.jpg',
+    image: '/images/site/Design-Within-Reach-on-Instagram_-Teak-peek_-The-Kayu-Teak-Dining-Table-and-Moller-Model-55-Armchair-make-an-appearance-in-the-eclectic-home-of-actress-@hollandroden-–-as-Copy-768x960.jpg.webp',
     link: '/category/objects'
   },
   {
     title: 'MOH SWING',
     subtitle: 'Indoor Swing',
-    image: '/images/home/instagram/post9.jpg',
+    image: '/images/home/instagram/post9.webp',
     link: '/category/swing'
   }
 ];
@@ -80,6 +80,8 @@ const PreFooterCollections: React.FC = () => {
                 <img 
                   src={item.image} 
                   alt={item.title} 
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out"
                 />
               </div>

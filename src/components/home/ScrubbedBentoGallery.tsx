@@ -177,7 +177,13 @@ const ScrubbedBentoGallery: React.FC = () => {
               className={`bento-item group ${item.className} ${item.isTarget ? 'target-item' : ''}`}
             >
               <div className="absolute inset-0 bg-black/50 transition-opacity duration-500 ease-in-out group-hover:opacity-0 z-10 pointer-events-none" />
-              <img src={item.src} alt="" className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
+              <img 
+                src={item.src} 
+                alt="Atelier Gallery" 
+                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                decoding="async"
+                {...(item.isTarget ? { fetchPriority: 'high' as const, loading: 'eager' as const } : {})}
+              />
             </div>
           ))}
         </div>
@@ -186,7 +192,14 @@ const ScrubbedBentoGallery: React.FC = () => {
           ref={cloneRef} 
           className="absolute z-20 overflow-hidden opacity-0 rounded-sm"
         >
-          <img src={'/images/home/carousel/mainhero.webp'} alt="" className="w-full h-full object-cover" />
+          <img 
+            src={'/images/home/carousel/mainhero.webp'} 
+            alt="The Raw Project" 
+            fetchPriority="high"
+            loading="eager"
+            decoding="async"
+            className="w-full h-full object-cover" 
+          />
         </div>
 
       </div>

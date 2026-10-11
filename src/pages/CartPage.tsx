@@ -59,7 +59,13 @@ const CartPage: React.FC = () => {
                 return (
                   <div key={item.key} className="p-5 sm:p-6 flex flex-col sm:flex-row gap-5 items-start">
                     <div className="w-24 h-28 sm:w-28 sm:h-32 bg-sand-100 overflow-hidden shrink-0 border border-sand-200">
-                      <img src={img} alt={item.name} className="w-full h-full object-cover" />
+                      <img 
+                        src={img} 
+                        alt={item.name} 
+                        loading="lazy" 
+                        decoding="async" 
+                        className="w-full h-full object-cover" 
+                      />
                     </div>
 
                     <div className="flex-1 space-y-2">

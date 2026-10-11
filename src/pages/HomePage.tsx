@@ -13,11 +13,11 @@ const HomePage: React.FC = () => {
 
 
   const inspirationSlides = [
-    { id: 'wood-grain', src: '/images/home/inspiration/3.jpg', alt: 'The Raw Project Inspiration - Wood Grain' },
-    { id: 'cut-timber', src: '/images/home/inspiration/6.jpg', alt: 'The Raw Project Inspiration - Cut Timber Logs' },
-    { id: 'monstera-leaf', src: '/images/home/inspiration/7.jpg', alt: 'The Raw Project Inspiration - Leaf Patterns' },
-    { id: 'bedside-coffee', src: '/images/home/inspiration/4.jpg', alt: 'The Raw Project Inspiration - Handcrafted Bedside Table' },
-    { id: 'striped-leaf', src: '/images/home/inspiration/5.jpg', alt: 'The Raw Project Inspiration - Botanical Textures' },
+    { id: 'wood-grain', src: '/images/home/inspiration/3.webp', alt: 'The Raw Project Inspiration - Wood Grain' },
+    { id: 'cut-timber', src: '/images/home/inspiration/6.webp', alt: 'The Raw Project Inspiration - Cut Timber Logs' },
+    { id: 'monstera-leaf', src: '/images/home/inspiration/7.webp', alt: 'The Raw Project Inspiration - Leaf Patterns' },
+    { id: 'bedside-coffee', src: '/images/home/inspiration/4.webp', alt: 'The Raw Project Inspiration - Handcrafted Bedside Table' },
+    { id: 'striped-leaf', src: '/images/home/inspiration/5.webp', alt: 'The Raw Project Inspiration - Botanical Textures' },
   ];
 
   const [inspirationIndex, setInspirationIndex] = useState(0);
@@ -59,15 +59,15 @@ const HomePage: React.FC = () => {
   };
 
   const instagramPosts = [
-    { id: 'ig1', image: '/images/home/instagram/post1.jpg', caption: 'Simple forms. Lasting details. Crafted for everyday spaces.', likes: 99, comments: 3, time: '2 days ago', type: 'reel', url: 'https://www.instagram.com/reel/ClsuaLzoZgm/' },
-    { id: 'ig2', image: '/images/home/instagram/post2.jpg', caption: 'Where craft meets everyday living. Every piece is made to last.', likes: 84, comments: 5, time: '4 days ago', type: 'post', url: 'https://www.instagram.com/therawproject.in/' },
-    { id: 'ig3', image: '/images/home/instagram/post3.jpg', caption: 'Natural forms, lasting beauty. Our latest piece in solid wood.', likes: 71, comments: 2, time: '1 week ago', type: 'post', url: 'https://www.instagram.com/therawproject.in/' },
-    { id: 'ig4', image: '/images/home/instagram/post4.jpg', caption: 'In the workshop - watching form take shape from raw timber.', likes: 63, comments: 4, time: '1 week ago', type: 'reel', url: 'https://www.instagram.com/reel/CvSNrGBImf_/' },
-    { id: 'ig5', image: '/images/home/instagram/post5.jpg', caption: 'Good Design Lasts. Simple lines, honest materials.', likes: 57, comments: 3, time: '2 weeks ago', type: 'post', url: 'https://www.instagram.com/therawproject.in/' },
-    { id: 'ig6', image: '/images/home/instagram/post6.jpg', caption: 'The texture of raw wood - nothing quite like it.', likes: 112, comments: 7, time: '2 weeks ago', type: 'reel', url: 'https://www.instagram.com/reel/CxdEuBvI0Fe/' },
-    { id: 'ig7', image: '/images/home/instagram/post7.jpg', caption: 'Crafted for everyday spaces. Built to last a lifetime.', likes: 88, comments: 6, time: '3 weeks ago', type: 'post', url: 'https://www.instagram.com/therawproject.in/' },
-    { id: 'ig8', image: '/images/home/instagram/post8.jpg', caption: 'Bringing nature into your home, one piece at a time.', likes: 43, comments: 2, time: '3 weeks ago', type: 'post', url: 'https://www.instagram.com/therawproject.in/' },
-    { id: 'ig9', image: '/images/home/instagram/post9.jpg', caption: 'The MOH Swing - our most loved, handcrafted piece.', likes: 95, comments: 9, time: '1 month ago', type: 'post', url: 'https://www.instagram.com/therawproject.in/' },
+    { id: 'ig1', image: '/images/home/instagram/post1.webp', caption: 'Simple forms. Lasting details. Crafted for everyday spaces.', likes: 99, comments: 3, time: '2 days ago', type: 'reel', url: 'https://www.instagram.com/reel/ClsuaLzoZgm/' },
+    { id: 'ig2', image: '/images/home/instagram/post2.webp', caption: 'Where craft meets everyday living. Every piece is made to last.', likes: 84, comments: 5, time: '4 days ago', type: 'post', url: 'https://www.instagram.com/therawproject.in/' },
+    { id: 'ig3', image: '/images/home/instagram/post3.webp', caption: 'Natural forms, lasting beauty. Our latest piece in solid wood.', likes: 71, comments: 2, time: '1 week ago', type: 'post', url: 'https://www.instagram.com/therawproject.in/' },
+    { id: 'ig4', image: '/images/home/instagram/post4.webp', caption: 'In the workshop - watching form take shape from raw timber.', likes: 63, comments: 4, time: '1 week ago', type: 'reel', url: 'https://www.instagram.com/reel/CvSNrGBImf_/' },
+    { id: 'ig5', image: '/images/home/instagram/post5.webp', caption: 'Good Design Lasts. Simple lines, honest materials.', likes: 57, comments: 3, time: '2 weeks ago', type: 'post', url: 'https://www.instagram.com/therawproject.in/' },
+    { id: 'ig6', image: '/images/home/instagram/post6.webp', caption: 'The texture of raw wood - nothing quite like it.', likes: 112, comments: 7, time: '2 weeks ago', type: 'reel', url: 'https://www.instagram.com/reel/CxdEuBvI0Fe/' },
+    { id: 'ig7', image: '/images/home/instagram/post7.webp', caption: 'Crafted for everyday spaces. Built to last a lifetime.', likes: 88, comments: 6, time: '3 weeks ago', type: 'post', url: 'https://www.instagram.com/therawproject.in/' },
+    { id: 'ig8', image: '/images/home/instagram/post8.webp', caption: 'Bringing nature into your home, one piece at a time.', likes: 43, comments: 2, time: '3 weeks ago', type: 'post', url: 'https://www.instagram.com/therawproject.in/' },
+    { id: 'ig9', image: '/images/home/instagram/post9.webp', caption: 'The MOH Swing - our most loved, handcrafted piece.', likes: 95, comments: 9, time: '1 month ago', type: 'post', url: 'https://www.instagram.com/therawproject.in/' },
   ];
 
   const [featuredPost, setFeaturedPost] = useState(0);
@@ -99,8 +99,8 @@ const HomePage: React.FC = () => {
       category: p.categories && p.categories.length > 0 ? p.categories[0].name : 'Furniture',
       scope: 'Handcrafted Solid Wood',
       location: 'Atelier Collection',
-      mainImg: p.images && p.images.length > 0 ? p.images[0].src : '/images/products/Toronto_website_product_page_slideshow_2042_x_1012.jpg',
-      detailImg: p.images && p.images.length > 1 ? p.images[1].src : (p.images && p.images.length > 0 ? p.images[0].src : '/images/products/Toronto_website_product_page_slideshow_2042_x_1012.jpg')
+      mainImg: p.images && p.images.length > 0 ? p.images[0].src : '/images/products/Toronto_website_product_page_slideshow_2042_x_1012.webp',
+      detailImg: p.images && p.images.length > 1 ? p.images[1].src : (p.images && p.images.length > 0 ? p.images[0].src : '/images/products/Toronto_website_product_page_slideshow_2042_x_1012.webp')
     };
   });
 
@@ -364,6 +364,8 @@ const HomePage: React.FC = () => {
                         <img 
                           src={project.mainImg} 
                           alt={project.title} 
+                          loading="lazy"
+                          decoding="async"
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
                         />
                       </div>
@@ -371,6 +373,8 @@ const HomePage: React.FC = () => {
                         <img 
                           src={project.detailImg} 
                           alt={`${project.title} Detail`} 
+                          loading="lazy"
+                          decoding="async"
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
                         />
                       </div>
@@ -452,6 +456,7 @@ const HomePage: React.FC = () => {
                     alt={slide.alt}
                     className="w-full h-full object-cover object-center"
                     loading={idx === 0 ? 'eager' : 'lazy'}
+                    decoding="async"
                   />
                 </div>
               ))}
@@ -469,6 +474,7 @@ const HomePage: React.FC = () => {
           muted 
           loop 
           playsInline 
+          preload="none"
           className="absolute inset-0 w-full h-full object-cover z-0"
         >
           <source src="/images/Video-76275.mp4" type="video/mp4" />
@@ -607,6 +613,8 @@ const HomePage: React.FC = () => {
                 <img
                   src={product.image}
                   alt={product.title}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 
@@ -661,8 +669,10 @@ const HomePage: React.FC = () => {
             <div className="flex flex-col group">
               <div className="relative aspect-[3/2] overflow-hidden bg-[#e0ded8] mb-6 shadow-sm border border-[#dfdbd2]">
                 <img 
-                  src="/images/home/inspiration/6.jpg" 
+                  src="/images/home/inspiration/6.webp" 
                   alt="Raw Material" 
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" 
                 />
               </div>
@@ -681,8 +691,10 @@ const HomePage: React.FC = () => {
             <div className="flex flex-col group">
               <div className="relative aspect-[3/2] overflow-hidden bg-[#e0ded8] mb-6 shadow-sm border border-[#dfdbd2]">
                 <img 
-                  src="/images/home/inspiration/3.jpg" 
+                  src="/images/home/inspiration/3.webp" 
                   alt="Craft" 
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" 
                 />
               </div>
@@ -701,8 +713,10 @@ const HomePage: React.FC = () => {
             <div className="flex flex-col group">
               <div className="relative aspect-[3/2] overflow-hidden bg-[#e0ded8] mb-6 shadow-sm border border-[#dfdbd2]">
                 <img 
-                  src="/images/home/inspiration/4.jpg" 
+                  src="/images/home/inspiration/4.webp" 
                   alt="Object" 
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" 
                 />
               </div>
@@ -747,6 +761,8 @@ const HomePage: React.FC = () => {
                   <img
                     src={post.image}
                     alt={post.caption}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-[#2a251e]/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
@@ -763,8 +779,10 @@ const HomePage: React.FC = () => {
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-full overflow-hidden border border-[#dbdbdb] cursor-pointer">
                     <img
-                      src="/images/home/instagram/avatar.png"
+                      src="/images/home/instagram/avatar.webp"
                       alt="therawproject.in"
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -792,6 +810,8 @@ const HomePage: React.FC = () => {
                 <img
                   src={instagramPosts[featuredPost].image}
                   alt={instagramPosts[featuredPost].caption}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover"
                 />
               </a>

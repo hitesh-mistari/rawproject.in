@@ -31,6 +31,7 @@ const NewsPage: React.FC = () => {
                 alt={`Instagram post ${index + 1}`} 
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 loading="lazy"
+                decoding="async"
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500"></div>
               {/* Optional: Add instagram icon overlay on hover */}

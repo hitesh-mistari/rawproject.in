@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Sparkles } from "lucide-react";
 
@@ -143,6 +143,9 @@ export const MegaMenu: React.FC<MegaMenuProps> = ({ isOpen, onClose, activeCateg
             <img
               src={current.featuredImage}
               alt={current.featuredTitle}
+              loading="lazy"
+              fetchPriority="low"
+              decoding="async"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#181818] via-transparent to-transparent"></div>
