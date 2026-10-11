@@ -5,6 +5,13 @@ import { api } from '../services/api';
 import { useCart } from '../context/CartContext';
 import { ChevronLeft, ChevronDown, ChevronUp, Share2, Heart, Star } from 'lucide-react';
 
+const getOptimizedImg = (src: string) => {
+  if (src && src.startsWith('/images/products/') && !src.includes('/optimized/')) {
+    return src.replace('/images/products/', '/images/products/optimized/');
+  }
+  return src;
+};
+
 interface RelatedCardItem {
   id: number;
   slug: string;
@@ -193,7 +200,9 @@ const ProductDetailPage: React.FC = () => {
         {/* Hero Image */}
         <div className="w-full bg-[#f7f5f2] aspect-[4/3] overflow-hidden">
           <img
-            src={currentImage.src}
+            src={getOptimizedImg(currentImage.src)}
+            srcSet={`${getOptimizedImg(currentImage.src)} 640w, ${currentImage.src} 1200w`}
+            sizes="(max-width: 640px) 100vw, 800px"
             alt={currentImage.alt || product.name}
             fetchPriority="high"
             decoding="async"
@@ -215,7 +224,7 @@ const ProductDetailPage: React.FC = () => {
                 }`}
               >
                 <img 
-                  src={img.src} 
+                  src={getOptimizedImg(img.src)} 
                   alt={`View ${idx + 1}`} 
                   loading="lazy"
                   decoding="async"

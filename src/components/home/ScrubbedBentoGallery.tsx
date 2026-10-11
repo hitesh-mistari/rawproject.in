@@ -14,8 +14,8 @@ const ScrubbedBentoGallery: React.FC = () => {
   // the Target naturally gets its own full-width row right in the middle!
   const gridItems = [
     // 0, 1 (Mobile Row 1)
-    { src: '/images/experience/exp1.webp', className: 'item-0' },
-    { src: '/images/experience/exp3.webp', className: 'item-1' },
+    { src: '/images/experience/optimized/exp1.webp', className: 'item-0' },
+    { src: '/images/experience/optimized/exp3.webp', className: 'item-1' },
     // 2, 3 (Mobile Row 2)
     { src: '/images/home/instagram/post1.webp', className: 'item-2' },
     { src: '/images/home/hero/hero_slide2.webp', className: 'item-3' }, 
@@ -23,13 +23,13 @@ const ScrubbedBentoGallery: React.FC = () => {
     { src: '/images/home/carousel/mainhero.webp', className: 'item-4 target-item', isTarget: true },
     // 5, 6 (Mobile Row 4)
     { src: '/images/home/instagram/post2.webp', className: 'item-5' },
-    { src: '/images/experience/exp2.webp', className: 'item-6' },
+    { src: '/images/experience/optimized/exp2.webp', className: 'item-6' },
     // 7, 8 (Mobile Row 5)
     { src: '/images/home/instagram/post1.webp', className: 'item-7' },
     { src: '/images/home/instagram/post2.webp', className: 'item-8' },
     // 9, 10 (Mobile Row 6)
-    { src: '/images/experience/exp3.webp', className: 'item-9' },
-    { src: '/images/experience/exp1.webp', className: 'item-10' },
+    { src: '/images/experience/optimized/exp3.webp', className: 'item-9' },
+    { src: '/images/experience/optimized/exp1.webp', className: 'item-10' },
   ];
 
   useLayoutEffect(() => {
@@ -40,14 +40,17 @@ const ScrubbedBentoGallery: React.FC = () => {
       if (!targetElement) return;
 
       const setClonePosition = () => {
-        const wrapperRect = wrapperRef.current!.getBoundingClientRect();
-        const targetRect = targetElement.getBoundingClientRect();
-        
-        gsap.set(cloneRef.current, {
-          top: targetRect.top - wrapperRect.top,
-          left: targetRect.left - wrapperRect.left,
-          width: targetRect.width,
-          height: targetRect.height,
+        requestAnimationFrame(() => {
+          if (!wrapperRef.current || !targetElement || !cloneRef.current) return;
+          const wrapperRect = wrapperRef.current.getBoundingClientRect();
+          const targetRect = targetElement.getBoundingClientRect();
+          
+          gsap.set(cloneRef.current, {
+            top: targetRect.top - wrapperRect.top,
+            left: targetRect.left - wrapperRect.left,
+            width: targetRect.width,
+            height: targetRect.height,
+          });
         });
       };
 
@@ -182,7 +185,15 @@ const ScrubbedBentoGallery: React.FC = () => {
                 alt="Atelier Gallery" 
                 className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                 decoding="async"
-                {...(item.isTarget ? { fetchPriority: 'high' as const, loading: 'eager' as const } : {})}
+                {...(item.isTarget ? { 
+                  fetchPriority: 'high' as const, 
+                  loading: 'eager' as const,
+                  srcSet: '/images/home/carousel/mainhero-mobile.webp 720w, /images/home/carousel/mainhero.webp 1400w',
+                  sizes: '(max-width: 640px) 100vw, 100vw'
+                } : { 
+                  loading: 'lazy' as const, 
+                  fetchPriority: 'low' as const 
+                })}
               />
             </div>
           ))}
@@ -194,6 +205,8 @@ const ScrubbedBentoGallery: React.FC = () => {
         >
           <img 
             src={'/images/home/carousel/mainhero.webp'} 
+            srcSet="/images/home/carousel/mainhero-mobile.webp 720w, /images/home/carousel/mainhero.webp 1400w"
+            sizes="100vw"
             alt="The Raw Project" 
             fetchPriority="high"
             loading="eager"

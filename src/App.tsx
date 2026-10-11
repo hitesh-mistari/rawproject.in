@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState, lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { CartProvider } from "./context/CartContext";
 import Header from "./components/layout/Header";
@@ -8,19 +8,21 @@ import IntroLoader from "./components/layout/IntroLoader";
 import WhatsAppButton from "./components/layout/WhatsAppButton";
 import CartDrawer from "./components/common/CartDrawer";
 
-// Pages
+// Keep HomePage eager so the initial landing page renders with zero extra request
 import HomePage from "./pages/HomePage";
-import ShopPage from "./pages/ShopPage";
-import CategoryPage from "./pages/CategoryPage";
-import ProductDetailPage from "./pages/ProductDetailPage";
-import CartPage from "./pages/CartPage";
-import NewsPage from "./pages/NewsPage";
-import CheckoutPage from "./pages/CheckoutPage";
-import AboutPage from "./pages/AboutPage";
-import ExperienceCentrePage from "./pages/ExperienceCentrePage";
-import RequestQuotePage from "./pages/RequestQuotePage";
-import ContactPage from "./pages/ContactPage";
-import PolicyPage from "./pages/PolicyPage";
+
+// Code-split secondary routes to shrink initial bundle
+const ShopPage = lazy(() => import("./pages/ShopPage"));
+const CategoryPage = lazy(() => import("./pages/CategoryPage"));
+const ProductDetailPage = lazy(() => import("./pages/ProductDetailPage"));
+const CartPage = lazy(() => import("./pages/CartPage"));
+const NewsPage = lazy(() => import("./pages/NewsPage"));
+const CheckoutPage = lazy(() => import("./pages/CheckoutPage"));
+const AboutPage = lazy(() => import("./pages/AboutPage"));
+const ExperienceCentrePage = lazy(() => import("./pages/ExperienceCentrePage"));
+const RequestQuotePage = lazy(() => import("./pages/RequestQuotePage"));
+const ContactPage = lazy(() => import("./pages/ContactPage"));
+const PolicyPage = lazy(() => import("./pages/PolicyPage"));
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -74,49 +76,51 @@ const App: React.FC = () => {
         <div className="min-h-screen flex flex-col justify-between bg-[#eae5da] text-[#222222] selection:bg-[#c5a880] selection:text-stone-900">
           <Header />
           <main className="flex-1">
-            <Routes>
-              {/* Home */}
-              <Route path="/" element={<HomePage />} />
-              <Route path="/news" element={<NewsPage />} />
-              <Route path="/get-in-touch" element={<ContactPage />} />
+            <Suspense fallback={<div className="min-h-[50vh] bg-[#eae5da]" />}>
+              <Routes>
+                {/* Home */}
+                <Route path="/" element={<HomePage />} />
+                <Route path="/news" element={<NewsPage />} />
+                <Route path="/get-in-touch" element={<ContactPage />} />
 
-              {/* Shop & Catalog */}
-              <Route path="/shop" element={<ShopPage />} />
-              <Route path="/product/:slug" element={<ProductDetailPage />} />
+                {/* Shop & Catalog */}
+                <Route path="/shop" element={<ShopPage />} />
+                <Route path="/product/:slug" element={<ProductDetailPage />} />
 
-              {/* WooCommerce Standard Category & Subcategory Routes */}
-              <Route path="/product-category/:category" element={<CategoryPage />} />
-              <Route path="/product-category/:category/:subcategory" element={<CategoryPage />} />
-              <Route path="/category/:slug" element={<CategoryPage />} />
-              
-              {/* Direct Category Shortcuts */}
-              <Route path="/living" element={<CategoryPage />} />
-              <Route path="/bedroom" element={<CategoryPage />} />
-              <Route path="/dining" element={<CategoryPage />} />
-              <Route path="/one-of-one" element={<CategoryPage />} />
+                {/* WooCommerce Standard Category & Subcategory Routes */}
+                <Route path="/product-category/:category" element={<CategoryPage />} />
+                <Route path="/product-category/:category/:subcategory" element={<CategoryPage />} />
+                <Route path="/category/:slug" element={<CategoryPage />} />
+                
+                {/* Direct Category Shortcuts */}
+                <Route path="/living" element={<CategoryPage />} />
+                <Route path="/bedroom" element={<CategoryPage />} />
+                <Route path="/dining" element={<CategoryPage />} />
+                <Route path="/one-of-one" element={<CategoryPage />} />
 
-              {/* Cart & Checkout */}
-              <Route path="/cart" element={<CartPage />} />
-              <Route path="/checkout" element={<CheckoutPage />} />
+                {/* Cart & Checkout */}
+                <Route path="/cart" element={<CartPage />} />
+                <Route path="/checkout" element={<CheckoutPage />} />
 
-              {/* Information & Atelier */}
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/about-us" element={<AboutPage />} />
-              <Route path="/experience-centre" element={<ExperienceCentrePage />} />
-              <Route path="/request-quote" element={<RequestQuotePage />} />
-              <Route path="/contact" element={<ContactPage />} />
-              <Route path="/contact-us" element={<ContactPage />} />
-              <Route path="/get-in-touch" element={<ContactPage />} />
-              
-              {/* Policies */}
-              <Route path="/shipping-policy" element={<PolicyPage />} />
-              <Route path="/terms-of-service" element={<PolicyPage />} />
-              <Route path="/privacy-policy" element={<PolicyPage />} />
-              <Route path="/policies" element={<PolicyPage />} />
+                {/* Information & Atelier */}
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/about-us" element={<AboutPage />} />
+                <Route path="/experience-centre" element={<ExperienceCentrePage />} />
+                <Route path="/request-quote" element={<RequestQuotePage />} />
+                <Route path="/contact" element={<ContactPage />} />
+                <Route path="/contact-us" element={<ContactPage />} />
+                <Route path="/get-in-touch" element={<ContactPage />} />
+                
+                {/* Policies */}
+                <Route path="/shipping-policy" element={<PolicyPage />} />
+                <Route path="/terms-of-service" element={<PolicyPage />} />
+                <Route path="/privacy-policy" element={<PolicyPage />} />
+                <Route path="/policies" element={<PolicyPage />} />
 
-              {/* Catch-all */}
-              <Route path="*" element={<NotFoundPage />} />
-            </Routes>
+                {/* Catch-all */}
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
+            </Suspense>
           </main>
           <Footer />
 

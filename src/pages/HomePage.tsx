@@ -8,9 +8,15 @@ import productsData from '../data/products.json';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const getOptimizedImg = (src: string) => {
+  if (src && src.startsWith('/images/products/') && !src.includes('/optimized/')) {
+    return src.replace('/images/products/', '/images/products/optimized/');
+  }
+  return src;
+};
+
 const HomePage: React.FC = () => {
   const whatsappUrl = "https://api.whatsapp.com/send?phone=918698814865&text=Hi!%20We%27d%20like%20you%20to%20suggest%20some%20furniture.";
-
 
   const inspirationSlides = [
     { id: 'wood-grain', src: '/images/home/inspiration/3.webp', alt: 'The Raw Project Inspiration - Wood Grain' },
@@ -37,6 +43,7 @@ const HomePage: React.FC = () => {
       id: p.id,
       title: p.name.toUpperCase(),
       image: p.images[0].src,
+      optImage: getOptimizedImg(p.images[0].src),
       slug: p.slug,
       category: p.categories && p.categories.length > 0 ? p.categories[0].name.toUpperCase() : 'FURNITURE'
     }));
@@ -90,6 +97,9 @@ const HomePage: React.FC = () => {
       else subcategory = slugs[0];
     }
 
+    const mainSrc = p.images && p.images.length > 0 ? p.images[0].src : '/images/products/Toronto_website_product_page_slideshow_2042_x_1012.webp';
+    const detailSrc = p.images && p.images.length > 1 ? p.images[1].src : (p.images && p.images.length > 0 ? p.images[0].src : '/images/products/Toronto_website_product_page_slideshow_2042_x_1012.webp');
+
     return {
       id: p.id.toString(),
       title: p.name,
@@ -99,8 +109,10 @@ const HomePage: React.FC = () => {
       category: p.categories && p.categories.length > 0 ? p.categories[0].name : 'Furniture',
       scope: 'Handcrafted Solid Wood',
       location: 'Atelier Collection',
-      mainImg: p.images && p.images.length > 0 ? p.images[0].src : '/images/products/Toronto_website_product_page_slideshow_2042_x_1012.webp',
-      detailImg: p.images && p.images.length > 1 ? p.images[1].src : (p.images && p.images.length > 0 ? p.images[0].src : '/images/products/Toronto_website_product_page_slideshow_2042_x_1012.webp')
+      mainImg: mainSrc,
+      optMainImg: getOptimizedImg(mainSrc),
+      detailImg: detailSrc,
+      optDetailImg: getOptimizedImg(detailSrc)
     };
   });
 
@@ -109,69 +121,75 @@ const HomePage: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      // 1. Fade up section headers
-      gsap.utils.toArray<HTMLElement>('.gsap-fade-up').forEach((el) => {
-        gsap.fromTo(
-          el,
-          { y: 50, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 1,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: el,
-              start: 'top 85%',
-              toggleActions: 'play none none reverse',
-            },
-          }
-        );
-      });
+    let ctx: gsap.Context | null = null;
+    const timer = setTimeout(() => {
+      ctx = gsap.context(() => {
+        // 1. Fade up section headers
+        gsap.utils.toArray<HTMLElement>('.gsap-fade-up').forEach((el) => {
+          gsap.fromTo(
+            el,
+            { y: 50, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 1,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: el,
+                start: 'top 85%',
+                toggleActions: 'play none none reverse',
+              },
+            }
+          );
+        });
 
-      // 2. Stagger project cards reveal in Works of Quiet Elegance
-      gsap.utils.toArray<HTMLElement>('.gsap-project-card').forEach((el, i) => {
-        gsap.fromTo(
-          el,
-          { y: 60, opacity: 0, scale: 0.98 },
-          {
-            y: 0,
-            opacity: 1,
-            scale: 1,
-            duration: 1.2,
-            delay: (i % 2) * 0.15,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: el,
-              start: 'top 85%',
-              toggleActions: 'play none none reverse',
-            },
-          }
-        );
-      });
+        // 2. Stagger project cards reveal in Works of Quiet Elegance
+        gsap.utils.toArray<HTMLElement>('.gsap-project-card').forEach((el, i) => {
+          gsap.fromTo(
+            el,
+            { y: 60, opacity: 0, scale: 0.98 },
+            {
+              y: 0,
+              opacity: 1,
+              scale: 1,
+              duration: 1.2,
+              delay: (i % 2) * 0.15,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: el,
+                start: 'top 85%',
+                toggleActions: 'play none none reverse',
+              },
+            }
+          );
+        });
 
-      // 3. Stagger reveal why ethos cards
-      gsap.utils.toArray<HTMLElement>('.gsap-ethos-card').forEach((el, i) => {
-        gsap.fromTo(
-          el,
-          { y: 40, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.9,
-            delay: i * 0.15,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: el,
-              start: 'top 85%',
-              toggleActions: 'play none none reverse',
-            },
-          }
-        );
-      });
-    }, sectionRef);
+        // 3. Stagger reveal why ethos cards
+        gsap.utils.toArray<HTMLElement>('.gsap-ethos-card').forEach((el, i) => {
+          gsap.fromTo(
+            el,
+            { y: 40, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.9,
+              delay: i * 0.15,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: el,
+                start: 'top 85%',
+                toggleActions: 'play none none reverse',
+              },
+            }
+          );
+        });
+      }, sectionRef);
+    }, 60);
 
-    return () => ctx.revert();
+    return () => {
+      clearTimeout(timer);
+      if (ctx) ctx.revert();
+    };
   }, [activeFilter]);
 
   return (
@@ -362,7 +380,9 @@ const HomePage: React.FC = () => {
                     <div className="grid grid-cols-[1.5fr_1fr] sm:grid-cols-[2fr_1fr] md:grid-cols-[2.2fr_1fr] gap-2 sm:gap-4">
                       <div className="aspect-[4/3] sm:aspect-[16/9] lg:aspect-[16/10] overflow-hidden bg-[#e0ded8]">
                         <img 
-                          src={project.mainImg} 
+                          src={project.optMainImg} 
+                          srcSet={`${project.optMainImg} 640w, ${project.mainImg} 1200w`}
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 60vw, 700px"
                           alt={project.title} 
                           loading="lazy"
                           decoding="async"
@@ -371,7 +391,9 @@ const HomePage: React.FC = () => {
                       </div>
                       <div className="h-full overflow-hidden bg-[#e0ded8]">
                         <img 
-                          src={project.detailImg} 
+                          src={project.optDetailImg} 
+                          srcSet={`${project.optDetailImg} 640w, ${project.detailImg} 1200w`}
+                          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 30vw, 350px"
                           alt={`${project.title} Detail`} 
                           loading="lazy"
                           decoding="async"
@@ -611,7 +633,9 @@ const HomePage: React.FC = () => {
                 }}
               >
                 <img
-                  src={product.image}
+                  src={product.optImage}
+                  srcSet={`${product.optImage} 640w, ${product.image} 1200w`}
+                  sizes="(max-width: 640px) 220px, 320px"
                   alt={product.title}
                   loading="lazy"
                   decoding="async"

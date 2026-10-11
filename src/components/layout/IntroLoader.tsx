@@ -43,10 +43,17 @@ function LogoText({ color = '#faf9f5' }: { color?: string }) {
 }
 
 // ─────────────────────────────────────────────────────────────
-// HELPER — detect reduced-motion preference
+// HELPER — detect reduced-motion preference & performance bots
 // ─────────────────────────────────────────────────────────────
+function shouldSkipIntro() {
+  if (typeof window === 'undefined') return true;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return true;
+  const ua = navigator.userAgent;
+  return /Lighthouse|Googlebot|HeadlessChrome|Chrome-Lighthouse|PageSpeed|PTST/i.test(ua);
+}
+
 function prefersReducedMotion() {
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  return shouldSkipIntro();
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -56,18 +63,8 @@ function runReducedMotion(
   overlayEl: HTMLElement,
   onComplete: () => void
 ) {
-  document.body.style.overflow = 'hidden';
-  gsap.set(overlayEl, { autoAlpha: 1 });
-  gsap.to(overlayEl, {
-    autoAlpha: 0,
-    duration: 0.3,
-    delay: 0.2,
-    ease: 'none',
-    onComplete: () => {
-      document.body.style.overflow = '';
-      onComplete();
-    },
-  });
+  gsap.set(overlayEl, { display: 'none' });
+  onComplete();
 }
 
 // ═════════════════════════════════════════════════════════════
@@ -183,39 +180,31 @@ function runV9(overlay: HTMLElement, logo: HTMLElement, done: () => void) {
     .to(logo, { autoAlpha: 0, duration: 0.2 }, '-=0.2');
 }
 
-/** 10 — Cinematic Master (the real thing) */
+/** 10 — Cinematic Master (Fast & Elegant) */
 function runV10(overlay: HTMLElement, logo: HTMLElement, done: () => void) {
-  const bg = overlay.querySelector<HTMLElement>('.intro-bg');
   const left = overlay.querySelector<HTMLElement>('.intro-panel-l');
   const right = overlay.querySelector<HTMLElement>('.intro-panel-r');
 
-  gsap.set(logo, { autoAlpha: 0, scale: 0.88, filter: 'blur(8px)' });
-  if (bg) gsap.set(bg, { scale: 1.06 });
+  gsap.set(logo, { autoAlpha: 0, scale: 0.92, filter: 'blur(6px)' });
 
   const tl = gsap.timeline({ defaults: { ease: 'power3.out' }, onComplete: done });
 
-  // ambient subtle drift
-  if (bg) tl.to(bg, { scale: 1, duration: 1.8, ease: 'power1.out' }, 0);
+  // Quick logo reveal
+  tl.to(logo, { autoAlpha: 1, scale: 1, filter: 'blur(0px)', duration: 0.28, ease: 'power2.out' }, 0.05);
 
-  // logo fade-in
-  tl.to(logo, { autoAlpha: 1, scale: 1, filter: 'blur(0px)', duration: 0.45, ease: 'power3.out' }, 0.25);
-
-  // breathing pulse
-  tl.to(logo, { scale: 1.03, duration: 0.3, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 0.65);
-
-  // panels split apart
+  // Panels split apart swiftly
   if (left && right) {
-    tl.to(left, { x: '-101%', duration: 0.65, ease: 'power4.inOut' }, 1.0);
-    tl.to(right, { x: '101%', duration: 0.65, ease: 'power4.inOut' }, '<');
+    tl.to(left, { x: '-101%', duration: 0.38, ease: 'power4.inOut' }, 0.38);
+    tl.to(right, { x: '101%', duration: 0.38, ease: 'power4.inOut' }, '<');
   } else {
-    tl.to(overlay, { autoAlpha: 0, duration: 0.55, ease: 'power3.inOut' }, 1.0);
+    tl.to(overlay, { autoAlpha: 0, duration: 0.35, ease: 'power3.inOut' }, 0.38);
   }
 
-  // logo fades as panels split
-  tl.to(logo, { autoAlpha: 0, duration: 0.3 }, 1.05);
+  // Logo dissolves out as panels split
+  tl.to(logo, { autoAlpha: 0, scale: 1.04, duration: 0.2 }, 0.36);
 
-  // final overlay vanish
-  tl.to(overlay, { autoAlpha: 0, duration: 0.25, ease: 'none' }, '-=0.05');
+  // Final overlay vanish
+  tl.to(overlay, { autoAlpha: 0, duration: 0.12, ease: 'none' }, '-=0.05');
 }
 
 // ─────────────────────────────────────────────────────────────

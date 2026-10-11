@@ -6,12 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Raw Project | Handcrafted Luxury Bespoke Furniture</title>
     <meta name="description" content="Raw Project crafts exquisite bespoke furniture, sofas, dining tables, beds, and accent chairs tailored with luxury fabrics and artisanal wood textures." />
-    <!-- Critical First-Fold LCP Image Preload -->
-    <link rel="preload" href="/images/home/carousel/mainhero.webp" as="image" type="image/webp" fetchpriority="high">
-    <!-- Google Fonts: Quicksand -->
+    <!-- Critical Brand Font Preload (Eliminating Critical Request Chain) -->
+    <link rel="preload" href="/images/Recoleta-RegularDEMO.woff2" as="font" type="font/woff2" crossorigin>
+
+    <!-- Critical First-Fold LCP Image Responsive Preload -->
+    <link rel="preload" href="/images/home/carousel/mainhero-mobile.webp" as="image" type="image/webp" fetchpriority="high" media="(max-width: 640px)">
+    <link rel="preload" href="/images/home/carousel/mainhero.webp" as="image" type="image/webp" fetchpriority="high" media="(min-width: 641px)">
+
+    <!-- Google Fonts: Quicksand (Asynchronous non-blocking) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'">
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap">
+    </noscript>
   </head>
   <body class="bg-[#0e0e0e] text-[#f2f2f2] font-sans antialiased selection:bg-[#c5a880] selection:text-black">
     <div id="root"></div>

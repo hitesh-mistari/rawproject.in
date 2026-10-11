@@ -75,7 +75,9 @@ const ExperienceCentrePage: React.FC = () => {
                 {sliderImages.map((img, idx) => (
                   <div key={idx} className="w-full h-full shrink-0 relative">
                     <img
-                      src={img.src}
+                      src={`/images/experience/optimized/exp${idx + 1}.webp`}
+                      srcSet={`/images/experience/optimized/exp${idx + 1}.webp 640w, ${img.src} 1200w`}
+                      sizes="(max-width: 640px) 100vw, 600px"
                       alt={img.alt}
                       className="w-full h-full object-cover object-center"
                       loading={idx === 0 ? 'eager' : 'lazy'}

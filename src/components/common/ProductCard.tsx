@@ -3,6 +3,13 @@ import { Link } from "react-router-dom";
 import { Heart } from "lucide-react";
 import { Product } from "../../types";
 
+const getOptimizedImg = (src: string) => {
+  if (src && src.startsWith('/images/products/') && !src.includes('/optimized/')) {
+    return src.replace('/images/products/', '/images/products/optimized/');
+  }
+  return src;
+};
+
 interface ProductCardProps {
   product: Product;
 }
@@ -10,6 +17,8 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const imageUrl = product.images?.[0]?.src || "/placeholder-image.jpg";
   const hoverImageUrl = product.images?.[1]?.src || imageUrl;
+  const optImageUrl = getOptimizedImg(imageUrl);
+  const optHoverImageUrl = getOptimizedImg(hoverImageUrl);
   const [wished, setWished] = useState(false);
 
   const price = parseFloat(product.prices?.price || "0");
@@ -21,14 +30,18 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       {/* Image */}
       <Link to={`/product/${product.slug}`} className="relative aspect-square overflow-hidden bg-[#f5f3f0] block">
         <img
-          src={imageUrl}
+          src={optImageUrl}
+          srcSet={`${optImageUrl} 640w, ${imageUrl} 1200w`}
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 300px"
           alt={product.name}
           loading="lazy"
           decoding="async"
           className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:opacity-0 group-hover:scale-105"
         />
         <img
-          src={hoverImageUrl}
+          src={optHoverImageUrl}
+          srcSet={`${optHoverImageUrl} 640w, ${hoverImageUrl} 1200w`}
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 300px"
           alt={product.name}
           loading="lazy"
           decoding="async"
