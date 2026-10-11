@@ -3,7 +3,7 @@ import gsap from 'gsap';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Search, ChevronDown, ChevronRight, Menu, X, Download } from 'lucide-react';
 
-const HoverUnderlineLink = ({ to, children, className = '', isActive = false, onMouseEnter, onMouseLeave }: any) => {
+const HoverUnderlineLink = ({ to, children, className = '', isActive = false, onMouseEnter, onMouseLeave, onClick }: any) => {
   const lineRef = useRef(null);
 
   const handleEnter = (e: any) => {
@@ -32,6 +32,7 @@ const HoverUnderlineLink = ({ to, children, className = '', isActive = false, on
       className={`relative inline-block ${className}`}
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
+      onClick={onClick}
     >
       <span className="relative z-10">{children}</span>
       <span 
@@ -290,12 +291,12 @@ const Header: React.FC = () => {
   return (
     <>
       <header className="bg-white w-full relative z-50 shadow-[0_1px_0_0_rgba(0,0,0,0.06)]">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12 py-5 flex items-center justify-between">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-4 sm:py-5 flex items-center justify-between">
           
           {/* Left: Brand Logo */}
-          <div className="flex-shrink-0">
+          <div className="flex-shrink-0 mr-4 lg:mr-8">
             <Link to="/" className="group flex flex-col" onClick={closeMobileMenu}>
-              <span ref={logoRef} className="font-recoleta text-[24px] sm:text-[28px] md:text-[32px] text-[#1a1612] leading-tight mb-1 flex items-center" style={{ letterSpacing: '0.02em', perspective: '400px' }}>
+              <span ref={logoRef} className="font-recoleta text-[22px] sm:text-[26px] md:text-[28px] lg:text-[32px] text-[#1a1612] leading-tight mb-1 flex items-center whitespace-nowrap" style={{ letterSpacing: '0.02em', perspective: '400px' }}>
                 {renderAnimatedText('the ')}
                 {renderAnimatedText('raw', true)}
                 {renderAnimatedText(' project')}
@@ -303,12 +304,12 @@ const Header: React.FC = () => {
             </Link>
           </div>
 
-          {/* Center: Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-6 lg:gap-10 mt-1">
-            <HoverUnderlineLink to="/about" isActive={location.pathname === '/about'} className="text-[12px] tracking-[0.1em] text-[#666] hover:text-black font-medium transition-colors uppercase py-1">
+          {/* Center: Desktop Navigation Links (>= 1024px) */}
+          <nav className="hidden lg:flex items-center gap-4 xl:gap-8 2xl:gap-10 mt-1">
+            <HoverUnderlineLink to="/about" isActive={location.pathname === '/about'} className="text-[11px] xl:text-[12px] tracking-[0.08em] xl:tracking-[0.1em] text-[#666] hover:text-black font-medium transition-colors uppercase py-1 whitespace-nowrap">
               ABOUT
             </HoverUnderlineLink>
-            <HoverUnderlineLink to="/experience-centre" isActive={location.pathname === '/experience-centre'} className="text-[12px] tracking-[0.1em] text-[#666] hover:text-black font-medium transition-colors uppercase py-1">
+            <HoverUnderlineLink to="/experience-centre" isActive={location.pathname === '/experience-centre'} className="text-[11px] xl:text-[12px] tracking-[0.08em] xl:tracking-[0.1em] text-[#666] hover:text-black font-medium transition-colors uppercase py-1 whitespace-nowrap">
               EXPERIENCE CENTRE
             </HoverUnderlineLink>
 
@@ -321,7 +322,15 @@ const Header: React.FC = () => {
               <HoverUnderlineLink 
                 to="/shop" 
                 isActive={location.pathname === '/shop'}
-                className={`text-[12px] tracking-[0.1em] font-medium transition-colors uppercase cursor-pointer py-1 ${
+                onClick={(e: React.MouseEvent) => {
+                  if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(hover: none)').matches) {
+                    if (!isShopOpen) {
+                      e.preventDefault();
+                      setIsShopOpen(true);
+                    }
+                  }
+                }}
+                className={`text-[11px] xl:text-[12px] tracking-[0.08em] xl:tracking-[0.1em] font-medium transition-colors uppercase cursor-pointer py-1 whitespace-nowrap ${
                   isShopOpen ? 'text-black' : 'text-[#666] hover:text-black'
                 }`}
               >
@@ -358,7 +367,7 @@ const Header: React.FC = () => {
                           onMouseEnter={() => setHoveredCategory(cat.id)}
                         >
                           <Link 
-                            to={cat.href}
+                            to={cat.href} 
                             onClick={() => setIsShopOpen(false)}
                             className="text-[#1a1612] font-semibold uppercase tracking-[0.15em] text-[11px] mb-4 pb-2 border-b border-[#e8e4db] hover:text-[#8a7f72] transition-colors"
                           >
@@ -420,120 +429,130 @@ const Header: React.FC = () => {
                 </div>
             </div>
 
-            <HoverUnderlineLink to="/news" isActive={location.pathname === '/news'} className="text-[12px] tracking-[0.1em] text-[#666] hover:text-black font-medium transition-colors uppercase py-1">
+            <HoverUnderlineLink to="/news" isActive={location.pathname === '/news'} className="text-[11px] xl:text-[12px] tracking-[0.08em] xl:tracking-[0.1em] text-[#666] hover:text-black font-medium transition-colors uppercase py-1 whitespace-nowrap">
               NEWS
             </HoverUnderlineLink>
-            <HoverUnderlineLink to="/get-in-touch" isActive={location.pathname === '/get-in-touch' || location.pathname === '/contact'} className="text-[12px] tracking-[0.1em] text-[#666] hover:text-black font-medium transition-colors uppercase py-1">
+            <HoverUnderlineLink to="/get-in-touch" isActive={location.pathname === '/get-in-touch' || location.pathname === '/contact'} className="text-[11px] xl:text-[12px] tracking-[0.08em] xl:tracking-[0.1em] text-[#666] hover:text-black font-medium transition-colors uppercase py-1 whitespace-nowrap">
               GET IN TOUCH
             </HoverUnderlineLink>
           </nav>
 
-          {/* Right: Download Catalog */}
-          <div className="hidden md:flex items-center gap-5 mt-1">
+          {/* Right: Download Catalog (Desktop >= 1024px) */}
+          <div className="hidden lg:flex items-center gap-5 mt-1 shrink-0">
             <a 
               href="/catalog.pdf" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="group flex items-center gap-2 px-5 py-2 bg-transparent border border-[#d3cec3] text-[#4a4238] hover:bg-[#1a1612] hover:text-[#eae5da] hover:border-[#1a1612] transition-all duration-300 rounded-full shadow-[0_2px_10px_rgba(0,0,0,0.02)]"
+              className="group flex items-center gap-2 px-4 xl:px-5 py-2 bg-transparent border border-[#d3cec3] text-[#4a4238] hover:bg-[#1a1612] hover:text-[#eae5da] hover:border-[#1a1612] transition-all duration-300 rounded-full shadow-[0_2px_10px_rgba(0,0,0,0.02)] whitespace-nowrap"
             >
               <span className="text-[10px] tracking-[0.15em] font-bold uppercase mt-px">Catalog</span>
               <Download className="w-3.5 h-3.5 transition-transform duration-300 group-hover:-translate-y-0.5" strokeWidth={2.5} />
             </a>
           </div>
 
-          {/* Mobile menu toggle */}
-          <div className="md:hidden flex items-center gap-4">
-             <button
-               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-               className="p-1 text-[#222] cursor-pointer"
-               aria-label="Toggle Menu"
-             >
-               {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-             </button>
+          {/* Tablet & Mobile Right Actions (< 1024px) */}
+          <div className="lg:hidden flex items-center gap-3 sm:gap-4">
+            <a 
+              href="/catalog.pdf" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-transparent border border-[#d3cec3] text-[#4a4238] hover:bg-[#1a1612] hover:text-[#eae5da] hover:border-[#1a1612] transition-all duration-300 rounded-full text-[10px] tracking-[0.12em] font-bold uppercase whitespace-nowrap shadow-sm"
+            >
+              <span>Catalog</span>
+              <Download className="w-3 h-3" strokeWidth={2.5} />
+            </a>
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-1.5 text-[#1a1612] hover:text-black focus:outline-none cursor-pointer rounded-md hover:bg-black/5 transition-colors"
+              aria-label="Toggle Menu"
+            >
+              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
           </div>
         </div>
       </header>
 
-      {/* Mobile Menu Overlay - Full Screen Slide-in Drawer */}
+      {/* Mobile & Tablet Menu Overlay - Slide-in Drawer (< 1024px) */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-50 md:hidden">
+        <div className="fixed inset-0 z-50 lg:hidden">
           {/* Backdrop */}
           <div 
-            className="absolute inset-0 bg-black/40 backdrop-blur-sm" 
+            className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity" 
             onClick={closeMobileMenu}
           />
           
           {/* Drawer Panel */}
-          <div className="absolute top-0 left-0 bottom-0 w-[85vw] max-w-[340px] bg-[#FAF9F6] overflow-y-auto shadow-2xl flex flex-col mobile-menu-enter border-t-4 border-t-[#18484B]">
+          <div className="absolute top-0 left-0 bottom-0 w-[85vw] sm:w-[380px] max-w-[420px] bg-[#FAF9F6] overflow-y-auto shadow-2xl flex flex-col mobile-menu-enter border-t-4 border-t-[#18484B]">
             
             {/* Drawer Header */}
-            <div className="flex items-center justify-between px-5 py-5 border-b border-[#ded7ca]">
-              <span className="text-[14px] font-medium tracking-wider text-black uppercase">Menu</span>
-              <button onClick={closeMobileMenu} className="p-1 text-black" aria-label="Close Menu">
-                <X className="w-6 h-6" />
+            <div className="flex items-center justify-between px-6 py-5 border-b border-[#ded7ca]">
+              <span className="text-[13px] font-semibold tracking-[0.2em] text-[#1a1612] uppercase font-sans">Menu</span>
+              <button onClick={closeMobileMenu} className="p-1.5 text-[#1a1612] hover:opacity-70 transition-opacity rounded-full hover:bg-black/5" aria-label="Close Menu">
+                <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* Search bar */}
-            <div className="px-5 py-4 border-b border-[#ded7ca]">
-              <form onSubmit={handleSearch} className="flex items-center border-b border-black pb-2">
-                <Search className="w-4 h-4 mr-2 text-black shrink-0" />
+            <div className="px-6 py-4 border-b border-[#ded7ca]">
+              <form onSubmit={handleSearch} className="flex items-center border-b border-[#1a1612] pb-2">
+                <Search className="w-4 h-4 mr-2.5 text-[#1a1612] shrink-0" />
                 <input
                   type="text"
                   placeholder="Search products..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="bg-transparent text-sm w-full focus:outline-none text-black placeholder-black/60"
+                  className="bg-transparent text-sm w-full focus:outline-none text-[#1a1612] placeholder-[#1a1612]/60"
                 />
               </form>
             </div>
 
             {/* Nav Links */}
-            <nav className="flex-1 px-5 py-2 text-[16px]">
+            <nav className="flex-1 px-6 py-3 text-[15px] sm:text-[16px]">
               <Link 
                 to="/about" 
                 onClick={closeMobileMenu} 
-                className="flex items-center py-3.5 border-b border-[#d8d2c4] text-black font-light hover:text-[#6b6359] transition-colors uppercase"
+                className="flex items-center py-3.5 border-b border-[#d8d2c4] text-[#1a1612] font-normal hover:text-[#6b6359] transition-colors uppercase tracking-[0.05em]"
               >
                 ABOUT
               </Link>
               <Link 
                 to="/experience-centre" 
                 onClick={closeMobileMenu} 
-                className="flex items-center py-3.5 border-b border-[#d8d2c4] text-black font-light hover:text-[#6b6359] transition-colors uppercase"
+                className="flex items-center py-3.5 border-b border-[#d8d2c4] text-[#1a1612] font-normal hover:text-[#6b6359] transition-colors uppercase tracking-[0.05em]"
               >
                 EXPERIENCE CENTRE
               </Link>
 
-              
               {/* Shop Accordion */}
               <div className="border-b border-[#d8d2c4]">
-                <div className="flex items-center justify-between py-3.5 cursor-pointer text-black font-light">
-                  <Link to="/shop" onClick={closeMobileMenu} className="flex-1 hover:text-[#6b6359] transition-colors uppercase">COLLECTIONS</Link>
+                <div className="flex items-center justify-between py-3.5 cursor-pointer text-[#1a1612]">
+                  <Link to="/shop" onClick={closeMobileMenu} className="flex-1 hover:text-[#6b6359] transition-colors uppercase tracking-[0.05em] font-normal">COLLECTIONS</Link>
                   <button
                     onClick={() => setMobileExpandedCat(mobileExpandedCat === '__shop__' ? null : '__shop__')}
-                    className="p-1"
+                    className="p-1.5 hover:bg-black/5 rounded"
+                    aria-label="Toggle Collections"
                   >
                     <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileExpandedCat === '__shop__' ? 'rotate-180' : ''}`} />
                   </button>
                 </div>
 
                 {mobileExpandedCat === '__shop__' && (
-                  <div className="pb-3 space-y-0.5 bg-[#f0eadd] -mx-5 px-8 py-3">
+                  <div className="pb-3 space-y-0.5 bg-[#f0eadd] -mx-6 px-8 py-3">
                     {SHOP_CATEGORIES.map((cat) => (
                       <div key={cat.id}>
                         <div className="flex items-center justify-between py-2">
                           <Link 
                             to={cat.href} 
                             onClick={closeMobileMenu}
-                            className="text-[15px] text-[#333] hover:text-black transition-colors font-normal"
+                            className="text-[14px] sm:text-[15px] text-[#2a241e] hover:text-black transition-colors font-medium"
                           >
                             {cat.name}
                           </Link>
                           {cat.subcategories && cat.subcategories.length > 0 && (
                             <button
                               onClick={() => setMobileExpandedCat(mobileExpandedCat === cat.id ? '__shop__' : cat.id)}
-                              className="p-1"
+                              className="p-1 hover:bg-black/5 rounded"
+                              aria-label={`Toggle ${cat.name}`}
                             >
                               <ChevronDown className={`w-3.5 h-3.5 text-[#666] transition-transform duration-200 ${mobileExpandedCat === cat.id ? 'rotate-180' : ''}`} />
                             </button>
@@ -541,13 +560,13 @@ const Header: React.FC = () => {
                         </div>
 
                         {cat.subcategories && mobileExpandedCat === cat.id && (
-                          <div className="ml-4 mb-2 border-l-2 border-[#6b6359] pl-3 space-y-2">
+                          <div className="ml-4 mb-2 border-l-2 border-[#8c7f70] pl-3 space-y-2">
                             {cat.subcategories.map(sub => (
                               <Link 
                                 key={sub.name} 
                                 to={sub.href} 
                                 onClick={closeMobileMenu}
-                                className="block text-[13px] py-0.5 text-[#666] hover:text-[#6b6359] transition-colors"
+                                className="block text-[13px] py-0.5 text-[#554e44] hover:text-black transition-colors"
                               >
                                 {sub.name}
                               </Link>
@@ -563,27 +582,40 @@ const Header: React.FC = () => {
               <Link 
                 to="/news" 
                 onClick={closeMobileMenu} 
-                className="flex items-center py-3.5 border-b border-[#d8d2c4] text-black font-light hover:text-[#6b6359] transition-colors uppercase"
+                className="flex items-center py-3.5 border-b border-[#d8d2c4] text-[#1a1612] font-normal hover:text-[#6b6359] transition-colors uppercase tracking-[0.05em]"
               >
                 NEWS
               </Link>
               <Link 
                 to="/get-in-touch" 
                 onClick={closeMobileMenu} 
-                className="flex items-center py-3.5 border-b border-[#d8d2c4] text-black font-light hover:text-[#6b6359] transition-colors uppercase"
+                className="flex items-center py-3.5 border-b border-[#d8d2c4] text-[#1a1612] font-normal hover:text-[#6b6359] transition-colors uppercase tracking-[0.05em]"
               >
                 GET IN TOUCH
               </Link>
+
+              {/* Download Catalog inside Drawer */}
+              <a 
+                href="/catalog.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={closeMobileMenu}
+                className="flex items-center justify-between py-3.5 border-b border-[#d8d2c4] text-[#1a1612] font-medium hover:text-[#6b6359] transition-colors uppercase tracking-[0.05em]"
+              >
+                <span>DOWNLOAD CATALOG</span>
+                <Download className="w-4 h-4 text-[#4a4238]" />
+              </a>
+
               <a 
                 href="tel:+918698814865"
-                className="flex items-center py-3.5 border-b border-[#d8d2c4] text-black font-light hover:text-[#6b6359] transition-colors mt-2"
+                className="flex items-center py-3.5 border-b border-[#d8d2c4] text-[#554e44] hover:text-black transition-colors mt-2 text-sm"
               >
                 +91 8698814865
               </a>
             </nav>
 
             {/* Drawer Footer */}
-            <div className="px-5 py-4 border-t border-[#ded7ca] text-[11px] text-[#666]">
+            <div className="px-6 py-4 border-t border-[#ded7ca] text-[11px] text-[#666]">
               Handcrafted Luxury Furniture by Ar. Amruta Bade
             </div>
           </div>
