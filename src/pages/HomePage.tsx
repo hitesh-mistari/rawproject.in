@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ScrubbedBentoGallery from '../components/home/ScrubbedBentoGallery';
 import { Link } from 'react-router-dom';
-import { Play, Instagram, ChevronLeft, ChevronRight, Heart, MessageCircle, Send, Bookmark, Camera, ArrowRight } from 'lucide-react';
+import { Play, Instagram, ChevronLeft, ChevronRight, Heart, MessageCircle, Send, Bookmark, Camera, ArrowRight, SlidersHorizontal, X, Check } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import productsData from '../data/products.json';
@@ -14,6 +14,49 @@ const getOptimizedImg = (src: string) => {
   }
   return src;
 };
+
+const filterCategories = [
+  {
+    type: 'bedroom',
+    label: 'Bedroom',
+    subcategories: [
+      { id: 'bed', label: 'Bed' },
+      { id: 'side-table', label: 'Side Table' },
+    ],
+  },
+  {
+    type: 'living',
+    label: 'Living',
+    subcategories: [
+      { id: 'ottoman-bench', label: 'Ottoman & Bench' },
+      { id: 'tv-unit', label: 'TV Unit' },
+      { id: 'sofa', label: 'Sofa' },
+      { id: 'side-table-living', label: 'Side Table Living' },
+      { id: 'shoe-stand', label: 'Shoe Stand' },
+      { id: 'lounge-chair', label: 'Lounge Chair' },
+      { id: 'console-table', label: 'Console Unit' },
+      { id: 'swing', label: 'Swing' },
+      { id: 'center-table', label: 'Center Table' },
+    ],
+  },
+  {
+    type: 'dining',
+    label: 'Dining',
+    subcategories: [
+      { id: 'chairs', label: 'Chairs' },
+      { id: 'bar-cabinates', label: 'Bar Cabinets' },
+      { id: 'bar-chairs', label: 'Bar Chairs' },
+      { id: 'dining-table', label: 'Dining Table' },
+    ],
+  },
+  {
+    type: 'one-of-one',
+    label: 'One of One',
+    subcategories: [
+      { id: 'one-of-one', label: 'Explore piece' },
+    ],
+  },
+];
 
 const HomePage: React.FC = () => {
   const whatsappUrl = "https://api.whatsapp.com/send?phone=918698814865&text=Hi!%20We%27d%20like%20you%20to%20suggest%20some%20furniture.";
@@ -79,6 +122,18 @@ const HomePage: React.FC = () => {
 
   const [featuredPost, setFeaturedPost] = useState(0);
   const [activeFilter, setActiveFilter] = useState<{ type: string; sub: string }>({ type: 'bedroom', sub: 'bed' });
+  const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
+  const [isPortfolioVisible, setIsPortfolioVisible] = useState(false);
+  const portfolioRef = useRef<HTMLElement>(null);
+
+  const activeSubLabel = (() => {
+    if (activeFilter.sub === 'all') return 'All Works';
+    for (const cat of filterCategories) {
+      const sub = cat.subcategories.find(s => s.id === activeFilter.sub);
+      if (sub) return sub.label;
+    }
+    return 'Filtered';
+  })();
 
   const portfolioProjects = productsData.map((p) => {
     const parentCats = ['bedroom', 'living', 'dining', 'one-of-one'];
@@ -192,13 +247,51 @@ const HomePage: React.FC = () => {
     };
   }, [activeFilter]);
 
+  useEffect(() => {
+    const el = portfolioRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsPortfolioVisible(entry.isIntersecting);
+      },
+      {
+        root: null,
+        threshold: 0,
+        rootMargin: '-5% 0px -5% 0px',
+      }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (isFilterDrawerOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isFilterDrawerOpen]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsFilterDrawerOpen(false);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   return (
     <div ref={sectionRef} className="bg-white text-[#111111] min-h-screen font-sans">
       
       <ScrubbedBentoGallery />
 
       {/* 1. HERO BANNER */}
-      <section className="bg-[#faf9f6] min-h-screen flex flex-col justify-between py-12 sm:py-16 border-b border-[#ded7ca]">
+      <section ref={portfolioRef} id="portfolio-section" className="bg-[#faf9f6] min-h-screen flex flex-col justify-between py-12 sm:py-16 pb-24 sm:pb-24 lg:pb-16 border-b border-[#ded7ca]">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12 w-full flex-1 flex flex-col justify-between">
           
           {/* Header Row */}
@@ -224,10 +317,10 @@ const HomePage: React.FC = () => {
           {/* Portfolio Grid Layout (Filter sidebar + Projects) */}
           <div className="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-10 lg:gap-14 items-start my-auto">
             
-            {/* Left Filter Sidebar - Sticky */}
-            <div className="w-full flex items-center overflow-x-auto gap-8 pb-3 pt-3 lg:pt-0 lg:pb-0 lg:flex-col lg:items-stretch lg:gap-0 lg:space-y-6 text-[12px] uppercase tracking-widest text-[#6b6359] sticky top-0 z-30 bg-[#faf9f6] border-b border-[#ded7ca] lg:border-none shadow-sm lg:shadow-none lg:top-8 scrollbar-none whitespace-nowrap lg:whitespace-normal -mx-4 px-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0">
+            {/* Desktop Left Filter Sidebar - Sticky */}
+            <div className="hidden lg:flex lg:flex-col lg:items-stretch lg:space-y-6 text-[12px] uppercase tracking-widest text-[#6b6359] sticky top-8">
               
-              <div className="font-bold text-[#1a1612] flex items-center gap-4 lg:pb-2 lg:border-b lg:border-[#ded7ca] lg:justify-between shrink-0 lg:w-full sticky left-0 bg-[#faf9f6] z-10 pr-4 lg:pr-0">
+              <div className="font-bold text-[#1a1612] flex items-center justify-between pb-2 border-b border-[#ded7ca] w-full">
                 <span>Filter</span>
                 {activeFilter.sub !== 'all' && (
                   <button 
@@ -240,13 +333,12 @@ const HomePage: React.FC = () => {
               </div>
               
               {/* BEDROOM Filter Group */}
-              <div className="flex items-center gap-3 shrink-0 lg:flex-col lg:items-stretch lg:gap-0">
-                <div className="font-semibold text-[#1a1612] flex items-center gap-2 lg:justify-between">
+              <div className="flex flex-col items-stretch">
+                <div className="font-semibold text-[#1a1612] flex items-center justify-between">
                   <span>Bedroom</span>
-                  <span className="hidden lg:inline text-[10px]">✕</span>
-                  <span className="lg:hidden text-[#ded7ca]">|</span>
+                  <span className="text-[10px]">✕</span>
                 </div>
-                <div className="flex items-center gap-4 lg:flex-col lg:items-stretch lg:gap-0 lg:pl-3 lg:space-y-2 text-[#8a7f72] lg:mt-2.5">
+                <div className="flex flex-col items-stretch pl-3 space-y-2 text-[#8a7f72] mt-2.5">
                   {[
                     { id: 'bed', label: 'Bed' },
                     { id: 'side-table', label: 'Side Table' },
@@ -261,7 +353,7 @@ const HomePage: React.FC = () => {
                         }`}
                       >
                         <span>{sub.label}</span>
-                        {isSelected && <span className="text-[14px] leading-none text-[#1a1612] hidden lg:inline">•</span>}
+                        {isSelected && <span className="text-[14px] leading-none text-[#1a1612]">•</span>}
                       </div>
                     );
                   })}
@@ -269,13 +361,12 @@ const HomePage: React.FC = () => {
               </div>
 
               {/* LIVING Filter Group */}
-              <div className="flex items-center gap-3 shrink-0 lg:flex-col lg:items-stretch lg:gap-0 lg:border-t lg:border-[#ded7ca] lg:pt-3">
-                <div className="font-semibold text-[#1a1612] flex items-center gap-2 lg:justify-between">
+              <div className="flex flex-col items-stretch border-t border-[#ded7ca] pt-3">
+                <div className="font-semibold text-[#1a1612] flex items-center justify-between">
                   <span>Living</span>
-                  <span className="hidden lg:inline text-[10px]">✕</span>
-                  <span className="lg:hidden text-[#ded7ca]">|</span>
+                  <span className="text-[10px]">✕</span>
                 </div>
-                <div className="flex items-center gap-4 lg:flex-col lg:items-stretch lg:gap-0 lg:pl-3 lg:space-y-2 text-[#8a7f72] lg:mt-2.5">
+                <div className="flex flex-col items-stretch pl-3 space-y-2 text-[#8a7f72] mt-2.5">
                   {[
                     { id: 'ottoman-bench', label: 'Ottoman & Bench' },
                     { id: 'tv-unit', label: 'TV Unit' },
@@ -297,7 +388,7 @@ const HomePage: React.FC = () => {
                         }`}
                       >
                         <span>{sub.label}</span>
-                        {isSelected && <span className="text-[14px] leading-none text-[#1a1612] hidden lg:inline">•</span>}
+                        {isSelected && <span className="text-[14px] leading-none text-[#1a1612]">•</span>}
                       </div>
                     );
                   })}
@@ -305,13 +396,12 @@ const HomePage: React.FC = () => {
               </div>
 
               {/* DINING Filter Group */}
-              <div className="flex items-center gap-3 shrink-0 lg:flex-col lg:items-stretch lg:gap-0 lg:border-t lg:border-[#ded7ca] lg:pt-3">
-                <div className="font-semibold text-[#1a1612] flex items-center gap-2 lg:justify-between">
+              <div className="flex flex-col items-stretch border-t border-[#ded7ca] pt-3">
+                <div className="font-semibold text-[#1a1612] flex items-center justify-between">
                   <span>Dining</span>
-                  <span className="hidden lg:inline text-[10px]">✕</span>
-                  <span className="lg:hidden text-[#ded7ca]">|</span>
+                  <span className="text-[10px]">✕</span>
                 </div>
-                <div className="flex items-center gap-4 lg:flex-col lg:items-stretch lg:gap-0 lg:pl-3 lg:space-y-2 text-[#8a7f72] lg:mt-2.5">
+                <div className="flex flex-col items-stretch pl-3 space-y-2 text-[#8a7f72] mt-2.5">
                   {[
                     { id: 'chairs', label: 'Chairs' },
                     { id: 'bar-cabinates', label: 'Bar Cabinets' },
@@ -328,7 +418,7 @@ const HomePage: React.FC = () => {
                         }`}
                       >
                         <span>{sub.label}</span>
-                        {isSelected && <span className="text-[14px] leading-none text-[#1a1612] hidden lg:inline">•</span>}
+                        {isSelected && <span className="text-[14px] leading-none text-[#1a1612]">•</span>}
                       </div>
                     );
                   })}
@@ -336,13 +426,12 @@ const HomePage: React.FC = () => {
               </div>
 
               {/* ONE OF ONE Filter Group */}
-              <div className="flex items-center gap-3 shrink-0 lg:flex-col lg:items-stretch lg:gap-0 lg:border-t lg:border-[#ded7ca] lg:pt-3">
-                <div className="font-semibold text-[#1a1612] flex items-center gap-2 lg:justify-between">
+              <div className="flex flex-col items-stretch border-t border-[#ded7ca] pt-3">
+                <div className="font-semibold text-[#1a1612] flex items-center justify-between">
                   <span>One of One</span>
-                  <span className="hidden lg:inline text-[10px]">✕</span>
-                  <span className="lg:hidden text-[#ded7ca]">|</span>
+                  <span className="text-[10px]">✕</span>
                 </div>
-                <div className="flex items-center gap-4 lg:flex-col lg:items-stretch lg:gap-0 lg:pl-3 lg:space-y-2 text-[#8a7f72] lg:mt-2.5">
+                <div className="flex flex-col items-stretch pl-3 space-y-2 text-[#8a7f72] mt-2.5">
                   {[
                     { id: 'one-of-one', label: 'Explore piece' },
                   ].map(sub => {
@@ -356,7 +445,7 @@ const HomePage: React.FC = () => {
                         }`}
                       >
                         <span>{sub.label}</span>
-                        {isSelected && <span className="text-[14px] leading-none text-[#1a1612] hidden lg:inline">•</span>}
+                        {isSelected && <span className="text-[14px] leading-none text-[#1a1612]">•</span>}
                       </div>
                     );
                   })}
@@ -367,6 +456,39 @@ const HomePage: React.FC = () => {
 
             {/* Right Portfolio Projects List */}
             <div className="space-y-12">
+              {/* Mobile In-flow Category Quick Filter (Non-sticky) */}
+              <div className="lg:hidden flex items-center gap-2 overflow-x-auto scrollbar-none pb-2 -mx-4 px-4 sm:-mx-6 sm:px-6">
+                <button
+                  type="button"
+                  onClick={() => setActiveFilter({ type: 'all', sub: 'all' })}
+                  className={`px-3.5 py-1.5 rounded-full text-[11px] uppercase tracking-wider font-semibold whitespace-nowrap transition-all ${
+                    activeFilter.sub === 'all'
+                      ? 'bg-[#1a1612] text-white shadow-sm'
+                      : 'bg-[#f4f1ea] text-[#6b6359] border border-[#ded7ca]'
+                  }`}
+                >
+                  All Works
+                </button>
+                {filterCategories.map((cat) => {
+                  const isCatActive = activeFilter.type === cat.type && activeFilter.sub !== 'all';
+                  return (
+                    <button
+                      key={cat.type}
+                      type="button"
+                      onClick={() => {
+                        setActiveFilter({ type: cat.type, sub: cat.subcategories[0].id });
+                      }}
+                      className={`px-3.5 py-1.5 rounded-full text-[11px] uppercase tracking-wider font-semibold whitespace-nowrap transition-all ${
+                        isCatActive
+                          ? 'bg-[#1a1612] text-white shadow-sm'
+                          : 'bg-[#f4f1ea] text-[#6b6359] border border-[#ded7ca]'
+                      }`}
+                    >
+                      {cat.label}
+                    </button>
+                  );
+                })}
+              </div>
               {portfolioProjects
                 .filter(proj => activeFilter.sub === 'all' || (proj.categoryType === activeFilter.type && proj.subcategory === activeFilter.sub) || activeFilter.type === 'all')
                 .concat(
@@ -419,6 +541,180 @@ const HomePage: React.FC = () => {
 
         </div>
       </section>
+
+      {/* Mobile Fixed Bottom Floating Filter Bar (Contained, Rounded, Elevated Shadow - Phone only) */}
+      <div 
+        className={`fixed bottom-5 left-4 right-4 z-40 max-w-sm sm:max-w-md mx-auto pointer-events-none lg:hidden transition-all duration-300 ease-out ${
+          isPortfolioVisible 
+            ? 'opacity-100 translate-y-0' 
+            : 'opacity-0 translate-y-8 pointer-events-none'
+        }`}
+      >
+        <div className="bg-white/95 backdrop-blur-md border border-[#e0dad0] rounded-[30px] p-2 shadow-[0_10px_35px_rgba(0,0,0,0.18)] flex items-center gap-2 pointer-events-auto">
+          {/* Active Filter Pill / Quick Reset */}
+          <div 
+            onClick={() => setIsFilterDrawerOpen(true)}
+            className="flex items-center gap-2 bg-[#f4f1ea] rounded-full px-3.5 h-[44px] min-w-0 shrink cursor-pointer hover:bg-[#ece7dc] active:bg-[#e4ded3] transition-colors"
+            role="button"
+            tabIndex={0}
+            aria-label={`Current filter: ${activeSubLabel}. Tap to change.`}
+          >
+            <span className="text-[11px] uppercase tracking-wider text-[#6b6359] font-medium truncate max-w-[105px] sm:max-w-[130px]">
+              {activeFilter.sub === 'all' ? 'All Works' : activeSubLabel}
+            </span>
+            {activeFilter.sub !== 'all' && (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setActiveFilter({ type: 'all', sub: 'all' });
+                }}
+                className="text-[#8a7f72] hover:text-[#1a1612] p-1 -mr-1 rounded-full hover:bg-[#ded7ca] active:scale-95 transition-all"
+                title="Reset filter"
+                aria-label="Reset filter"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            )}
+          </div>
+
+          {/* Filter Action Button */}
+          <button
+            type="button"
+            onClick={() => setIsFilterDrawerOpen(true)}
+            className="flex-1 h-[44px] bg-[#1a1612] hover:bg-[#2a2622] active:bg-black text-white text-[12px] font-semibold tracking-widest uppercase rounded-full transition-all duration-200 active:scale-[0.98] flex items-center justify-center gap-2 shadow-sm"
+            aria-label="Open filter options"
+            aria-expanded={isFilterDrawerOpen}
+          >
+            <SlidersHorizontal className="w-4 h-4 text-[#c5a880]" />
+            <span>Filter</span>
+            {activeFilter.sub !== 'all' && (
+              <span className="w-2 h-2 rounded-full bg-[#c5a880] ring-2 ring-[#1a1612]" />
+            )}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Filter Drawer / Bottom Sheet */}
+      {isFilterDrawerOpen && (
+        <div className="fixed inset-0 z-50 lg:hidden">
+          {/* Backdrop */}
+          <div 
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity animate-in fade-in duration-200" 
+            onClick={() => setIsFilterDrawerOpen(false)}
+            aria-hidden="true"
+          />
+
+          {/* Drawer Sheet */}
+          <div 
+            className="fixed inset-x-0 bottom-0 z-50 max-h-[85vh] bg-[#faf9f6] rounded-t-[28px] border-t border-[#ded7ca] shadow-[0_-12px_40px_rgba(0,0,0,0.25)] flex flex-col animate-in slide-in-from-bottom duration-300"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Filter portfolio works"
+          >
+            {/* Drag Handle Bar */}
+            <div className="w-12 h-1.5 bg-[#d6cfc2] rounded-full mx-auto mt-3.5 shrink-0" />
+
+            {/* Header */}
+            <div className="flex items-center justify-between px-6 pt-3 pb-4 border-b border-[#ded7ca] shrink-0">
+              <div>
+                <h3 className="text-lg font-serif text-[#1a1612] font-normal tracking-tight">
+                  Filter Collection
+                </h3>
+                <p className="text-[11px] uppercase tracking-wider text-[#8a7f72] mt-0.5">
+                  {activeFilter.sub === 'all' ? 'Showing all pieces' : `Filtered: ${activeSubLabel}`}
+                </p>
+              </div>
+              <div className="flex items-center gap-2">
+                {activeFilter.sub !== 'all' && (
+                  <button
+                    type="button"
+                    onClick={() => setActiveFilter({ type: 'all', sub: 'all' })}
+                    className="text-[11px] uppercase tracking-wider text-[#8a7f72] hover:text-[#1a1612] underline underline-offset-2 px-2 py-1 font-medium"
+                  >
+                    Reset All
+                  </button>
+                )}
+                <button
+                  type="button"
+                  onClick={() => setIsFilterDrawerOpen(false)}
+                  className="w-8 h-8 rounded-full bg-[#f0ede6] hover:bg-[#e4ded3] text-[#1a1612] flex items-center justify-center transition-colors"
+                  aria-label="Close filters"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* Scrollable Categories & Subcategories */}
+            <div className="overflow-y-auto px-6 py-5 space-y-6 flex-1">
+              {/* All Portfolio Pieces */}
+              <div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setActiveFilter({ type: 'all', sub: 'all' });
+                    setIsFilterDrawerOpen(false);
+                  }}
+                  className={`w-full text-left px-4 py-3 rounded-2xl flex items-center justify-between text-xs uppercase tracking-widest font-semibold transition-all ${
+                    activeFilter.sub === 'all'
+                      ? 'bg-[#1a1612] text-white shadow-sm'
+                      : 'bg-[#f4f1ea] text-[#6b6359] border border-[#ded7ca] hover:border-[#1a1612]'
+                  }`}
+                >
+                  <span>All Portfolio Pieces</span>
+                  {activeFilter.sub === 'all' && <Check className="w-4 h-4 text-[#c5a880]" />}
+                </button>
+              </div>
+
+              {/* Grouped Categories */}
+              {filterCategories.map((cat) => (
+                <div key={cat.type} className="space-y-2.5">
+                  <h4 className="text-[11px] uppercase tracking-[0.2em] text-[#8a7f72] font-bold">
+                    {cat.label}
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {cat.subcategories.map((sub) => {
+                      const isSelected = activeFilter.type === cat.type && activeFilter.sub === sub.id;
+                      return (
+                        <button
+                          key={sub.id}
+                          type="button"
+                          onClick={() => {
+                            setActiveFilter({ type: cat.type, sub: sub.id });
+                          }}
+                          className={`px-4 py-2.5 rounded-full text-[12px] uppercase tracking-wider transition-all flex items-center gap-1.5 ${
+                            isSelected
+                              ? 'bg-[#1a1612] text-white font-semibold shadow-sm'
+                              : 'bg-[#f4f1ea] text-[#5c564f] border border-[#ded7ca] hover:border-[#1a1612] hover:text-[#1a1612]'
+                          }`}
+                        >
+                          <span>{sub.label}</span>
+                          {isSelected && <span className="w-1.5 h-1.5 rounded-full bg-[#c5a880]" />}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Bottom Sticky Action */}
+            <div className="p-4 px-6 border-t border-[#ded7ca] bg-white/80 backdrop-blur-sm shrink-0">
+              <button
+                type="button"
+                onClick={() => setIsFilterDrawerOpen(false)}
+                className="w-full h-12 bg-[#1a1612] hover:bg-[#2a2622] active:bg-black text-white text-[13px] font-semibold uppercase tracking-wider rounded-full shadow-md flex items-center justify-center gap-2 transition-all active:scale-[0.99]"
+              >
+                <span>View Results</span>
+                {activeFilter.sub !== 'all' && (
+                  <span className="text-[#c5a880] text-xs">({activeSubLabel})</span>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
 
 
